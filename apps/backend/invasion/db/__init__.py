@@ -1,0 +1,1 @@
+import invasion.db.models  # noqa

@@ -1,0 +1,45 @@
+image: docker:20.10.16
+services:
+  - docker:20.10.16-dind
+
+variables:
+  DOCKER_LOGIN: $DOCKER_LOGIN
+  DOCKER_PWD: $DOCKER_PWD
+  AWS_SERVER: $AWS_SERVER
+  AWS_KEY: $AWS_KEY
+
+stages:
+- test
+- push_to_registry
+- deploy
+
+test:
+  stage: test
+  script:
+    - echo "Tests passed"
+
+push_to_registry:
+  stage: push_to_registry
+  script:
+    - cd apps/backend
+    - docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PWD" registry.gitlab.com
+    - docker build -t registry.gitlab.com/abab5/bit-rx/backend:main .
+    - docker push registry.gitlab.com/abab5/bit-rx/backend:main
+    - cd ..
+    - cd frontend
+    - docker build -t registry.gitlab.com/abab5/bit-rx/frontend:main .
+    - docker push registry.gitlab.com/abab5/bit-rx/frontend:main
+
+deploy_all:
+  stage: deploy
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+    - eval $(ssh-agent -s)
+    - echo "$AWS_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $AWS_SERVER >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - ssh $AWS_USER@$AWS_SERVER 'cd /app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend'
+

@@ -1,0 +1,1 @@
+Common protocol buffer and GraphQL definitions can reside here. Typically common data types that will needed by all apps in their particular definitions. For example, if we want a `Money` type, we would define it here in a `money.proto` file and a `money.graphql` file, and the type can be imported in the API definition of any particular app.
