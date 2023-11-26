@@ -1,4 +1,5 @@
 import Header from "../../components/header";
+import MainVideo from "../../components/main_video";
 import { useTranslation } from "next-i18next";
 
 
@@ -8,12 +9,7 @@ const Home = () => {
     return (
         <div>
             <Header/>
-            <div>
-                {t("app_title")}
-            </div>
-            <div>
-                {t("app_title")}
-            </div>
+            <MainVideo/>
         </div>
     );
 }

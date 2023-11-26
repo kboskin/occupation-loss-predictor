@@ -14,7 +14,7 @@ import Logo from "../logo";
 import {useTranslation} from "next-i18next";
 
 
-export default function Header() {
+const Header = () => {
     const {t} = useTranslation();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -88,7 +88,7 @@ export default function Header() {
                     </Link>
                 </NavbarMenuItem>
                  <NavbarMenuItem>
-                    <Link color="danger" href="#" variant="flat">
+                    <Link color="danger" href="#" variant="flat" size="lg">
                         {t('header_item_army_support')}
                     </Link>
                 </NavbarMenuItem>
@@ -96,3 +96,5 @@ export default function Header() {
         </Navbar>
     );
 }
+
+export default Header

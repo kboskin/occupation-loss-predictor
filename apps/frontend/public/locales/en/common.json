@@ -4,5 +4,12 @@
   "header_item_losses": "Losses & Forecast",
   "header_item_numbers": "Numeric forecast",
   "header_item_support_us": "Support project",
-  "header_item_army_support": "Support the UArmy"
+  "header_item_army_support": "Support the UArmy",
+
+  "heading_protecting_the_world": "Protecting the World",
+  "heading_protecting_losses_forecast": "AI-Based Russian Losses Forecast",
+  "heading_unit_days": "Days",
+  "heading_unit_hours": "Hours",
+  "heading_unit_minutes": "Minutes",
+  "heading_unit_seconds": "Seconds"
 }
