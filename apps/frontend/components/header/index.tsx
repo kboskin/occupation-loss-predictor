@@ -56,9 +56,11 @@ const Header = () => {
             </NavbarContent>
             <NavbarContent className="hidden sm:flex" justify="end">
                 <NavbarItem>
-                    <Button as={Link} color="danger" href="#" variant="flat">
-                        {t('header_item_army_support')}
-                    </Button>
+                    <Link href={t('link_support_army')} target="_blank" rel="noopener noreferrer">
+                        <Button color="danger" href={t('link_support_army')} variant="flat" >
+                            {t('header_item_army_support')}
+                        </Button>
+                    </Link>
                 </NavbarItem>
             </NavbarContent>
             <NavbarMenu>
@@ -88,7 +90,7 @@ const Header = () => {
                     </Link>
                 </NavbarMenuItem>
                  <NavbarMenuItem>
-                    <Link color="danger" href="#" variant="flat" size="lg">
+                    <Link color="danger" variant="flat" size="lg" href={t('link_support_army')} target="_blank" rel="noopener noreferrer">
                         {t('header_item_army_support')}
                     </Link>
                 </NavbarMenuItem>

@@ -1,12 +1,9 @@
+$color-dark: #000103;
+$color-light: #c0ccda;
+
 $theme-colors: (
-  'primary': #093ea8,
-  'secondary': #3bd7ec,
-  'success': #22e11c,
-  'info': #d9ff50,
-  'warning': #ffbe0b,
-  'danger': #ff0000,
-  'light': #c0ccda,
-  'dark': #000103,
+  'light': $color-light,
+  'dark': $color-dark,
 );
 
 $blur-radius: 8px;

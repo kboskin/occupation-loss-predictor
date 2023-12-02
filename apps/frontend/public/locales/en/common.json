@@ -11,5 +11,25 @@
   "heading_unit_days": "Days",
   "heading_unit_hours": "Hours",
   "heading_unit_minutes": "Minutes",
-  "heading_unit_seconds": "Seconds"
+  "heading_unit_seconds": "Seconds",
+
+  "footer_column_disclaimer": "Disclaimer",
+  "footer_column_navigation": "Navigation",
+  "footer_column_contacts": "Contacts",
+
+  "footer_column_disclaimer_approximate": "All data is approximate\n",
+  "footer_column_disclaimer_ai": "Artificial intelligence \ntechnology was used during the calculation",
+  "footer_column_source": "Source: Open data of the \nAFU General Staff ",
+
+  "footer_column_total_losses_aggregation": "Total enemy losses",
+  "footer_column_tomorrow_forecast": "Tomorrow forecast",
+  "footer_column_support_project": "How to help us?",
+
+  "footer_copyright": "© 2023 All rights reserved",
+
+
+  "contacts_email": "contact@contact.com",
+
+  "link_support_army": "https://savelife.in.ua/donate/"
+
 }

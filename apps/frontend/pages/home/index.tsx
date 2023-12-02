@@ -1,6 +1,7 @@
 import Header from "../../components/header";
 import MainVideo from "../../components/main_video";
 import { useTranslation } from "next-i18next";
+import Footer from "../../components/footer";
 
 
 const Home = () => {
@@ -10,6 +11,7 @@ const Home = () => {
         <div>
             <Header/>
             <MainVideo/>
+            <Footer/>
         </div>
     );
 }
