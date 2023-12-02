@@ -23,7 +23,7 @@ const Footer = () => {
                         <TableCell
                             className="width-45 text-center">{t('footer_column_disclaimer_approximate')}</TableCell>
                         <TableCell><Link href={"#"}>{t('footer_column_total_losses_aggregation')}</Link></TableCell>
-                        <TableCell className="width-30"/>
+                        <TableCell className="width-30">✌🏻🇺🇦</TableCell>
                     </TableRow>
                     <TableRow key="2">
                         <TableCell
