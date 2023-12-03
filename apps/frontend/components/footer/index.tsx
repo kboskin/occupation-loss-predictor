@@ -9,9 +9,9 @@ const Footer = () => {
         <footer className="content-center">
             <Table className="footer pt-2" aria-label="AI losses footer">
                 <TableHeader>
-                    <TableColumn
-                        className="footer-title text-lg text-center text-amber-300">{t('footer_column_disclaimer')
-                    }</TableColumn>
+                    <TableColumn className="footer-title text-lg text-center text-amber-300">
+                        {t('footer_column_disclaimer')}
+                    </TableColumn>
                     <TableColumn
                         className="footer-title text-lg">{t('footer_column_navigation')}</TableColumn>
                     <TableColumn
@@ -26,8 +26,9 @@ const Footer = () => {
                         <TableCell className="width-30">✌🏻🇺🇦</TableCell>
                     </TableRow>
                     <TableRow key="2">
-                        <TableCell
-                            className="width-45 text-center whitespace-pre-wrap">{t('footer_column_disclaimer_ai')}</TableCell>
+                        <TableCell className="width-45 text-center whitespace-pre-wrap">
+                            {t('footer_column_disclaimer_ai')}
+                        </TableCell>
                         <TableCell><Link href={"#"}>{t('footer_column_tomorrow_forecast')}</Link></TableCell>
                         <TableCell className="width-30">{t('contacts_email')}</TableCell>
                     </TableRow>

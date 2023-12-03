@@ -23,11 +23,11 @@ class POSTGRES:
 
 
 SQLALCHEMY_DATABASE_URI = (
-    f"postgresql://{POSTGRES.user}:{POSTGRES.password}"
+    f"postgresql+asyncpg://{POSTGRES.user}:{POSTGRES.password}"
     f"@{POSTGRES.host}:{POSTGRES.port}/{POSTGRES.db}"
 )
 
-SQLALCHEMY_ECHO = False
+SQLALCHEMY_ECHO = DEBUG
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 

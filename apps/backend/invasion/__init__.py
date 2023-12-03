@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import asyncio
 
+import asyncpg
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -9,10 +11,10 @@ from fastapi.staticfiles import StaticFiles
 from invasion.admin.service import AdminService
 from fastapi import APIRouter
 
-from invasion.config import DEBUG, CORS
+from invasion.config import DEBUG, CORS, SQLALCHEMY_DATABASE_URI
 import os
 
-from invasion.db.engine import DB
+from invasion.db.models import init_models
 from invasion.losses.router import losses_router
 
 app = FastAPI(debug=DEBUG)
@@ -35,15 +37,7 @@ api_router.include_router(losses_router, prefix="/losses")
 app.include_router(api_router)
 
 
-async def connect_to_db():
-    return await DB.connect()
-
-
 @app.on_event("startup")
 async def startup_event():
-    asyncio.create_task(connect_to_db())
-    asyncio.create_task(AdminService.update_statistic())
-
-# @app.exception_handler(AuthException)
-# async def validation_exception_handler(request, exc):
-#     return PlainTextResponse("Unauthorized", status_code=401)
+    await init_models()
+    await AdminService.update_statistic()

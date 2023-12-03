@@ -1,12 +1,12 @@
-import databases
-import sqlalchemy as sa
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 
-from invasion.config import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_ECHO, POSTGRES
+from invasion.config import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_ECHO
 
-DB = databases.Database(SQLALCHEMY_DATABASE_URI)
-engine = sa.create_engine(
+engine = create_async_engine(
     SQLALCHEMY_DATABASE_URI,
-    echo=SQLALCHEMY_ECHO
+    echo=SQLALCHEMY_ECHO,
+
 )
-session = Session(engine)
+async_session = AsyncSession(
+    engine, expire_on_commit=False
+)

@@ -1,8 +1,9 @@
+import asyncio
 from enum import Enum
 
 import sqlalchemy as sa
 from sqlalchemy.orm import declarative_base
-from sqlalchemy.sql import func, expression
+from sqlalchemy.sql import func
 from .engine import engine
 
 metadata = declarative_base().metadata
@@ -12,6 +13,7 @@ PersonnelLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -23,6 +25,7 @@ TanksLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -34,6 +37,7 @@ APVLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -45,6 +49,7 @@ ArtilleryLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -56,6 +61,7 @@ MLRSLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -67,6 +73,7 @@ AircraftWarfareLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -78,6 +85,7 @@ AircraftLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -89,6 +97,7 @@ HelicoptersLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -100,6 +109,7 @@ UAVLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -111,6 +121,7 @@ MissilesLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -122,6 +133,7 @@ WarshipsLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -133,6 +145,7 @@ SubmarinesLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -144,6 +157,7 @@ FuelTanksLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
@@ -155,10 +169,14 @@ SpecialLossesTable = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
     sa.Column('losses', sa.Numeric, nullable=False),
+    sa.Column('added_on_day', sa.Numeric, nullable=False),
     sa.Column('time', sa.DateTime, nullable=False),
     sa.Column('created_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('updated_time', sa.DateTime, server_default=func.now(), nullable=False),
     sa.Column('deleted_time', sa.DateTime),
 )
 
-metadata.create_all(engine)
+
+async def init_models():
+    async with engine.begin() as conn:
+        await conn.run_sync(metadata.create_all)
