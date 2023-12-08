@@ -1,4 +1,8 @@
+from datetime import datetime
 from enum import Enum
+from typing import List
+
+from pydantic import BaseModel
 
 
 class LossesProjectEnum(str, Enum):
@@ -16,3 +20,15 @@ class LossesProjectEnum(str, Enum):
     tanks = 'tanks'
     uav = 'uav'
     warships = 'warships'
+
+
+class LossesProjectModel(BaseModel):
+    time: datetime
+    losses: int
+    added_on_day: int
+    type: LossesProjectEnum
+
+
+class ScrapDataHolder(BaseModel):
+    original_models: List[LossesProjectModel]
+    tables_mapped: List[object]

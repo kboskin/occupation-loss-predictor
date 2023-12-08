@@ -1,14 +1,17 @@
+import logging
 from datetime import datetime
 from enum import Enum
 from typing import List
 
 import requests
+import sentry_sdk
 from bs4 import BeautifulSoup
 from pydantic import BaseModel
 
 
 class MinFinEnum(str, Enum):
     aircraft = 'Літаки'
+
     aircraft_warfare = 'Засоби ППО'
     aircraft_warfare_2 = 'ЗРК БУК'
 
@@ -79,7 +82,8 @@ def scrap_minfin_data(year: int, month: int) -> List[MinFinModel]:
                         }
                     )
                 )
-            except:
-                print(date)
-
-        return list_of_losses
+            except Exception as e:
+                sentry_sdk.capture_message(f"Issue happened during parsing date: {date} e: {e}")
+                logging.debug(f"Exception while parsing date: ${date} loss: {loss}")
+    list_of_losses.sort(key=lambda x: x.date)
+    return list_of_losses
