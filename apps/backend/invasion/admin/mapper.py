@@ -1,4 +1,7 @@
-from invasion.db.models import *
+from invasion.db.models import AircraftLossesTable, AircraftWarfareLossesTable, APVLossesTable, ArtilleryLossesTable
+from invasion.db.models import FuelTanksLossesTable, HelicoptersLossesTable, MissilesLossesTable, MLRSLossesTable
+from invasion.db.models import PersonnelLossesTable, SpecialLossesTable, SubmarinesLossesTable, TanksLossesTable
+from invasion.db.models import UAVLossesTable, WarshipsLossesTable
 
 from invasion.admin.models import LossesProjectEnum, LossesProjectModel
 from invasion.integrations.mapper import minfin_enum_to_project_mapper
@@ -47,5 +50,4 @@ def minfin_to_losses_mapper(models: List[MinFinModel]) -> List[LossesProjectMode
         "type": minfin_enum_to_project_mapper(model.type),
         "added_on_day": model.losses_increase,
         "losses": model.losses
-    }) for model in
-     models]
+    }) for model in models]

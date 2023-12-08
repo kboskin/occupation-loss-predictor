@@ -35,7 +35,7 @@ def minfin_enum_to_project_mapper(model_type: MinFinEnum) -> LossesProjectEnum:
         case MinFinEnum.special_equipment:
             return LossesProjectEnum.special_equipment
         case MinFinEnum.ballistic:
-            #special case
+            # special case
             return LossesProjectEnum.special_equipment
         case MinFinEnum.submarines:
             return LossesProjectEnum.submarines

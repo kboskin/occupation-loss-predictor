@@ -10,7 +10,7 @@ from fastapi_utils_sqlalch2.tasks import repeat_every
 from invasion.admin.service import AdminService
 from fastapi import APIRouter
 
-from invasion.config import DEBUG, CORS, SQLALCHEMY_DATABASE_URI
+from invasion.config import DEBUG, CORS
 import os
 
 from invasion.db.models import init_models

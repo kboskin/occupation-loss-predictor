@@ -1,16 +1,13 @@
 import os
 import sys
 from logging.config import fileConfig
-
-sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), '..')))
-
 from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
 from invasion.config import SQLALCHEMY_DATABASE_URI
-
 from invasion.db.models import metadata
+
+sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), '..')))
 
 config = context.config
 config.set_main_option('sqlalchemy.url', SQLALCHEMY_DATABASE_URI)

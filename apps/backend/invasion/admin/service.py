@@ -3,7 +3,7 @@ import logging
 from typing import List
 
 import pandas as pd
-from sqlalchemy import select, insert, desc, exists
+from sqlalchemy import select, desc, exists
 
 from invasion.admin.mapper import minfin_to_losses_mapper, losses_enum_to_table_mapper
 from invasion.admin.models import LossesProjectModel, ScrapDataHolder
@@ -24,9 +24,7 @@ class AdminService:
         years = list(range(invasion_start, present_year - (present_year - invasion_start) + 2))
 
         last_personnel_record = await async_session.execute(
-            select(PersonnelLossesTable)
-                .order_by(desc(PersonnelLossesTable.time))
-                .limit(1)
+            select(PersonnelLossesTable).order_by(desc(PersonnelLossesTable.time)).limit(1)
         )
 
         last_personnel_record: PersonnelLossesTable = last_personnel_record.scalars().one()
