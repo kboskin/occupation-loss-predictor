@@ -6,7 +6,8 @@
     "local": "NEXT_PUBLIC_BASE_URL='http://127.0.0.1:3000' next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest --passWithNoTests"
   },
   "dependencies": {
     "@nextui-org/button": "^2.0.26",
@@ -17,6 +18,7 @@
     "d3": "^7.8.5",
     "framer-motion": "^10.16.5",
     "i18next": "^23.7.6",
+    "jest": "^29.7.0",
     "next": "14.0.3",
     "next-i18next": "^15.0.0",
     "react": "18.2.0",

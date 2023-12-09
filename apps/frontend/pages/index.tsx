@@ -1,12 +1,11 @@
 import Home from "./home";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {GetServerSideProps} from "next";
 
-export default function Page(props) {
-  return <Home props={props} />;
-}
-
-export const getServerSideProps = async ({ locale }) => ({
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale)),
+    ...(await serverSideTranslations(locale as string)),
   },
 })
+
+export default Home

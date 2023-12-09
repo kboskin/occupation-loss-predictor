@@ -36,7 +36,7 @@ const Footer = () => {
                         <TableCell
                             className="width-45 text-center whitespace-pre-wrap">{t('footer_column_source')}</TableCell>
                         <TableCell><Link href={"#"}>{t('footer_column_support_project')}</Link></TableCell>
-                        <TableCell className="width-30"/>
+                        <TableCell className="width-30"><Link className="hidden" href="https://cloudflex.team" rel="dofollow">Developed by CloudFlex - custom software development</Link></TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

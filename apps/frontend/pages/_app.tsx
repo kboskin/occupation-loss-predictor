@@ -1,13 +1,11 @@
 import "../styles/globals.scss";
 import { appWithTranslation } from 'next-i18next'
 import {NextUIProvider} from "@nextui-org/react";
-import React, { Suspense } from 'react';
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-// no remove
-// import '../i18n';
+import React from 'react';
+import { AppProps } from 'next/app';
 
 
-const MyApp = ({ Component, pageProps }) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
     return (
         <NextUIProvider>
             <main className="dark text-foreground bg-background">
