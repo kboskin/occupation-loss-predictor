@@ -1,0 +1,64 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@2.0.3
+  node: circleci/node@5.0.2
+
+jobs:
+  backend_validate:
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Install dependencies
+          command: poetry install
+      - run:
+          name: Backend Lint
+          command: poetry run flake8
+      - run:
+          name: Backend Build
+          command: poetry build
+      - run:
+          name: Backend Test
+          command: poetry run pytest
+
+  frontend_validate:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: yarn test
+          name: Run tests
+      - run:
+          command: yarn build
+          name: Build app
+
+  push_to_registry:
+    - run:
+	name: Push docker images
+	command: |
+          cd apps/backend
+          docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PWD" registry.gitlab.com
+          docker build -t registry.gitlab.com/abab5/bit-rx/backend:main .
+          docker push registry.gitlab.com/abab5/bit-rx/backend:main
+          cd ..
+          cd frontend
+          docker build -t registry.gitlab.com/abab5/bit-rx/frontend:main .
+          docker push registry.gitlab.com/abab5/bit-rx/frontend:main
+  deploy_all:
+    - run:
+	name: Backend Build
+	command: |
+          'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+          eval $(ssh-agent -s)
+          echo "$AWS_KEY" | tr -d '\r' | ssh-add -
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan $AWS_SERVER >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          ssh $AWS_USER@$AWS_SERVER 'cd /app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend'
+
