@@ -9,6 +9,16 @@ class SingleResponseLoss(BaseModel):
     prediction: List[float]
 
 
+class SingleResponseLossNoHistory(BaseModel):
+    type: str
+    history: List[float]
+
+
 class LossesResponseModel(BaseModel):
-    message: str
+    message: str = "Ok"
     data: List[SingleResponseLoss]
+
+
+class LossesAggregationModel(BaseModel):
+    message: str = "Ok"
+    data: List[SingleResponseLossNoHistory] = []

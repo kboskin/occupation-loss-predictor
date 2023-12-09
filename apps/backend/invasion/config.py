@@ -2,15 +2,23 @@
 import os
 import shlex
 from dataclasses import dataclass
+from datetime import date
 
 import sentry_sdk
 
 DEBUG = os.getenv('DEBUG') == 'True'
 
+INVASION_START = date(2022, 2, 24)
+
 
 @dataclass
 class CORS:
     allowed_origins = os.getenv("ALLOWED_ORIGINS", "").split(',')
+
+
+@dataclass
+class ENCRYPTION:
+    key = os.getenv("ENCRYPTION_KEY", "occupation_loss_")
 
 
 @dataclass
@@ -20,6 +28,13 @@ class POSTGRES:
     db = os.getenv("POSTGRES_DB", "losses")
     host = os.getenv("POSTGRES_HOST", "localhost")
     port = os.getenv("POSTGRES_PORT", "5432")
+
+
+@dataclass
+class SENTRY:
+    dsn = os.getenv("SENTRY_DSN")
+    environment = os.getenv("SENTRY_ENVIRONMENT")
+    tags = os.getenv("SENTRY_TAGS")
 
 
 SQLALCHEMY_DATABASE_URI = (
@@ -32,14 +47,7 @@ SQLALCHEMY_ECHO = DEBUG
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-@dataclass
-class SENTRY:
-    dsn = os.getenv("SENTRY_DSN")
-    environment = os.getenv("SENTRY_ENVIRONMENT")
-    tags = os.getenv("SENTRY_TAGS")
-
-
-def init_sentry():
+async def init_sentry():
     if SENTRY.dsn:
         sentry_sdk.init(
             dsn=SENTRY.dsn,

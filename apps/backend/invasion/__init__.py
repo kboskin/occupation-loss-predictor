@@ -1,19 +1,24 @@
 from __future__ import annotations
 import logging
 from typing import Final
+from urllib.request import Request
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi_utils_sqlalch2.tasks import repeat_every
+from starlette.responses import JSONResponse
 
 from invasion.admin.service import AdminService
 from fastapi import APIRouter
 
-from invasion.config import DEBUG, CORS
+from invasion.base.pagination import PaginationException
+from invasion.config import DEBUG, CORS, init_sentry
 import os
 
+from invasion.db.engine import async_session
 from invasion.db.models import init_models
+from invasion.losses.losses import BrokenLossTypeException
 from invasion.losses.router import losses_router
 
 logging_level = logging.ERROR
@@ -51,5 +56,22 @@ timeout: Final[int] = 14400
 @app.on_event("startup")
 @repeat_every(seconds=14400)
 async def startup_event():
+    await init_sentry()
     await init_models()
-    await AdminService.update_statistic()
+    await AdminService.update_statistic(async_session)
+
+
+@app.exception_handler(PaginationException)
+async def pagination_exception_handler(_: Request, _1: PaginationException):
+    return JSONResponse(
+        status_code=400,
+        content={"message": "Wrong date parameters"},
+    )
+
+
+@app.exception_handler(BrokenLossTypeException)
+async def losstype_exception_handler(_: Request, _1: BrokenLossTypeException):
+    return JSONResponse(
+        status_code=400,
+        content={"message": "Broken category type"},
+    )

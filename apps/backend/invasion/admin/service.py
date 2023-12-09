@@ -4,10 +4,10 @@ from typing import List
 
 import pandas as pd
 from sqlalchemy import select, desc, exists
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from invasion.admin.mapper import minfin_to_losses_mapper, losses_enum_to_table_mapper
 from invasion.admin.models import LossesProjectModel, ScrapDataHolder
-from invasion.db.engine import async_session
 from invasion.db.models import PersonnelLossesTable
 from invasion.integrations.minfin import scrap_minfin_data
 
@@ -15,7 +15,7 @@ from invasion.integrations.minfin import scrap_minfin_data
 class AdminService:
 
     @classmethod
-    async def update_statistic(cls):
+    async def update_statistic(cls, async_session: AsyncSession):
         invasion_start = 2022
         present_date = datetime.date.today()
         present_year = present_date.year
