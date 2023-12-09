@@ -6,7 +6,7 @@ orbs:
 
 jobs:
   backend_validate:
-    working_directory: ~/ocupation-loss-predictor/apps/backend
+    working_directory: ~/occupation-loss-predictor/apps/backend
     executor: python/default
     steps:
       - checkout
@@ -26,7 +26,7 @@ jobs:
           command: poetry run pytest
 
   frontend_validate:
-    working_directory: ~/ocupation-loss-predictor/apps/backend
+    working_directory: ~/occupation-loss-predictor/apps/backend
     executor: node/default
     steps:
       - checkout
