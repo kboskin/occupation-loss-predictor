@@ -39,8 +39,8 @@ jobs:
 
   push_to_registry:
     - run:
-	name: Push docker images
-	command: |
+        name: Push docker images
+        command: |
           cd apps/backend
           docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PWD" registry.gitlab.com
           docker build -t registry.gitlab.com/abab5/bit-rx/backend:main .
@@ -51,8 +51,8 @@ jobs:
           docker push registry.gitlab.com/abab5/bit-rx/frontend:main
   deploy_all:
     - run:
-	name: Backend Build
-	command: |
+        name: Backend Build
+        command: |
           'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
           eval $(ssh-agent -s)
           echo "$AWS_KEY" | tr -d '\r' | ssh-add -
