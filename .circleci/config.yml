@@ -6,7 +6,7 @@ orbs:
 
 jobs:
   backend_validate:
-    name: Validate Backend
+    description: Validate Backend [Build, Lint, Test]
     working_directory: ~/occupation-loss-predictor/apps/backend
     executor: python/default
     steps:
@@ -28,7 +28,7 @@ jobs:
           command: poetry run pytest
 
   frontend_validate:
-    name: Validate Frontend
+    description: Validate Frontend [Build, Lint, Test]
     working_directory: ~/occupation-loss-predictor/apps/frontend
     executor: node/default
     steps:
@@ -67,7 +67,7 @@ jobs:
       image: ubuntu-2204:2022.04.2
     steps:
       - run:
-          name: Backend Build
+          name: Deploy Everything to the Server
           command: |
             'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
             eval $(ssh-agent -s)
