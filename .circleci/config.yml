@@ -27,7 +27,7 @@ jobs:
           command: poetry run pytest
 
   frontend_validate:
-    working_directory: ~/occupation-loss-predictor/apps/backend
+    working_directory: ~/occupation-loss-predictor/apps/frontend
     executor: node/default
     steps:
       - checkout:
