@@ -9,7 +9,7 @@ jobs:
     working_directory: ~/occupation-loss-predictor/apps/backend
     executor: python/default
     steps:
-      - checkout
+      - checkout:
           path: ~/occupation-loss-predictor/
       - python/install-packages:
           pkg-manager: poetry
@@ -30,7 +30,7 @@ jobs:
     working_directory: ~/occupation-loss-predictor/apps/backend
     executor: node/default
     steps:
-      - checkout
+      - checkout:
            path: ~/occupation-loss-predictor/
       - node/install-packages:
           pkg-manager: yarn
