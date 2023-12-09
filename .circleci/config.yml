@@ -6,6 +6,7 @@ orbs:
 
 jobs:
   backend_validate:
+    working_directory: ~/apps/backend
     executor: python/default
     steps:
       - checkout
@@ -25,6 +26,7 @@ jobs:
           command: poetry run pytest
 
   frontend_validate:
+    working_directory: ~/apps/frontend
     executor: node/default
     steps:
       - checkout
