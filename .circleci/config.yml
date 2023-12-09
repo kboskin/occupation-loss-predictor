@@ -6,6 +6,7 @@ orbs:
 
 jobs:
   backend_validate:
+    name: Validate Backend
     working_directory: ~/occupation-loss-predictor/apps/backend
     executor: python/default
     steps:
@@ -17,16 +18,17 @@ jobs:
           name: Install dependencies
           command: poetry install
       - run:
-          name: Backend Lint
-          command: poetry run flake8
-      - run:
           name: Backend Build
           command: poetry build
+      - run:
+          name: Backend Lint
+          command: poetry run flake8
       - run:
           name: Backend Test
           command: poetry run pytest
 
   frontend_validate:
+    name: Validate Frontend
     working_directory: ~/occupation-loss-predictor/apps/frontend
     executor: node/default
     steps:
@@ -35,11 +37,14 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          command: yarn test
-          name: Run tests
-      - run:
           command: yarn build
           name: Build app
+      - run:
+          command: yarn lint
+          name: Run linter
+      - run:
+          command: yarn test
+          name: Run tests
 
   push_to_registry:
     machine:
