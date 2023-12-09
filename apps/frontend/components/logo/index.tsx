@@ -1,6 +1,10 @@
 import {Image} from "@nextui-org/react";
 
-export default function Logo(props) {
+interface LogoProps {
+    width: number,
+    height: number
+}
+export default function Logo(props: LogoProps) {
     return (
         <Image
             alt="Russian army losses prediction logo"

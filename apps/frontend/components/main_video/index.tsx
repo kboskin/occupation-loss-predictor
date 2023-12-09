@@ -4,10 +4,10 @@ import {useEffect, useState} from "react";
 
 const MainVideo = () => {
     const {t} = useTranslation()
-    const [days, setDays] = useState<number>();
-    const [hours, setHours] = useState<number>();
-    const [minutes, setMinutes] = useState<number>();
-    const [seconds, setSeconds] = useState<number>();
+    const [days, setDays] = useState<number>(0);
+    const [hours, setHours] = useState<number>(0);
+    const [minutes, setMinutes] = useState<number>(0);
+    const [seconds, setSeconds] = useState<number>(0);
     const [numbersShown, setNumbersShown] = useState<boolean>(false)
 
     const invasionDate = Date.parse("2022/02/24")

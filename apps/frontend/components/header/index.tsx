@@ -24,7 +24,7 @@ const Header = () => {
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                     className="sm:hidden"/>
-                <NavbarBrand justify="start">
+                <NavbarBrand>
                     <Logo width={50} height={50} />
                     <p className="font-bold text-inherit px-10">{t("app_title")}</p>
                 </NavbarBrand>
@@ -90,7 +90,7 @@ const Header = () => {
                     </Link>
                 </NavbarMenuItem>
                  <NavbarMenuItem>
-                    <Link color="danger" variant="flat" size="lg" href={t('link_support_army')} target="_blank" rel="noopener noreferrer">
+                    <Link color="danger" size="lg" href={t('link_support_army')} target="_blank" rel="noopener noreferrer">
                         {t('header_item_army_support')}
                     </Link>
                 </NavbarMenuItem>
