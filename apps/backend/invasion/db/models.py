@@ -8,158 +8,70 @@ BASE = declarative_base()
 metadata = BASE.metadata
 
 
-class PersonnelLossesTable(BASE):
+class GenericLossTable:
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    losses: Mapped[int] = mapped_column(nullable=False)
+    added_on_day: Mapped[int] = mapped_column(nullable=False)
+    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
+    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
+    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
+    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
+
+
+class PersonnelLossesTable(BASE, GenericLossTable):
     __tablename__ = "personnel"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class TanksLossesTable(BASE):
+class TanksLossesTable(BASE, GenericLossTable):
     __tablename__ = "tanks"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class APVLossesTable(BASE):
+class APVLossesTable(BASE, GenericLossTable):
     __tablename__ = "apv"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class ArtilleryLossesTable(BASE):
+class ArtilleryLossesTable(BASE, GenericLossTable):
     __tablename__ = "artillery"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class MLRSLossesTable(BASE):
+class MLRSLossesTable(BASE, GenericLossTable):
     __tablename__ = "mlrs"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class AircraftWarfareLossesTable(BASE):
+class AircraftWarfareLossesTable(BASE, GenericLossTable):
     __tablename__ = "aircraft_warfare"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class AircraftLossesTable(BASE):
+class AircraftLossesTable(BASE, GenericLossTable):
     __tablename__ = "aircraft"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class HelicoptersLossesTable(BASE):
+class HelicoptersLossesTable(BASE, GenericLossTable):
     __tablename__ = "helicopters"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class UAVLossesTable(BASE):
+class UAVLossesTable(BASE, GenericLossTable):
     __tablename__ = "uav"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class MissilesLossesTable(BASE):
+class MissilesLossesTable(BASE, GenericLossTable):
     __tablename__ = "missiles"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class WarshipsLossesTable(BASE):
+class WarshipsLossesTable(BASE, GenericLossTable):
     __tablename__ = "warships"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class SubmarinesLossesTable(BASE):
+class SubmarinesLossesTable(BASE, GenericLossTable):
     __tablename__ = "submarines"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class FuelTanksLossesTable(BASE):
+class FuelTanksLossesTable(BASE, GenericLossTable):
     __tablename__ = "fuel_tanks"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
-class SpecialLossesTable(BASE):
+class SpecialLossesTable(BASE, GenericLossTable):
     __tablename__ = "special_equipment"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    losses: Mapped[int] = mapped_column(nullable=False)
-    added_on_day: Mapped[int] = mapped_column(nullable=False)
-    time: Mapped[datetime.datetime] = mapped_column(nullable=False)
-    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
-    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
 async def init_models():

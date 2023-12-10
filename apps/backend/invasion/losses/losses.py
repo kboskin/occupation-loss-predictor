@@ -1,5 +1,6 @@
 import logging
 import base64
+from typing import List
 
 import sentry_sdk
 from Cryptodome.Cipher import AES
@@ -14,11 +15,10 @@ class BrokenLossTypeException(Exception):
     pass
 
 
-def check_losses_category(cat: str | None = None) -> str:
+def check_losses_category_secure(cat: str | None = None) -> str:
     cryptor = Cryptor(ENCRYPTION.key)
 
     tables = [str(e) for e in LossesProjectEnum]
-    print(tables)
     if cat:
         try:
             decoded = cryptor.decrypt(cat)
@@ -31,6 +31,27 @@ def check_losses_category(cat: str | None = None) -> str:
             raise BrokenLossTypeException
 
     return cat
+
+
+def check_losses_category(cat: str | None = None) -> List[LossesProjectEnum]:
+    tables = [e for e in LossesProjectEnum]
+    if cat:
+        try:
+            enumed = LossesProjectEnum(cat)
+            if enumed not in tables:
+                raise BrokenLossTypeException
+        except Exception as e:
+            logging.debug(f"decoding exception {e}")
+            sentry_sdk.capture_exception(e)
+            raise BrokenLossTypeException
+
+    categories: List[LossesProjectEnum] = []
+    if cat:
+        categories.append(enumed)
+    else:
+        categories = [item.value for item in LossesProjectEnum]
+
+    return categories
 
 
 class Cryptor:

@@ -6,9 +6,9 @@ import pandas as pd
 from sqlalchemy import select, desc, exists
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from invasion.admin.mapper import minfin_to_losses_mapper, losses_enum_to_table_mapper
+from invasion.admin.mapper import minfin_to_losses_mapper, losses_to_orm_mapper
 from invasion.admin.models import LossesProjectModel, ScrapDataHolder
-from invasion.db.models import PersonnelLossesTable
+from invasion.db.models import PersonnelLossesTable, GenericLossTable
 from invasion.integrations.minfin import scrap_minfin_data
 
 
@@ -50,7 +50,7 @@ class AdminService:
                 logging.debug(f"current pair f{pair}")
                 # sync only missing days
                 scrap_results = AdminService._scrap(pair[0], pair[1])
-                table_models: List[object] = scrap_results.tables_mapped
+                table_models: List[GenericLossTable] = scrap_results.tables_mapped
                 available_models: List[LossesProjectModel] = scrap_results.original_models
 
                 logging.debug(f"starting from year, month, day {year_to_start, month_to_start, day_to_start}")
@@ -86,7 +86,7 @@ class AdminService:
     def _scrap(cls, year, month) -> ScrapDataHolder:
         logging.debug(f"scrapping data for {year}-{month}")
         models: List[LossesProjectModel] = minfin_to_losses_mapper(scrap_minfin_data(year, month))
-        updated_models = [losses_enum_to_table_mapper(model) for model in models]
+        updated_models = [losses_to_orm_mapper(model) for model in models]
         logging.debug(f"models after scrapping {updated_models}")
 
         return ScrapDataHolder(**{"original_models": models, "tables_mapped": updated_models})

@@ -1,24 +1,23 @@
+import datetime
 from typing import List
 
 from pydantic import BaseModel
 
-
-class SingleResponseLoss(BaseModel):
-    type: str
-    history: List[float]
-    prediction: List[float]
+from invasion.admin.models import LossesProjectEnum
 
 
-class SingleResponseLossNoHistory(BaseModel):
-    type: str
-    history: List[float]
+class LossDataPoint(BaseModel):
+    day_increment: int
+    losses: int
+    time: datetime.datetime
+
+
+class Loss(BaseModel):
+    type: LossesProjectEnum
+    history: List[LossDataPoint]
+    prediction: List[LossDataPoint]
 
 
 class LossesResponseModel(BaseModel):
-    message: str = "Ok"
-    data: List[SingleResponseLoss]
-
-
-class LossesAggregationModel(BaseModel):
-    message: str = "Ok"
-    data: List[SingleResponseLossNoHistory] = []
+    message: str = "OK"
+    data: List[Loss]
