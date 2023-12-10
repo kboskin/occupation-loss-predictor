@@ -90,6 +90,10 @@ workflows:
           requires:
             - backend_validate
             - frontend_validate
+          filters:
+            branches:
+              only:
+                - main
       - deploy_all:
           requires:
             - push_to_registry
