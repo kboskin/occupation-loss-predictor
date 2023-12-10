@@ -4,6 +4,8 @@ from typing import List
 
 from pydantic import BaseModel
 
+from invasion.db.models import GenericLossTable
+
 
 class LossesProjectEnum(str, Enum):
     aircraft = 'aircraft'
@@ -31,4 +33,7 @@ class LossesProjectModel(BaseModel):
 
 class ScrapDataHolder(BaseModel):
     original_models: List[LossesProjectModel]
-    tables_mapped: List[object]
+    tables_mapped: List[GenericLossTable]
+
+    class Config:
+        arbitrary_types_allowed = True

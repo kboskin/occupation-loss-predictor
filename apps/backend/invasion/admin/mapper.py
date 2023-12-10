@@ -2,6 +2,7 @@ from invasion.db.models import AircraftLossesTable, AircraftWarfareLossesTable, 
 from invasion.db.models import FuelTanksLossesTable, HelicoptersLossesTable, MissilesLossesTable, MLRSLossesTable
 from invasion.db.models import PersonnelLossesTable, SpecialLossesTable, SubmarinesLossesTable, TanksLossesTable
 from invasion.db.models import UAVLossesTable, WarshipsLossesTable
+from invasion.db.models import GenericLossTable
 
 from invasion.admin.models import LossesProjectEnum, LossesProjectModel
 from invasion.integrations.mapper import minfin_enum_to_project_mapper
@@ -10,7 +11,7 @@ from pydantic.typing import List
 from invasion.integrations.minfin import MinFinModel
 
 
-def losses_enum_to_table_mapper(model: LossesProjectModel) -> object:
+def losses_to_orm_mapper(model: LossesProjectModel) -> GenericLossTable:
     dictified = dict(model)
     del dictified['type']
     match model.type:
@@ -42,6 +43,38 @@ def losses_enum_to_table_mapper(model: LossesProjectModel) -> object:
             return UAVLossesTable(**dictified)
         case LossesProjectEnum.warships:
             return WarshipsLossesTable(**dictified)
+
+
+def losses_enum_to_table_mapper(enum: LossesProjectEnum) -> GenericLossTable:
+    match enum:
+        case LossesProjectEnum.aircraft:
+            return AircraftLossesTable
+        case LossesProjectEnum.aircraft_warfare:
+            return AircraftWarfareLossesTable
+        case LossesProjectEnum.apv:
+            return APVLossesTable
+        case LossesProjectEnum.artillery:
+            return ArtilleryLossesTable
+        case LossesProjectEnum.fuel_tanks:
+            return FuelTanksLossesTable
+        case LossesProjectEnum.helicopters:
+            return HelicoptersLossesTable
+        case LossesProjectEnum.missiles:
+            return MissilesLossesTable
+        case LossesProjectEnum.mlrs:
+            return MLRSLossesTable
+        case LossesProjectEnum.personnel:
+            return PersonnelLossesTable
+        case LossesProjectEnum.special_equipment:
+            return SpecialLossesTable
+        case LossesProjectEnum.submarines:
+            return SubmarinesLossesTable
+        case LossesProjectEnum.tanks:
+            return TanksLossesTable
+        case LossesProjectEnum.uav:
+            return UAVLossesTable
+        case LossesProjectEnum.warships:
+            return WarshipsLossesTable
 
 
 def minfin_to_losses_mapper(models: List[MinFinModel]) -> List[LossesProjectModel]:

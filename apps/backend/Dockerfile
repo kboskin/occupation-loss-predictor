@@ -1,7 +1,6 @@
 FROM python:3.10
 MAINTAINER Kostiantyn Boskin
 
-COPY ./poetry.lock /app/poetry.lock
 COPY ./pyproject.toml /app/pyproject.toml
 WORKDIR /app
 ENV PYTHONPATH=/app

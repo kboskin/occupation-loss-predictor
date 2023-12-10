@@ -1,14 +1,23 @@
+import datetime
 from typing import List
 
 from pydantic import BaseModel
 
+from invasion.admin.models import LossesProjectEnum
 
-class SingleResponseLoss(BaseModel):
-    type: str
-    history: List[float]
-    prediction: List[float]
+
+class LossDataPoint(BaseModel):
+    day_increment: int
+    losses: int
+    time: datetime.datetime
+
+
+class Loss(BaseModel):
+    type: LossesProjectEnum
+    history: List[LossDataPoint]
+    prediction: List[LossDataPoint]
 
 
 class LossesResponseModel(BaseModel):
-    message: str
-    data: List[SingleResponseLoss]
+    message: str = "OK"
+    data: List[Loss]
