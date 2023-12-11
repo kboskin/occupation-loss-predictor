@@ -44,5 +44,4 @@ MANIFEST
 # Virtualenv
 .venv
 venv/
-*.lock
 *.log

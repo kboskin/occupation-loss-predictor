@@ -56,6 +56,7 @@ timeout: Final[int] = 14400
 @app.on_event("startup")
 @repeat_every(seconds=14400)
 async def startup_event():
+    logging.debug("app startup event received")
     await init_sentry()
     await init_models()
     await AdminService.update_statistic(async_session)

@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from sqlalchemy.orm import declarative_base, mapped_column, Mapped
 from sqlalchemy.sql import func
@@ -75,5 +76,6 @@ class SpecialLossesTable(BASE, GenericLossTable):
 
 
 async def init_models():
+    logging.debug("initializing models")
     async with engine.begin() as conn:
         await conn.run_sync(metadata.create_all)
