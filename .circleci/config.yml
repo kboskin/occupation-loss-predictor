@@ -3,8 +3,21 @@ version: 2.1
 orbs:
   python: circleci/python@2.0.3
   node: circleci/node@5.0.2
+  cypress: cypress-io/cypress@3
 
 jobs:
+  autotests_validate:
+    description: Run UI and API autotests
+    working_directory: ~/occupation-loss-predictor/apps/automation
+    steps:
+      - checkout:
+          path: ~/occupation-loss-predictor/
+      - cypress/run:
+          install-browsers: true
+          start-command: 'npm run start'
+          cypress-command: 'npx cypress run --parallel --browser chrome'
+          parallelism: 4
+
   backend_validate:
     description: Validate Backend [Build, Lint, Test]
     working_directory: ~/occupation-loss-predictor/apps/backend
@@ -82,14 +95,17 @@ workflows:
     jobs:
       - backend_validate
       - frontend_validate
+      - autotests_validate
   build_test_deploy:
     jobs:
       - backend_validate
       - frontend_validate
+      - autotests_validate
       - push_to_registry:
           requires:
             - backend_validate
             - frontend_validate
+            - autotests_validate
           filters:
             branches:
               only:
