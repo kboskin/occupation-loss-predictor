@@ -3,20 +3,25 @@ version: 2.1
 orbs:
   python: circleci/python@2.0.3
   node: circleci/node@5.0.2
-  cypress: cypress-io/cypress@3
+  cypress: cypress-io/cypress@3.1.1
 
 jobs:
   autotests_validate:
     description: Run UI and API autotests
     working_directory: ~/occupation-loss-predictor/apps/automation
+    executor: cypress/default
+    parallelism: 10
     steps:
       - checkout:
           path: ~/occupation-loss-predictor/
-      - cypress/run:
+      - run: echo "This step assumes dependencies were installed using the cypress/install job"
+      - attach_workspace:
+          at: ~/
+      - cypress/install:
           install-browsers: true
+      - cypress/run-tests:
+          cypress-command: 'npx cypress run --parallel --record'
           start-command: 'npm run start'
-          cypress-command: 'npx cypress run --parallel --browser chrome'
-          parallelism: 4
 
   backend_validate:
     description: Validate Backend [Build, Lint, Test]
