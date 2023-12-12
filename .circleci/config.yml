@@ -14,11 +14,16 @@ jobs:
     steps:
       - checkout:
           path: ~/occupation-loss-predictor/
+      - cypress/install:
+          install-browsers: true
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .cache/Cypress
+            - occupation-loss-predictor
       - run: echo "This step assumes dependencies were installed using the cypress/install job"
       - attach_workspace:
           at: ~/
-      - cypress/install:
-          install-browsers: true
       - cypress/run-tests:
           cypress-command: 'npx cypress run --parallel --record'
           start-command: 'npm run start'
