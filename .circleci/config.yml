@@ -17,7 +17,7 @@ jobs:
           name: Install dependencies
           command: npm install
       - cypress/run-tests:
-          cypress-command: npx cypress run --component --parallel --record
+          cypress-command: npx cypress run --parallel --record
 
   backend_validate:
     description: Validate Backend [Build, Lint, Test]
