@@ -16,7 +16,6 @@ jobs:
           path: ~/occupation-loss-predictor/
       - cypress/run-tests:
           cypress-command: 'npx cypress run --parallel --browser electron'
-          start-command: 'npm run start'
 
   backend_validate:
     description: Validate Backend [Build, Lint, Test]
