@@ -11,6 +11,12 @@ jobs:
     executor: cypress/default
     steps:
       - run:
+          name: "PWD"
+          command: pwd
+      - run:
+          name: "ls -la"
+          command: ls -la
+      - run:
           name: "Move to cypress dir"
           command: cd apps/automation
       - cypress/install
