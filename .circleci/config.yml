@@ -23,7 +23,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - cypress/run-tests:
-          cypress-command: 'npx cypress run --parallel --record'
+          cypress-command: 'npx cypress run --parallel --browser electron'
           start-command: 'npm run start'
 
   backend_validate:
