@@ -13,6 +13,9 @@ jobs:
     steps:
       - checkout:
            path: ~/occupation-loss-predictor/
+      - run:
+          name: Install dependencies
+          command: npm install
       - cypress/run-tests:
           cypress-command: npx cypress run --component --parallel --record
 
