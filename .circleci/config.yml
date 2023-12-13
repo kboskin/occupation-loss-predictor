@@ -22,10 +22,6 @@ jobs:
           name: "Move to cypress dir"
           command: cd ~/occupation-loss-predictor/apps/automation
       - cypress/install
-      - persist_to_workspace:
-          paths:
-            - .cache/Cypress
-            - ~/occupation-loss-predictor/apps/automation
           root: ~/occupation-loss-predictor/apps/automation
       - attach_workspace:
           at: ~/occupation-loss-predictor/apps/automation
