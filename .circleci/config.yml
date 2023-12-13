@@ -8,17 +8,23 @@ orbs:
 jobs:
   autotests_validate:
     description: Run UI and API autotests
-    working_directory: ~/occupation-loss-predictor/apps/automation
     executor: cypress/default
-    parallelism: 8
     steps:
-      - checkout:
-          path: ~/occupation-loss-predictor/
+      - run:
+          name: "Move to cypress dir"
+          command: cd apps/automation
       - cypress/install
+      - persist_to_workspace:
+          paths:
+            - .cache/Cypress
+            - project
+          root: ~/apps/automation
       - attach_workspace:
-          at: ~/
+          at: ~/apps/automation
       - cypress/run-tests:
           cypress-command: npx cypress run --component --parallel --record
+      
+
 
   backend_validate:
     description: Validate Backend [Build, Lint, Test]
