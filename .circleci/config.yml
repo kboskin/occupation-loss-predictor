@@ -16,21 +16,21 @@ jobs:
       - run:
           name: "ls -la"
           command: ls -la
+      - checkout:
+           path: ~/occupation-loss-predictor/
       - run:
           name: "Move to cypress dir"
-          command: cd apps/automation
+          command: cd ~/occupation-loss-predictor/apps/automation
       - cypress/install
       - persist_to_workspace:
           paths:
             - .cache/Cypress
             - project
-          root: ~/apps/automation
+          root: ~/occupation-loss-predictor/apps/automation
       - attach_workspace:
-          at: ~/apps/automation
+          at: ~/occupation-loss-predictor/apps/automation
       - cypress/run-tests:
           cypress-command: npx cypress run --component --parallel --record
-      
-
 
   backend_validate:
     description: Validate Backend [Build, Lint, Test]
