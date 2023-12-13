@@ -12,6 +12,8 @@ jobs:
     executor: cypress/default
     parallelism: 8
     steps:
+      - checkout:
+          path: ~/occupation-loss-predictor/
       - cypress/install
       - persist_to_workspace:
           paths:
