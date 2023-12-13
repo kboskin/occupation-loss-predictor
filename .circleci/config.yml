@@ -10,19 +10,12 @@ jobs:
     description: Run UI and API autotests
     executor: cypress/default
     steps:
-      - run:
-          name: "PWD"
-          command: pwd
-      - run:
-          name: "ls -la"
-          command: ls -la
       - checkout:
            path: ~/occupation-loss-predictor/
       - run:
           name: "Move to cypress dir"
           command: cd ~/occupation-loss-predictor/apps/automation
       - cypress/install
-          root: ~/occupation-loss-predictor/apps/automation
       - attach_workspace:
           at: ~/occupation-loss-predictor/apps/automation
       - cypress/run-tests:
