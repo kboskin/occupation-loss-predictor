@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   python: circleci/python@2.0.3
   node: circleci/node@5.0.2
-  cypress: cypress-io/cypress@3.1.1
+  cypress: cypress-io/cypress@3
 
 jobs:
   autotests_validate:
@@ -12,16 +12,6 @@ jobs:
     executor: cypress/default
     parallelism: 10
     steps:
-      - cypress/install:
-          install-browsers: true
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - .cache/Cypress
-            - occupation-loss-predictor
-      - run: echo "This step assumes dependencies were installed using the cypress/install job"
-      - attach_workspace:
-          at: ~/
       - cypress/run-tests:
           cypress-command: 'npx cypress run --parallel --browser electron'
           start-command: 'npm run start'
