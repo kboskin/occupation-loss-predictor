@@ -13,12 +13,6 @@ jobs:
     steps:
       - checkout:
            path: ~/occupation-loss-predictor/
-      - run:
-          name: "Move to cypress dir"
-          command: cd ~/occupation-loss-predictor/apps/automation
-      - cypress/install
-      - attach_workspace:
-          at: ~/occupation-loss-predictor/apps/automation
       - cypress/run-tests:
           cypress-command: npx cypress run --component --parallel --record
 
