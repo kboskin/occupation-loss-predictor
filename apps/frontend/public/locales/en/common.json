@@ -30,6 +30,31 @@
 
   "contacts_email": "contact@contact.com",
 
-  "link_support_army": "https://savelife.in.ua/donate/"
+  "link_support_army": "https://savelife.in.ua/donate/",
+
+  "losses_table_header": "Losses of the occupiers \uD83E\uDE96",
+  "losses_table_subheader": "On this website, you can find out statistics on enemy losses according to the data of the AFU General Staff",
+  "losses_table_subheader_statistics": "General russian army Losses Statistics",
+
+  "category_aircraft": "Aircraft",
+  "category_aircraft_warfare": "Air Defense",
+  "category_apv": "APV",
+  "category_artillery": "Artillery",
+  "category_fuel_tanks": "Fuel tanks",
+  "category_helicopters": "Helicopters",
+  "category_missiles": "Missiles",
+  "category_mlrs": "MLRS",
+  "category_personnel": "Personnel",
+  "category_special_equipment": "Special equip",
+  "category_submarines": "Submarines",
+  "category_tanks": "Tanks",
+  "category_uav": "UAV",
+  "category_warships": "Warships",
+
+  "losses_header_last_day": "Last day",
+  "losses_header_last_week": "Last week",
+  "losses_header_last_month": "Last month",
+  "losses_header_last_year": "Last year",
+  "losses_no_changes": "no change"
 
 }
