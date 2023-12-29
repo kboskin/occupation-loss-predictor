@@ -55,6 +55,8 @@
   "losses_header_last_week": "Last week",
   "losses_header_last_month": "Last month",
   "losses_header_last_year": "Last year",
-  "losses_no_changes": "no change"
+  "losses_no_changes": "no change",
+
+  "forecast_chart_title": "Russian losses forecast for"
 
 }

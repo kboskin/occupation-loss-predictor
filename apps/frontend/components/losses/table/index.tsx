@@ -11,11 +11,11 @@ import {
 } from "@nextui-org/react";
 import {useMemo, useState} from "react";
 import {useTranslation} from "next-i18next";
-import LossesColumnHeader from "./column_header";
-import {Loss, LossType} from "../../redux/losses/models";
+import LossesColumnHeader from "./header";
+import {Loss, LossType} from "../../../redux/losses/models";
 import moment from "moment";
 import {Button} from "@nextui-org/button";
-import {mapCategoryToTranslation, mapCategoryToImage} from "../../utils/category";
+import {mapCategoryToTranslation, mapCategoryToImage} from "../../../utils/category";
 
 interface LossesTableProps {
     isLoading: Boolean,
@@ -47,7 +47,7 @@ const LossesTable = (props: LossesTableProps) => {
                 <h2 className="text-start text-2xl lg:text-4xl mb-8 lg:mb-4 font-bold text-white">{t('losses_table_header')}</h2>
                 <h3 className="text-start text-xl lg:text-2xl font-thin text-white">{t('losses_table_subheader')}</h3>
 
-                <h3 className="text-center text-xl font-thin mt-8">{t('losses_table_subheader_statistics')}</h3>
+                <h3 className="text-center text-xl font-thin mt-8 text-white">{t('losses_table_subheader_statistics')}</h3>
 
                 <div className="flex justify-center gap-4 lg:gap-12 items-end mt-8">
                     <ButtonGroup
