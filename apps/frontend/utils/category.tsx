@@ -25,15 +25,6 @@ const mapCategoryToTranslation = (cat: LossType, t: UseTranslation): string => {
     }
 }
 
-const mapCategoryToImage = (cat: LossType): string => {
-    console.log(cat)
-    return `images/emoji/${cat}.png`
-}
+const mapCategoryToImage = (cat: LossType): string => `images/emoji/${cat}.png`
 
-function getStandardDeviation(array: number[]): number {
-  const n = array.length
-  const mean = array.reduce((a, b) => a + b) / n
-  return Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n)
-}
-
-export { mapCategoryToTranslation, mapCategoryToImage, getStandardDeviation }
+export { mapCategoryToTranslation, mapCategoryToImage }

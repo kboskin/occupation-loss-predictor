@@ -12,7 +12,7 @@ import {
 import {useMemo, useState} from "react";
 import {useTranslation} from "next-i18next";
 import LossesColumnHeader from "./header";
-import {Loss, LossType} from "../../../redux/losses/models";
+import {Loss, LossDataPoint, LossType} from "../../../redux/losses/models";
 import moment from "moment";
 import {Button} from "@nextui-org/button";
 import {mapCategoryToTranslation, mapCategoryToImage} from "../../../utils/category";
@@ -90,7 +90,11 @@ const LossesTable = (props: LossesTableProps) => {
                 .reduce((i1, i2) => i1 + i2, 0)
 
             // it's in response, simply getting
-            let periodAggr = item.history.at(-1).losses
+            let history = item.history.at(-1)
+            let periodAggr = -1
+            if (history) {
+               periodAggr = history.losses
+            }
 
             const aggrData: AggrDataPoint = {
                 periodTotal: periodAggr,

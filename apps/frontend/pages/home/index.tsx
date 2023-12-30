@@ -5,6 +5,7 @@ import Footer from "../../components/footer";
 import LossesTable from "../../components/losses/table";
 import {useGetLossesQuery} from "../../redux/losses/lossesApi";
 import LineChart from "../../components/losses/chart";
+import GroupChart from "../../components/losses/groupChart";
 
 
 const Home = () => {
@@ -16,11 +17,7 @@ const Home = () => {
             <Header/>
             <MainVideo/>
             <LossesTable isLoading={isLoading} losses={data}/>
-            {data && data.map((dataItem) =>
-                <LineChart data={dataItem.history.slice(-30)}
-                           forecast={dataItem.prediction.slice(-30)}
-                           category={dataItem.type}/>
-            )}
+            <GroupChart data={data}/>
             <Footer/>
         </div>
     );
