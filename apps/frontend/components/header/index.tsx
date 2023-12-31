@@ -23,14 +23,14 @@ const Header = () => {
             <NavbarContent>
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                    className="sm:hidden"/>
+                    className="lg:hidden"/>
                 <NavbarBrand>
                     <Logo width={50} height={50} />
                     <p className="font-bold text-inherit px-10">{t("app_title")}</p>
                 </NavbarBrand>
             </NavbarContent>
 
-            <NavbarContent className="hidden sm:flex" justify="center">
+            <NavbarContent className="hidden lg:flex" justify="center">
                 <NavbarItem>
                     <Link
                         className="w-auto px-8"
@@ -54,7 +54,7 @@ const Header = () => {
                     </Link>
                 </NavbarItem>
             </NavbarContent>
-            <NavbarContent className="hidden sm:flex" justify="end">
+            <NavbarContent className="hidden lg:flex" justify="end">
                 <NavbarItem>
                     <Link href={t('link_support_army')} target="_blank" rel="noopener noreferrer">
                         <Button color="danger" href={t('link_support_army')} variant="flat" >

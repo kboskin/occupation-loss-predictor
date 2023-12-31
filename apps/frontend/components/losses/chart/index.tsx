@@ -84,8 +84,15 @@ const LineChart = (props: LineChartProps) => {
         svg
             .append("g")
             .call(xAxis)
+            // text color
             .attr("transform", `translate(0, ${h})`)
             .attr("stroke", "color-light")
+            // rotating text
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
 
         // setting up the data for the svg
         svg
@@ -99,7 +106,7 @@ const LineChart = (props: LineChartProps) => {
     }, [chartData]);
     return (
         <div className="text-center">
-            {props.showHeader && <h3 className="text-2xl font-bold mb-8 mt-4 text-white">{`${t('forecast_chart_title')} ${mapCategoryToTranslation(props.category, t)}`}</h3> }
+            {props.showHeader && <h3 className="text-2xl mb-8 mt-4 text-white">{`${t('forecast_chart_title')}`}<br/>{`${mapCategoryToTranslation(props.category, t)}`}</h3> }
             <svg ref={svgRef} style={{display: "block", margin: "auto", marginBottom: "30px"}} className="mt-8"/>
         </div>
     );

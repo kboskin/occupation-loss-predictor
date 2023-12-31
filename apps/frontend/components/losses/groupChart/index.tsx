@@ -36,7 +36,7 @@ const GroupChart = (props: GroupChartProps) => {
                     if (dataItem.type == LossType.PERSONNEL) {
                         return (
                             <>
-                                <h2>{t('forecast_trending')}</h2>
+                                <h2 className="text-3xl lg:text-4xl mt-16 font-bold">{t('forecast_trending')}</h2>
                                 <LineChart
                                     width={window.innerWidth - window.innerWidth * 0.12}
                                     data={dataItem.history.slice(SLICE)}
@@ -57,12 +57,12 @@ const GroupChart = (props: GroupChartProps) => {
                             skipCategories.push(LossType.MISSILES, LossType.AIRCRAFT, LossType.HELICOPTERS, LossType.WARSHIPS)
                             return (
                                 <>
-                                    <h2>{t('forecast_unique')}</h2>
+                                    <h2 className="text-3xl lg:text-4xl mt-16 lg:mt-16 font-bold">{t('forecast_unique')}</h2>
                                     {
                                         trendingItems.map((items) => {
                                             return (
                                                 <>
-                                                    <div className="md:grid md:grid-cols-2">
+                                                    <div className="md:grid md:grid-cols-2 mt-4">
                                                         {
                                                             items.map((dataItem) =>
                                                                 <LineChart
@@ -87,7 +87,8 @@ const GroupChart = (props: GroupChartProps) => {
                             skipCategories.push(...filteredSortableList.map((item) => item.type))
                             return (
                                 <>
-                                    <div className="md:grid md:grid-cols-2 lg:grid-cols-3">
+                                    <h2 className="text-3xl lg:text-4xl mt-16 lg:mt-16 font-bold">{t('forecast_other')}</h2>
+                                    <div className="md:grid md:grid-cols-2 lg:grid-cols-3 mt-4">
                                         {filteredSortableList.map((dataItem) => {
                                             return (
                                                 <LineChart
@@ -141,16 +142,16 @@ const select2UniqueCategories = (losses: Loss[]): Loss[][] => {
 }
 
 function getSupportedColumnsCount(): number {
-  const width = Math.max(
-    document.documentElement.clientWidth,
-    window.innerWidth || 0
-  )
-  if (width <= 576) return 1
-  if (width <= 768) return 1
-  if (width <= 992) return 2
-  if (width <= 1200) return 3
-  if (width <= 1400) return 3
-  return 3
+    const width = Math.max(
+        document.documentElement.clientWidth,
+        window.innerWidth || 0
+    )
+    if (width <= 576) return 1
+    if (width <= 768) return 1
+    if (width <= 992) return 2
+    if (width <= 1200) return 2
+    if (width <= 1400) return 3
+    return 3
 }
 
 export default GroupChart
