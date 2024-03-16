@@ -7,6 +7,7 @@ interface GroupChartProps {
 }
 
 const SLICE = -14
+const FORECAST_SLICE = 7
 const GroupChart = (props: GroupChartProps) => {
     const {t} = useTranslation()
 
@@ -40,8 +41,9 @@ const GroupChart = (props: GroupChartProps) => {
                                 <LineChart
                                     width={window.innerWidth - window.innerWidth * 0.12}
                                     data={dataItem.history.slice(SLICE)}
-                                    forecast={dataItem.prediction.slice(SLICE)}
-                                    category={dataItem.type} showHeader={true}
+                                    forecast={dataItem.prediction.slice(0, FORECAST_SLICE)}
+                                    category={dataItem.type}
+                                    showHeader={true}
                                 />
                             </>
                         )
@@ -69,7 +71,7 @@ const GroupChart = (props: GroupChartProps) => {
                                                                     width={(window.innerWidth / getSupportedColumnsCount() - window.innerWidth * 0.1)}
                                                                     key={dataItem.type}
                                                                     data={dataItem.history.slice(SLICE)}
-                                                                    forecast={dataItem.prediction.slice(SLICE)}
+                                                                     forecast={dataItem.prediction.slice(0, FORECAST_SLICE)}
                                                                     category={dataItem.type} showHeader/>
                                                             )
                                                         }
@@ -95,7 +97,7 @@ const GroupChart = (props: GroupChartProps) => {
                                                     width={(window.innerWidth / getSupportedColumnsCount() - window.innerWidth * 0.1)}
                                                     key={dataItem.type}
                                                     data={dataItem.history.slice(SLICE)}
-                                                    forecast={dataItem.prediction.slice(SLICE)}
+                                                    forecast={dataItem.prediction.slice(0, FORECAST_SLICE)}
                                                     category={dataItem.type} showHeader/>
                                             )
                                         })}

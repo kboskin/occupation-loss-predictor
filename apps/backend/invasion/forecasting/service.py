@@ -21,7 +21,7 @@ class ForecastService:
 
     @classmethod
     async def __get_last_forecast_date(cls, session: AsyncSession) -> Union[datetime, None]:
-        execution_result = await session.execute(select(ForecastsTable).order_by(ForecastsTable.id))
+        execution_result = await session.execute(select(ForecastsTable).order_by(ForecastsTable.id.desc()))
         await session.commit()
 
         data: ForecastsTable = execution_result.scalars().first()
@@ -67,8 +67,8 @@ class ForecastService:
         logging.debug("beginning forecast SARIMAX preparation")
 
         # SARIMAX model fitting
-        period = 7
-        model = SARIMAX(df.added_on_day[-(period * 20):], order=(1, 2, 1), seasonal_order=(1, 2, 1, period))
+        period = 45
+        model = SARIMAX(df.added_on_day[:], order=(1, 1, 1), seasonal_order=(1, 1, 1, period))
         model_fit = model.fit()
 
         # Future forecast for PERIOD
