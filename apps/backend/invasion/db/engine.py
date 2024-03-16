@@ -7,6 +7,11 @@ engine = create_async_engine(
     echo=SQLALCHEMY_ECHO,
 
 )
-async_session = AsyncSession(
+
+session = AsyncSession(
     engine, expire_on_commit=False
 )
+
+
+async def get_session() -> AsyncSession:
+    return session

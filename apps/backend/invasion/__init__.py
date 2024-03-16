@@ -9,6 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi_utils_sqlalch2.tasks import repeat_every
 from starlette.responses import JSONResponse
 
+from invasion.admin.base import LossesProjectEnum
 from invasion.admin.service import AdminService
 from fastapi import APIRouter
 
@@ -16,8 +17,9 @@ from invasion.base.pagination import PaginationException
 from invasion.config import DEBUG, CORS, init_sentry
 import os
 
-from invasion.db.engine import async_session
-from invasion.db.models import init_models
+from invasion.db.engine import get_session
+from invasion.db.models import init_models, ForecastsTable
+from invasion.forecasting.service import ForecastService
 from invasion.losses.losses import BrokenLossTypeException
 from invasion.losses.router import losses_router
 
@@ -54,11 +56,18 @@ timeout: Final[int] = 14400
 
 
 @app.on_event("startup")
-@repeat_every(seconds=14400)
 async def startup_event():
     await init_sentry()
     await init_models()
-    await AdminService.update_statistic(async_session)
+    await data_update_job()
+
+
+# trying to
+@repeat_every(seconds=timeout)
+async def data_update_job():
+    session = await get_session()
+    await ForecastService.create_all_forecasts_if_needed(session)
+    await AdminService.update_statistic(session)
 
 
 @app.exception_handler(PaginationException)

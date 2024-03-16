@@ -17,6 +17,6 @@ class LossesService:
         offset_to: date,
         table: GenericLossTable
     ) -> List[GenericLossTable]:
-        return (await session.execute(select(table).filter(table.time.between(offset_from, offset_to)))) \
+        return (await session.execute(select(table).filter(table.time.between(offset_from, offset_to)).order_by(table.time))) \
             .scalars() \
             .all()

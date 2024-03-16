@@ -3,9 +3,9 @@ from typing import Annotated, Union, List
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from invasion import get_session
 from invasion.admin.mapper import losses_enum_to_table_mapper
-from invasion.admin.models import LossesProjectEnum
-from invasion.base.base import get_session
+from invasion.admin.base import LossesProjectEnum
 from invasion.base.pagination import pagination, PaginationParameters
 from invasion.losses.losses import check_losses_category
 from invasion.losses.models import LossesResponseModel, LossDataPoint, Loss

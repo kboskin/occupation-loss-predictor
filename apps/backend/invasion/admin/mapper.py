@@ -4,7 +4,8 @@ from invasion.db.models import PersonnelLossesTable, SpecialLossesTable, Submari
 from invasion.db.models import UAVLossesTable, WarshipsLossesTable
 from invasion.db.models import GenericLossTable
 
-from invasion.admin.models import LossesProjectEnum, LossesProjectModel
+from invasion.admin.models import LossesProjectModel
+from invasion.admin.base import LossesProjectEnum
 from invasion.integrations.mapper import minfin_enum_to_project_mapper
 from pydantic.typing import List
 

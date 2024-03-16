@@ -3,7 +3,7 @@ from typing import List
 
 from pydantic import BaseModel
 
-from invasion.admin.models import LossesProjectEnum
+from invasion.admin.base import LossesProjectEnum
 
 
 class LossDataPoint(BaseModel):

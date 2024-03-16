@@ -6,7 +6,7 @@ import sentry_sdk
 from Cryptodome.Cipher import AES
 from Cryptodome.Util.Padding import pad, unpad
 
-from invasion.admin.models import LossesProjectEnum
+from invasion.admin.base import LossesProjectEnum
 from invasion.config import ENCRYPTION
 
 
