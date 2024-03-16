@@ -3,7 +3,7 @@ from typing import Annotated, Union, List
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from invasion import get_session
+from invasion import get_session, ForecastService
 from invasion.admin.mapper import losses_enum_to_table_mapper
 from invasion.admin.base import LossesProjectEnum
 from invasion.base.pagination import pagination, PaginationParameters
@@ -26,6 +26,9 @@ async def get_data_for_category(
         enum = LossesProjectEnum(category_item)
         table = losses_enum_to_table_mapper(enum)
         data = await LossesService.get_data_for(session, commons.offset_from, commons.offset_to, table)
+        last_data_record_data = data[-1].losses
+
+        prediction_data = await ForecastService.get_prediction(session, enum, last_data_record_data)
 
         loss = Loss(
             type=enum,
@@ -36,7 +39,7 @@ async def get_data_for_category(
                     time=item.time
                 ) for item in data
             ],
-            prediction=[]
+            prediction=prediction_data
         )
         losses_with_categories.append(loss)
 

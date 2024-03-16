@@ -1,18 +1,20 @@
 import logging
 from datetime import datetime, timedelta
 from datetime import date
-from typing import Union
+from typing import Union, List
 
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 import pandas as pd
-from sqlalchemy import select
+from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from invasion.admin.mapper import losses_enum_to_table_mapper
 from invasion.admin.models import LossesProjectModel
 from invasion.admin.base import LossesProjectEnum
 from invasion.db.models import ForecastsTable, ForecastsDataTable
+
+from invasion.losses.models import LossDataPoint
 
 
 class ForecastService:
@@ -140,3 +142,40 @@ class ForecastService:
 
         else:
             logging.debug("skipping forecast preparation; the date is same")
+
+    @classmethod
+    async def get_prediction(
+        cls,
+        session: AsyncSession,
+        enum: LossesProjectEnum,
+        base_loss: int
+    ) -> List[LossDataPoint]:
+        records = []
+        async with session:
+            result = await session.execute(
+                select(ForecastsDataTable.parent_forecast_id)
+                    .filter(ForecastsDataTable.forecast_type == enum)
+                    .order_by(ForecastsDataTable.parent_forecast_id.desc())
+                    .limit(1)
+            )
+            max_forecast_id = result.scalars().first()
+
+            result = await session.execute(
+                select(ForecastsDataTable).where(
+                    and_(
+                        ForecastsDataTable.parent_forecast_id == max_forecast_id,
+                        ForecastsDataTable.forecast_type == enum
+                    )
+                )
+            )
+
+            # Assume incremental_value is the value you want to add incrementally
+            losses_total = base_loss
+
+            for item in result.scalars().all():
+                item: ForecastsDataTable
+                losses_total += item.forecast_added  # Increment the 'losses' total
+                record = LossDataPoint(day_increment=item.forecast_added, losses=losses_total, time=item.forecast_time)
+                records.append(record)
+
+        return records
