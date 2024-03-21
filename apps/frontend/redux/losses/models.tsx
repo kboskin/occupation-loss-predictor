@@ -18,7 +18,7 @@ export enum LossType {
 export interface LossDataPoint {
     day_increment: number
     losses: number
-    time: Date
+    time: String
 }
 
 export interface Loss {

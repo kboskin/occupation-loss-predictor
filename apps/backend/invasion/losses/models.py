@@ -21,3 +21,29 @@ class Loss(BaseModel):
 class LossesResponseModel(BaseModel):
     message: str = "OK"
     data: List[Loss]
+
+
+class AggregationCategoryTotal(BaseModel):
+    name: str
+    value: int
+
+
+class AggregationYearTotal(BaseModel):
+    name: int
+    value: int
+    children: List[AggregationCategoryTotal]
+
+
+class AggregationResult(BaseModel):
+    children: List[AggregationYearTotal]
+
+
+class AggregationDbLoss(BaseModel):
+    year: int
+    total: int
+    type: LossesProjectEnum
+
+
+class AggregationResponseModel(BaseModel):
+    message: str = "OK"
+    data: AggregationResult

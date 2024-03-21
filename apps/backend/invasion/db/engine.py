@@ -8,10 +8,6 @@ engine = create_async_engine(
 
 )
 
-session = AsyncSession(
-    engine, expire_on_commit=False
-)
-
 
 async def get_session() -> AsyncSession:
-    return session
+    return AsyncSession(engine, expire_on_commit=False)

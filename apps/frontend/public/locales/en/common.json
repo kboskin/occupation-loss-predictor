@@ -60,6 +60,11 @@
   "forecast_chart_title": "Russian losses forecast for",
   "forecast_trending": "Occupation Army Personnel Losses \uD83D\uDCA5",
   "forecast_unique": "Common Interest losses \uD83D\uDE31",
-  "forecast_other": "Other important statistics \uD83D\uDE31"
+  "forecast_other": "Other important statistics \uD83D\uDE31",
+
+  "support_the_project": "Support project growth \uD83D\uDE31",
+
+  "losses_yearly_by_category": "Losses aggregation by years",
+  "losses_yearly_percentage_from_total": "* from all total"
 
 }
