@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from invasion.admin.base import LossesProjectEnum
 
 
+# "losses"
+
 class LossDataPoint(BaseModel):
     day_increment: int
     losses: int
@@ -23,8 +25,12 @@ class LossesResponseModel(BaseModel):
     data: List[Loss]
 
 
+# "losses" end
+
+
+# "/yearly/aggregation"
 class AggregationCategoryTotal(BaseModel):
-    name: str
+    name: LossesProjectEnum
     value: int
 
 
@@ -34,16 +40,32 @@ class AggregationYearTotal(BaseModel):
     children: List[AggregationCategoryTotal]
 
 
-class AggregationResult(BaseModel):
+class AggregationYearResult(BaseModel):
     children: List[AggregationYearTotal]
 
 
-class AggregationDbLoss(BaseModel):
-    year: int
-    total: int
-    type: LossesProjectEnum
-
-
-class AggregationResponseModel(BaseModel):
+class AggregationYearlyResponseModel(BaseModel):
     message: str = "OK"
-    data: AggregationResult
+    data: AggregationYearResult
+
+
+# "losses/yearly/aggregation" end
+
+
+# "/category/aggregation"
+
+class AggregationCategoryYearly(BaseModel):
+    name: LossesProjectEnum
+    value: int
+    children: List[AggregationYearTotal]
+
+
+class AggregationCategoryResult(BaseModel):
+    children: List[AggregationCategoryYearly]
+
+
+class AggregationCategoryResponseModel(BaseModel):
+    message: str = "OK"
+    data: AggregationCategoryResult
+
+# "/category/aggregation" end

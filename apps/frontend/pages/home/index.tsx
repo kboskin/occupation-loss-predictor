@@ -3,16 +3,16 @@ import MainVideo from "../../components/video";
 import {useTranslation} from "next-i18next";
 import Footer from "../../components/footer";
 import LossesTable from "../../components/losses/table";
-import {useGetLossesQuery, useGetVehiclesAggregationQuery} from "../../redux/losses/lossesApi";
-import YearlyGroupChart from "../../components/losses/yearGroupChart";
+import {useGetLossesQuery, useGetYearlyAggregationQuery} from "../../redux/losses/lossesApi";
 import GroupChart from "../../components/losses/groupChart";
 import SupportTheProject from "../../components/support";
+import YearlyGroupChart from "../../components/losses/aggregation/yearGroupChart";
 
 
 const Home = () => {
     const {t} = useTranslation("common");
     const {data: lossesData, isLoading: lossesLoading, error: lossesError} = useGetLossesQuery({});
-    const {data, isLoading, error} = useGetVehiclesAggregationQuery({});
+    const {data, isLoading, error} = useGetYearlyAggregationQuery({});
 
     return (
         <div>

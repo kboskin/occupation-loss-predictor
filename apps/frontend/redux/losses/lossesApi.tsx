@@ -12,9 +12,13 @@ export const lossesApi = createApi({
             transformResponse: (response, meta, arg) => response['data'],
             query: ({category, dateFrom, dateTo}) => `/losses/${paramsToFunction(category, dateFrom, dateTo)}`,
         }),
-        getVehiclesAggregation: builder.query({
+        getYearlyAggregation: builder.query({
             transformResponse: (response, meta, args) => response['data'],
-            query: () => `/losses/vehicles/aggregation`
+            query: () => `/losses/yearly/aggregation`
+        }),
+        getCategoryAggregation: builder.query({
+            transformResponse: (response, meta, args) => response['data'],
+            query: () => `/losses/category/aggregation`
         })
     })
 })
@@ -44,4 +48,4 @@ const paramsToFunction = (category?: string, dateFrom?: string, dateTo?: string)
     return result
 }
 
-export const {useGetLossesQuery, useGetVehiclesAggregationQuery} = lossesApi
+export const {useGetLossesQuery, useGetYearlyAggregationQuery} = lossesApi

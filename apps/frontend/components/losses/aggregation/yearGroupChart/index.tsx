@@ -1,28 +1,8 @@
-import {Loss, LossType} from "../../../redux/losses/models";
 import {useEffect, useRef, useState} from "react";
 import * as d3 from "d3";
 import {useTranslation} from "next-i18next";
-import {mapCategoryToTranslation} from "../../../utils/category";
-
-interface YearChartProps {
-    isLoading: Boolean
-    data: AggregationResult
-}
-
-interface AggregationCategoryTotal {
-    name: string;
-    value: number;
-}
-
-interface AggregationYearTotal {
-    name: number;
-    value: number;
-    children: AggregationCategoryTotal[];
-}
-
-interface AggregationResult {
-    children: AggregationYearTotal[];
-}
+import {LossType} from "../../../../redux/losses/models";
+import {mapCategoryToTranslation} from "../../../../utils/category";
 
 const YearlyGroupChart = (props: YearChartProps) => {
 

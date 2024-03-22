@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from invasion import LossesProjectEnum
 from invasion.admin.mapper import losses_enum_to_table_mapper
 from invasion.db.models import GenericLossTable
-from invasion.losses.models import AggregationDbLoss
+from invasion.losses.models.domain import AggregationDbLoss
 
 
 class LossesService:
@@ -26,7 +26,7 @@ class LossesService:
             .all()
 
     @classmethod
-    async def get_aggregation(
+    async def get_aggregations(
         cls,
         session: AsyncSession,
         enum: LossesProjectEnum

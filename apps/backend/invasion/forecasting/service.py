@@ -13,8 +13,7 @@ from invasion.admin.mapper import losses_enum_to_table_mapper
 from invasion.admin.models import LossesProjectModel
 from invasion.admin.base import LossesProjectEnum
 from invasion.db.models import ForecastsTable, ForecastsDataTable
-
-from invasion.losses.models import LossDataPoint
+from invasion.losses.models.presentation import LossDataPoint
 
 
 class ForecastService:
