@@ -21,7 +21,6 @@ class ForecastService:
     @classmethod
     async def __get_last_forecast_date(cls, session: AsyncSession) -> Union[datetime, None]:
         execution_result = await session.execute(select(ForecastsTable).order_by(ForecastsTable.id.desc()))
-        await session.commit()
 
         data: ForecastsTable = execution_result.scalars().first()
         if data:
@@ -119,18 +118,18 @@ class ForecastService:
     @classmethod
     async def create_all_forecasts_if_needed(cls, session: AsyncSession):
         logging.debug("create_all_forecasts_if_needed")
-        # Given datetime
-        given_datetime = await ForecastService.__get_last_forecast_date(session)
+        async with session.begin():
+            # Given datetime
+            given_datetime = await ForecastService.__get_last_forecast_date(session)
 
-        logging.debug(f"last forecast date: {given_datetime}")
+            logging.debug(f"last forecast date: {given_datetime}")
 
-        # Current datetime
-        current_datetime = datetime.now()
+            # Current datetime
+            current_datetime = datetime.now()
 
-        # Check if the given datetime is on the current day
-        if not given_datetime or (given_datetime.date() != current_datetime.date()):
-            logging.debug("preparing new forecast")
-            async with session.begin():
+            # Check if the given datetime is on the current day
+            if not given_datetime or (given_datetime.date() != current_datetime.date()):
+                logging.debug("preparing new forecast")
                 try:
                     parent_forecast = await ForecastService.create_parent_forecast(session)
                     for losses_item in LossesProjectEnum.list():
@@ -138,9 +137,10 @@ class ForecastService:
                 except Exception as e:
                     logging.error(f"exception during forecast preparation {e}")
                     await session.rollback()
-
-        else:
-            logging.debug("skipping forecast preparation; the date is same")
+                finally:
+                    await session.close()
+            else:
+                logging.debug("skipping forecast preparation; the date is same")
 
     @classmethod
     async def get_prediction(

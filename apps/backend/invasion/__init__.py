@@ -1,5 +1,9 @@
 from __future__ import annotations
+
+import asyncio
 import logging
+from functools import partial
+from threading import Thread
 from typing import Final
 from urllib.request import Request
 
@@ -65,9 +69,30 @@ async def startup_event():
 # trying to
 @repeat_every(seconds=timeout)
 async def data_update_job():
-    session = await get_session()
-    await ForecastService.create_all_forecasts_if_needed(session)
-    await AdminService.update_statistic(session)
+    # Start the long-running coroutine in a separate thread
+    # Pass a lambda function that creates a new session and calls the coroutine
+    thread = Thread(target=run_async_in_new_loop(
+        lambda: ForecastService.create_all_forecasts_if_needed(get_session())
+    ))
+    thread.start()
+
+    # Continue with other tasks using a separate session
+    await AdminService.update_statistic(get_session())
+
+
+def run_async_in_new_loop(coroutine_func):
+    def thread_target():
+        # Set up a new event loop for this thread
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+        # Run the coroutine in this new event loop
+        loop.run_until_complete(coroutine_func())
+
+        # Close the loop when done
+        loop.close()
+
+    return thread_target
 
 
 @app.exception_handler(PaginationException)
