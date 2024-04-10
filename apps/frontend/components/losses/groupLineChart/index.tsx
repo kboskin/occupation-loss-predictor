@@ -1,6 +1,6 @@
-import LineChart from "../chart";
 import {Loss, LossType} from "../../../redux/losses/models";
 import {useTranslation} from "next-i18next";
+import LineChart from "./lineChart";
 
 interface GroupChartProps {
     data: Loss[]

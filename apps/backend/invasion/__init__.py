@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from functools import partial
-from threading import Thread
+import multiprocessing
 from typing import Final
 from urllib.request import Request
 
@@ -63,36 +62,26 @@ timeout: Final[int] = 14400
 async def startup_event():
     await init_sentry()
     await init_models()
-    await data_update_job()
+    process = multiprocessing.Process(target=run_event_loop)
+    process.start()
 
 
 # trying to
 @repeat_every(seconds=timeout)
 async def data_update_job():
-    # Start the long-running coroutine in a separate thread
-    # Pass a lambda function that creates a new session and calls the coroutine
-    thread = Thread(target=run_async_in_new_loop(
-        lambda: ForecastService.create_all_forecasts_if_needed(get_session())
-    ))
-    thread.start()
+    process = multiprocessing.Process(target=run_event_loop)
+    process.start()
 
-    # Continue with other tasks using a separate session
+
+def run_event_loop():
+    new_loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(new_loop)
+    new_loop.run_until_complete(get_forecasts())
+
+
+async def get_forecasts():
     await AdminService.update_statistic(get_session())
-
-
-def run_async_in_new_loop(coroutine_func):
-    def thread_target():
-        # Set up a new event loop for this thread
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-        # Run the coroutine in this new event loop
-        loop.run_until_complete(coroutine_func())
-
-        # Close the loop when done
-        loop.close()
-
-    return thread_target
+    await ForecastService.create_all_forecasts_if_needed(get_session())
 
 
 @app.exception_handler(PaginationException)

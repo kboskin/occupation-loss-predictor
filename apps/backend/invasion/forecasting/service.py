@@ -62,7 +62,7 @@ class ForecastService:
         original_df = pd.DataFrame([res.__dict__ for res in data])
         df = original_df
 
-        logging.debug("beginning forecast SARIMAX preparation")
+        logging.debug(f"beginning forecast SARIMAX preparation for category {enum}")
 
         # SARIMAX model fitting
         period = 45
@@ -134,6 +134,7 @@ class ForecastService:
                     parent_forecast = await ForecastService.create_parent_forecast(session)
                     for losses_item in LossesProjectEnum.list():
                         await ForecastService.prepare_forecast_for_category(session, losses_item, parent_forecast)
+                    await session.commit()
                 except Exception as e:
                     logging.error(f"exception during forecast preparation {e}")
                     await session.rollback()

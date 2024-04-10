@@ -1,8 +1,8 @@
 import {useEffect, useRef, useState} from "react";
 import * as d3 from "d3";
-import {LossDataPoint, LossType} from "../../../redux/losses/models";
 import {useTranslation} from "next-i18next";
-import {mapCategoryToTranslation} from "../../../utils/category";
+import {mapCategoryToTranslation} from "../../../../utils/category";
+import {LossDataPoint, LossType} from "../../../../redux/losses/models";
 
 enum DataType {
     REGULAR_DATA,

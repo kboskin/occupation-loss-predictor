@@ -1,4 +1,4 @@
-interface YearChartProps {
+interface RadialChartProps {
     isLoading: Boolean
     data: AggregationResult
 }

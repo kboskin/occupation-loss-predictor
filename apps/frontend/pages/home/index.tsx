@@ -4,9 +4,9 @@ import {useTranslation} from "next-i18next";
 import Footer from "../../components/footer";
 import LossesTable from "../../components/losses/table";
 import {useGetLossesQuery, useGetYearlyAggregationQuery} from "../../redux/losses/lossesApi";
-import GroupChart from "../../components/losses/groupChart";
 import SupportTheProject from "../../components/support";
-import YearlyGroupChart from "../../components/losses/aggregation/yearGroupChart";
+import RadialGroupChart from "../../components/losses/aggregation/yearGroupChart";
+import GroupChart from "../../components/losses/groupLineChart";
 
 
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
             <LossesTable isLoading={lossesLoading} losses={lossesData}/>
             <GroupChart data={lossesData}/>
             <SupportTheProject />
-            <YearlyGroupChart data={data} isLoading={isLoading}/>
+            <RadialGroupChart data={data} isLoading={isLoading}/>
             <Footer/>
         </div>
     );

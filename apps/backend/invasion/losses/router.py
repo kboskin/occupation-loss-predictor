@@ -32,9 +32,7 @@ async def get_data_for_category(
         data = await LossesService.get_data_for(session, commons.offset_from, commons.offset_to, table)
         last_data_record_data = data[-1].losses
 
-        logging.debug(f"getting data for category here")
         prediction_data = await ForecastService.get_prediction(session, enum, last_data_record_data)
-        logging.debug(f"getting data for category her2")
 
         loss = Loss(
             type=enum,
@@ -81,7 +79,7 @@ async def get_yearly_aggregations(
 
 
 @losses_router.get("/category/aggregation", response_model=AggregationYearlyResponseModel)
-async def get_yearly_aggregations(
+async def get_category_aggregations(
     session: Annotated[AsyncSession, Depends(get_session, use_cache=False)]
 ) -> AggregationYearlyResponseModel:
     all_categories: List[List[AggregationDbLoss]] = [

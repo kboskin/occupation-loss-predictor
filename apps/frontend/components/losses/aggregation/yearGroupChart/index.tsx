@@ -4,7 +4,7 @@ import {useTranslation} from "next-i18next";
 import {LossType} from "../../../../redux/losses/models";
 import {mapCategoryToTranslation} from "../../../../utils/category";
 
-const YearlyGroupChart = (props: YearChartProps) => {
+const RadialGroupChart = (props: RadialChartProps) => {
 
     if (!props.data) {
         return
@@ -251,4 +251,4 @@ const YearlyGroupChart = (props: YearChartProps) => {
     </div>;
 }
 
-export default YearlyGroupChart
+export default RadialGroupChart
