@@ -2,7 +2,7 @@
   "app_title": "Russian losses forecast",
 
   "header_item_losses": "Losses & Forecast",
-  "header_item_numbers": "Numeric forecast",
+  "header_item_numbers": "Data Aggregations",
   "header_item_support_us": "Support project",
   "header_item_army_support": "Support the UArmy",
 
@@ -22,14 +22,50 @@
   "footer_column_source": "Source: Open data of the \nAFU General Staff ",
 
   "footer_column_total_losses_aggregation": "Total enemy losses",
-  "footer_column_tomorrow_forecast": "Tomorrow forecast",
+  "footer_column_tomorrow_forecast": "Data for analysis",
   "footer_column_support_project": "How to help us?",
 
-  "footer_copyright": "© 2023 All rights reserved",
+  "footer_copyright": "© 2024 All rights reserved",
 
 
   "contacts_email": "contact@contact.com",
 
-  "link_support_army": "https://savelife.in.ua/donate/"
+  "link_support_army": "https://savelife.in.ua/donate/",
+
+  "losses_table_header": "Losses of the occupiers \uD83E\uDE96",
+  "losses_table_subheader": "On this website, you can find out statistics on enemy losses according to the data of the AFU General Staff",
+  "losses_table_subheader_statistics": "General russian army Losses Statistics",
+
+  "category_aircraft": "Aircraft",
+  "category_aircraft_warfare": "Air Defense",
+  "category_apv": "APV",
+  "category_artillery": "Artillery",
+  "category_fuel_tanks": "Fuel tanks",
+  "category_helicopters": "Helicopters",
+  "category_missiles": "Missiles",
+  "category_mlrs": "MLRS",
+  "category_personnel": "Personnel",
+  "category_special_equipment": "Special equip",
+  "category_submarines": "Submarines",
+  "category_tanks": "Tanks",
+  "category_uav": "UAV",
+  "category_warships": "Warships",
+
+  "losses_header_last_day": "Last day",
+  "losses_header_last_week": "Last week",
+  "losses_header_last_month": "Last month",
+  "losses_header_last_year": "Last year",
+  "losses_no_changes": "no change",
+
+  "forecast_chart_title": "Russian losses forecast for",
+  "forecast_trending": "Occupation Army Personnel Losses \uD83D\uDCA5",
+  "forecast_unique": "Common Interest losses \uD83D\uDE31",
+  "forecast_other": "Other important statistics \uD83D\uDE31",
+
+  "support_the_project": "Support project growth \uD83D\uDE31",
+
+  "losses_yearly_by_category": "Losses by categories",
+  "losses_category_by_year": "Losses by year",
+  "losses_yearly_percentage_from_total": "* from all total for all years"
 
 }

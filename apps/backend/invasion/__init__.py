@@ -1,5 +1,9 @@
+# flake8: noqa
 from __future__ import annotations
+
+import asyncio
 import logging
+import multiprocessing
 from typing import Final
 from urllib.request import Request
 
@@ -12,12 +16,14 @@ from starlette.responses import JSONResponse
 from invasion.admin.service import AdminService
 from fastapi import APIRouter
 
+from invasion.admin.base import LossesProjectEnum
 from invasion.base.pagination import PaginationException
 from invasion.config import DEBUG, CORS, init_sentry
 import os
 
-from invasion.db.engine import async_session
+from invasion.db.engine import get_session
 from invasion.db.models import init_models
+from invasion.forecasting.service import ForecastService
 from invasion.losses.losses import BrokenLossTypeException
 from invasion.losses.router import losses_router
 
@@ -54,11 +60,29 @@ timeout: Final[int] = 14400
 
 
 @app.on_event("startup")
-@repeat_every(seconds=14400)
 async def startup_event():
     await init_sentry()
     await init_models()
-    await AdminService.update_statistic(async_session)
+    process = multiprocessing.Process(target=run_event_loop)
+    process.start()
+
+
+# trying to
+@repeat_every(seconds=timeout)
+async def data_update_job():
+    process = multiprocessing.Process(target=run_event_loop)
+    process.start()
+
+
+def run_event_loop():
+    new_loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(new_loop)
+    new_loop.run_until_complete(get_forecasts())
+
+
+async def get_forecasts():
+    await AdminService.update_statistic(get_session())
+    await ForecastService.create_all_forecasts_if_needed(get_session())
 
 
 @app.exception_handler(PaginationException)

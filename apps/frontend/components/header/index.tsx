@@ -23,24 +23,24 @@ const Header = () => {
             <NavbarContent>
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                    className="sm:hidden"/>
+                    className="lg:hidden"/>
                 <NavbarBrand>
                     <Logo width={50} height={50} />
                     <p className="font-bold text-inherit px-10">{t("app_title")}</p>
                 </NavbarBrand>
             </NavbarContent>
 
-            <NavbarContent className="hidden sm:flex" justify="center">
+            <NavbarContent className="hidden lg:flex" justify="center">
                 <NavbarItem>
                     <Link
-                        className="w-auto px-8"
+                        className="w-auto px-8 text-white"
                         href="#">
                         {t("header_item_losses")}
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
                     <Link
-                        className="w-auto px-8"
+                        className="w-auto px-8 text-white"
                         href="#">
                         {t("header_item_numbers")}
                     </Link>
@@ -54,7 +54,7 @@ const Header = () => {
                     </Link>
                 </NavbarItem>
             </NavbarContent>
-            <NavbarContent className="hidden sm:flex" justify="end">
+            <NavbarContent className="hidden lg:flex" justify="end">
                 <NavbarItem>
                     <Link href={t('link_support_army')} target="_blank" rel="noopener noreferrer">
                         <Button color="danger" href={t('link_support_army')} variant="flat" >
@@ -66,7 +66,7 @@ const Header = () => {
             <NavbarMenu>
                 <NavbarMenuItem key={"item_losses"}>
                     <Link
-                        className="w-auto"
+                        className="w-auto text-white"
                         href="#"
                         size="lg">
                         {t("header_item_losses")}
@@ -74,7 +74,7 @@ const Header = () => {
                 </NavbarMenuItem>
                 <NavbarMenuItem key={`item_numbers`}>
                     <Link
-                        className="w-auto"
+                        className="w-auto text-white"
                         href="#"
                         size="lg">
                         {t("header_item_numbers")}
@@ -83,7 +83,7 @@ const Header = () => {
                 <NavbarMenuItem key={`item_support_us`}>
                     <Link
                         className="w-auto"
-                        color={"warning"}
+                        color="warning"
                         href="#"
                         size="lg">
                         {t("header_item_support_us")}

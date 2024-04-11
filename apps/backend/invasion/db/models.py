@@ -1,8 +1,10 @@
 import datetime
 
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import declarative_base, mapped_column, Mapped
 from sqlalchemy.sql import func
 from .engine import engine
+from ..admin.base import LossesProjectEnum
 
 BASE = declarative_base()
 metadata = BASE.metadata
@@ -72,6 +74,27 @@ class FuelTanksLossesTable(BASE, GenericLossTable):
 
 class SpecialLossesTable(BASE, GenericLossTable):
     __tablename__ = "special_equipment"
+
+
+class ForecastsTable(BASE):
+    __tablename__ = "forecasts"
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
+    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
+    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
+
+
+class ForecastsDataTable(BASE):
+    __tablename__ = "forecasts_data"
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    forecast_added: Mapped[int] = mapped_column(nullable=False)
+    forecast_time: Mapped[datetime.datetime] = mapped_column(nullable=False)
+    forecast_type: Mapped[LossesProjectEnum] = mapped_column(nullable=False)
+    parent_forecast_id: Mapped[int] = mapped_column(ForeignKey(ForecastsTable.id, ondelete='CASCADE'), primary_key=True)
+
+    created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
+    updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
+    deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
 
 
 async def init_models():

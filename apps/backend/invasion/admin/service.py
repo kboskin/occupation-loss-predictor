@@ -16,6 +16,7 @@ class AdminService:
 
     @classmethod
     async def update_statistic(cls, async_session: AsyncSession):
+        logging.debug("executing update")
         invasion_start = 2022
         present_date = datetime.date.today()
         present_year = present_date.year
@@ -27,7 +28,7 @@ class AdminService:
             select(PersonnelLossesTable).order_by(desc(PersonnelLossesTable.time)).limit(1)
         )
 
-        last_personnel_record: PersonnelLossesTable = last_personnel_record.scalars().one()
+        last_personnel_record: PersonnelLossesTable = last_personnel_record.scalars().first()
         if last_personnel_record is not None:
             # db already has something, sync missing days between last record and present day
             last_record_time = last_personnel_record.time

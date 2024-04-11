@@ -78,3 +78,6 @@ fastlane/test_output
 ## next
 .next
 next/
+
+## env data
+.env

@@ -1,4 +1,4 @@
-from invasion.admin.models import LossesProjectEnum
+from invasion.admin.base import LossesProjectEnum
 from invasion.integrations.minfin import MinFinEnum
 
 

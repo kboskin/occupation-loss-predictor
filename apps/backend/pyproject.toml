@@ -26,6 +26,9 @@ flake8 = "^6.1.0"
 cryptography = "^41.0.7"
 pycryptodome = "^3.19.0"
 pycryptodomex = "^3.19.0"
+statsmodels = "^0.14.1"
+matplotlib = "^3.8.3"
+scikit-learn = "^1.4.1.post1"
 
 [tool.poetry.dev-dependencies]
 
