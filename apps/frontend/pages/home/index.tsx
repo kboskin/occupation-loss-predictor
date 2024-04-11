@@ -13,20 +13,21 @@ import RadialGroupChart from "../../components/losses/aggregation/yearGroupChart
 import GroupChart from "../../components/losses/groupLineChart";
 import CategoryBarGroupChart from "../../components/losses/aggregation/categoryGroupChart";
 import Separator from "../../components/separator";
+import {Loss} from "../../redux/losses/models";
 
 
 const Home = () => {
     const {t} = useTranslation("common");
-    const {data: lossesData, isLoading: lossesLoading, error: lossesError} = useGetLossesQuery({});
-    const {data: yearlyData, isLoading: yearlyLoading, error: yearlyError} = useGetYearlyAggregationQuery({});
-    const {data: categoryData, isLoading: categoryLoading, error: categoryError} = useGetCategoryAggregationQuery({});
+    const {data: lossesData, isLoading: lossesLoading, error: lossesError} = useGetLossesQuery("");
+    const {data: yearlyData, isLoading: yearlyLoading, error: yearlyError} = useGetYearlyAggregationQuery("");
+    const {data: categoryData, isLoading: categoryLoading, error: categoryError} = useGetCategoryAggregationQuery("");
 
     return (
         <div>
             <Header/>
             <MainVideo/>
-            <LossesTable isLoading={lossesLoading} losses={lossesData}/>
-            <GroupChart data={lossesData}/>
+            <LossesTable isLoading={lossesLoading} losses={lossesData as Loss[]}/>
+            <GroupChart data={lossesData as Loss[]}/>
             <SupportTheProject />
             <RadialGroupChart data={yearlyData} isLoading={yearlyLoading}/>
             <Separator/>

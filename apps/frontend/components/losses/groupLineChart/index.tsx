@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {Loss, LossType} from "../../../redux/losses/models";
 import {useTranslation} from "next-i18next";
 import LineChart from "./lineChart";

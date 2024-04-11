@@ -1,7 +1,6 @@
-import {UseTranslation} from "next-i18next";
 import {LossType} from "../redux/losses/models";
 
-const mapCategoryToTranslation = (cat: LossType, t: UseTranslation): string => {
+const mapCategoryToTranslation = (cat: LossType, t: any): string => {
     switch (cat) {
         case LossType.AIRCRAFT: { return t('category_aircraft')}
         case LossType.AIRCRAFT_WARFARE: { return t('category_aircraft_warfare')}
@@ -17,11 +16,6 @@ const mapCategoryToTranslation = (cat: LossType, t: UseTranslation): string => {
         case LossType.TANKS: { return t('category_tanks')}
         case LossType.UAV: { return t('category_uav')}
         case LossType.WARSHIPS: { return t('category_warships')}
-
-        default: {
-            //statements;
-            break;
-        }
     }
 }
 

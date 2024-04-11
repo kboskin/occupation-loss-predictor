@@ -54,13 +54,13 @@ jobs:
           name: Push docker images
           command: |
             cd apps/backend
-            docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PWD" registry.gitlab.com
-            docker build -t registry.gitlab.com/abab5/bit-rx/backend:main .
-            docker push registry.gitlab.com/abab5/bit-rx/backend:main
+            docker login -u "$GITHUB_USERNAME" -p "$GITHUB_TOKEN" ghcr.io
+            docker build -t ghcr.io/kboskin/occupation-loss-predictor/backend:main .
+            docker push ghcr.io/kboskin/occupation-loss-predictor/backend:main
             cd ..
             cd frontend
-            docker build -t registry.gitlab.com/abab5/bit-rx/frontend:main .
-            docker push registry.gitlab.com/abab5/bit-rx/frontend:main
+            docker build -t ghcr.io/kboskin/occupation-loss-predictor/frontend:main .
+            docker push ghcr.io/kboskin/occupation-loss-predictor/frontend:main
 
   deploy_all:
     machine:

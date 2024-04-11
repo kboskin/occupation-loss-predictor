@@ -1,25 +1,12 @@
-import {useEffect, useRef, useState} from "react";
+// @ts-nocheck
+
+import {useEffect, useRef} from "react";
 import * as d3 from "d3";
 import {useTranslation} from "next-i18next";
 import {LossType} from "../../../../redux/losses/models";
 import {mapCategoryToTranslation} from "../../../../utils/category";
 
-const RadialGroupChart = (props: RadialChartProps) => {
-
-    if (!props.data) {
-        return
-    }
-
-    const [data, setData] =
-        useState({
-                "name": "root",
-                "children":
-                    props.data.children.map((item) => ({
-                        "name": item.name,
-                        "children": item.children
-                    }))
-            }
-        )
+const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
 
     const {t} = useTranslation()
     const svgRef = useRef(null);
@@ -30,7 +17,7 @@ const RadialGroupChart = (props: RadialChartProps) => {
     const width = 700
     const radius = width / 2
 
-    const color = d3
+    const color: any = d3
         .scaleOrdinal()
         .domain([
             LossType.AIRCRAFT,
@@ -61,37 +48,44 @@ const RadialGroupChart = (props: RadialChartProps) => {
         ]);
 
     useEffect(() => {
-        if (!data) return;
+        if (!data || isLoading) return;
 
-        const partition = data =>
+        const chartData = {
+            "name": "root",
+            "children": data.children.map((item) => ({
+                "name": item.name,
+                "children": item.children
+            }))
+        }
+
+        const partition = (data: any) =>
             d3.partition().size([2 * Math.PI, radius * radius])(
                 d3
                     .hierarchy(data)
-                    .sum((d) => {
-                        return d.value
-                    })
-                    .sort((a, b) => b.name - a.name)
+                    .sum((d) => d.value as number)
+                    .sort((a, b) => (b as any).name as any - (a as any).name as any)
             )
 
-        const arc = d3
+        const arc: any = d3
             .arc()
-            .startAngle((d) => d.x0)
-            .endAngle(d => d.x1)
+            .startAngle((d: any) => d.x0)
+            .endAngle((d: any) => d.x1)
             .padAngle(1 / radius)
             .padRadius(radius)
-            .innerRadius(d => Math.sqrt(d.y0))
-            .outerRadius(d => Math.sqrt(d.y1) - 1)
-        const mousearc = d3
+            .innerRadius((d: any) => Math.sqrt(d.y0))
+            .outerRadius((d: any) => Math.sqrt(d.y1) - 1)
+
+        const mousearc: any = d3
             .arc()
-            .startAngle(d => d.x0)
-            .endAngle(d => d.x1)
-            .innerRadius(d => Math.sqrt(d.y0))
+            .startAngle((d: any) => d.x0)
+            .endAngle((d: any) => d.x1)
+            .innerRadius((d: any) => Math.sqrt(d.y0))
             .outerRadius(radius)
 
-        const root = partition(data);
+        const root: any = partition(chartData);
         const svg = d3.select(svgRef.current)
         // Make this into a view, so that the currently hovered sequence is available to the breadcrumb
-        const element = svg.node();
+        const element: any = svg.node();
         element.value = {sequence: [], percentage: 0.0};
 
         const label = svg
@@ -124,14 +118,9 @@ const RadialGroupChart = (props: RadialChartProps) => {
         const path = svg
             .append("g")
             .selectAll("path")
-            .data(
-                root.descendants().filter(d => {
-                    // Don't draw the root node, and for efficiency, filter out nodes that would be too small to see
-                    return d.depth && d.x1 - d.x0 > 0.001;
-                })
-            )
+            .data(root.descendants().filter((d: any) => d.depth && d.x1 - d.x0 > 0.001))
             .join("path")
-            .attr("fill", d => color(d.data.name))
+            .attr("fill", (d: any) => color((d.data as any).name))
             .attr("d", arc);
 
         svg
@@ -149,16 +138,16 @@ const RadialGroupChart = (props: RadialChartProps) => {
             })
             .selectAll("path")
             .data(
-                root.descendants().filter(d => {
+                root.descendants().filter((d: any) => {
                     // Don't draw the root node, and for efficiency, filter out nodes that would be too small to see
                     return d.depth && d.x1 - d.x0 > 0.001;
                 })
             )
             .join("path")
             .attr("d", mousearc)
-            .on("mouseenter", (event, d) => {
+            .on("mouseenter", (event, d: any) => {
                 // Get the ancestors of the current segment, minus the root
-                const sequence = d
+                const sequence: any = d
                     .ancestors()
                     .reverse()
                     .slice(1);
@@ -166,7 +155,7 @@ const RadialGroupChart = (props: RadialChartProps) => {
                 path.attr("fill-opacity", node =>
                     sequence.indexOf(node) >= 0 ? 1.0 : 0.3
                 );
-                const percentage = ((100 * d.value) / root.value).toPrecision(3);
+                const percentage = ((100 * d.value as number) / root.value as number).toPrecision(3);
 
                 label
                     .style("visibility", null)
@@ -188,7 +177,7 @@ const RadialGroupChart = (props: RadialChartProps) => {
 
     }, [data]);
 
-    const itemToText = (d, noYear: Boolean = false) => {
+    const itemToText = (d: any, noYear: Boolean = false) => {
 
         const item = d.data.name
         const parent = d.parent.data.name
@@ -208,7 +197,7 @@ const RadialGroupChart = (props: RadialChartProps) => {
 
     // Function to update breadcrumbs
     const updateBreadcrumbs = (sequence, percentage) => {
-        const breadcrumbs = d3.select("#breadcrumbs")
+        const breadcrumbs: any = d3.select("#breadcrumbs")
             .selectAll("g")
             .data(sequence, d => d.data.name);
 

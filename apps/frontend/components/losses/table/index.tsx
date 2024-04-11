@@ -12,13 +12,13 @@ import {
 import {useMemo, useState} from "react";
 import {useTranslation} from "next-i18next";
 import LossesColumnHeader from "./header";
-import {Loss, LossDataPoint, LossType} from "../../../redux/losses/models";
-import moment from "moment";
+import {Loss, LossType} from "../../../redux/losses/models";
+import moment, {MomentInput} from "moment";
 import {Button} from "@nextui-org/button";
 import {mapCategoryToTranslation, mapCategoryToImage} from "../../../utils/category";
 
 interface LossesTableProps {
-    isLoading: Boolean,
+    isLoading: boolean,
     losses: Loss[]
 }
 
@@ -73,7 +73,7 @@ const LossesTable = (props: LossesTableProps) => {
         losses.map((lossItem) => {
             let updatedHistory = lossItem
                 .history
-                .filter((point) => moment(point.time).isSame(today, period))
+                .filter((point) => moment(point.time as MomentInput).isSame(today, period))
 
             let updatedItem: Loss = {
                 history: updatedHistory,
@@ -108,10 +108,9 @@ const LossesTable = (props: LossesTableProps) => {
                     <TableCell
                         className="text-start">
                         <Button
-                            color="text-light-grey"
                             disabled
                             variant="light"
-                            className="text-large"
+                            className="text-large text-light-grey"
                             startContent={
                                 <Image
                                     className="border-none text-light-grey w-[18px] md:w-[35px] lg:w-[50px]"
@@ -124,8 +123,8 @@ const LossesTable = (props: LossesTableProps) => {
                     <TableCell className="text-large text-end">{aggrItem.periodTotal}</TableCell>
                     <TableCell className="text-start text-large">
                         <Button
-                            color="text-light-grey"
                             disabled
+                            className="text-light-grey"
                             variant="light"
                             startContent={
                                 aggrItem.periodIncr >= 1 ?
@@ -163,7 +162,7 @@ const LossesTable = (props: LossesTableProps) => {
                     className="center"
                     isLoading={props.isLoading}
                     loadingContent={<Spinner color="white"/>}>
-                    {mapLossesToRows(props.losses ?? [], period)}
+                    {mapLossesToRows(props?.losses ?? [], period)}
                 </TableBody>
             </Table>
         </div>

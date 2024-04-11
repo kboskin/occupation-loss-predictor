@@ -33,14 +33,14 @@ const Header = () => {
             <NavbarContent className="hidden lg:flex" justify="center">
                 <NavbarItem>
                     <Link
-                        className="w-auto px-8"
+                        className="w-auto px-8 text-white"
                         href="#">
                         {t("header_item_losses")}
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
                     <Link
-                        className="w-auto px-8"
+                        className="w-auto px-8 text-white"
                         href="#">
                         {t("header_item_numbers")}
                     </Link>
@@ -66,7 +66,7 @@ const Header = () => {
             <NavbarMenu>
                 <NavbarMenuItem key={"item_losses"}>
                     <Link
-                        className="w-auto"
+                        className="w-auto text-white"
                         href="#"
                         size="lg">
                         {t("header_item_losses")}
@@ -74,7 +74,7 @@ const Header = () => {
                 </NavbarMenuItem>
                 <NavbarMenuItem key={`item_numbers`}>
                     <Link
-                        className="w-auto"
+                        className="w-auto text-white"
                         href="#"
                         size="lg">
                         {t("header_item_numbers")}
@@ -83,7 +83,7 @@ const Header = () => {
                 <NavbarMenuItem key={`item_support_us`}>
                     <Link
                         className="w-auto"
-                        color={"warning"}
+                        color="warning"
                         href="#"
                         size="lg">
                         {t("header_item_support_us")}

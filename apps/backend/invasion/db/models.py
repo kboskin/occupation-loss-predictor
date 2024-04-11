@@ -1,7 +1,7 @@
 import datetime
 
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import declarative_base, mapped_column, Mapped, relationship
+from sqlalchemy.orm import declarative_base, mapped_column, Mapped
 from sqlalchemy.sql import func
 from .engine import engine
 from ..admin.base import LossesProjectEnum

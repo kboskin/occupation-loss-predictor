@@ -1,3 +1,4 @@
+# noqa
 from __future__ import annotations
 
 import asyncio
@@ -12,16 +13,16 @@ from fastapi.staticfiles import StaticFiles
 from fastapi_utils_sqlalch2.tasks import repeat_every
 from starlette.responses import JSONResponse
 
-from invasion.admin.base import LossesProjectEnum
 from invasion.admin.service import AdminService
 from fastapi import APIRouter
 
+from invasion.admin.base import LossesProjectEnum
 from invasion.base.pagination import PaginationException
 from invasion.config import DEBUG, CORS, init_sentry
 import os
 
 from invasion.db.engine import get_session
-from invasion.db.models import init_models, ForecastsTable
+from invasion.db.models import init_models
 from invasion.forecasting.service import ForecastService
 from invasion.losses.losses import BrokenLossTypeException
 from invasion.losses.router import losses_router

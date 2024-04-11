@@ -37,9 +37,7 @@ class LossesService:
             select(
                 func.EXTRACT('YEAR', table.time).label('year'),
                 func.MAX(table.time).label('max_time')
-            )
-                .group_by('year')
-                .subquery()
+            ).group_by('year').subquery()
         )
 
         # Main query to get the losses for the last record of each year
@@ -49,8 +47,9 @@ class LossesService:
                 table.losses
             ).join(
                 last_record_subquery,
-                (func.EXTRACT('YEAR', table.time) == last_record_subquery.c.year) &
-                (table.time == last_record_subquery.c.max_time)
+                (func.EXTRACT('YEAR', table.time) == last_record_subquery.c.year) & (
+                    table.time == last_record_subquery.c.max_time
+                )
             ).order_by('year')
         )
 

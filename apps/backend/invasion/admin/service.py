@@ -16,7 +16,7 @@ class AdminService:
 
     @classmethod
     async def update_statistic(cls, async_session: AsyncSession):
-        logging.debug(f"executing update")
+        logging.debug("executing update")
         invasion_start = 2022
         present_date = datetime.date.today()
         present_year = present_date.year

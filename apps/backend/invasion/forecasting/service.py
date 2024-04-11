@@ -112,7 +112,7 @@ class ForecastService:
         #     plt.grid(True)
         #     plt.show()
         session.add_all(dictified)
-        logging.debug(f"added forecast to session")
+        logging.debug("added forecast to session")
         logging.debug(f"forecast created for category {enum}")
 
     @classmethod
@@ -153,10 +153,9 @@ class ForecastService:
         records = []
         async with session:
             result = await session.execute(
-                select(ForecastsDataTable.parent_forecast_id)
-                    .filter(ForecastsDataTable.forecast_type == enum)
-                    .order_by(ForecastsDataTable.parent_forecast_id.desc())
-                    .limit(1)
+                select(ForecastsDataTable.parent_forecast_id).filter(ForecastsDataTable.forecast_type == enum).order_by(
+                    ForecastsDataTable.parent_forecast_id.desc()
+                ).limit(1)
             )
             max_forecast_id = result.scalars().first()
 

@@ -1,8 +1,12 @@
-import {useEffect, useRef, useState} from "react";
+/* eslint-plugin-disable */
+
+import {useEffect, useRef} from "react";
 import * as d3 from "d3";
 import {useTranslation} from "next-i18next";
+import {NumberValue} from "d3";
+import {ScaleBand} from "d3-scale";
 
-const CategoryBarGroupChart = ({ isLoading, data }) => {
+const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
     const svgRef = useRef(null);
     const { t } = useTranslation();
 
@@ -25,7 +29,7 @@ const CategoryBarGroupChart = ({ isLoading, data }) => {
 
         const years = new Set(data.children.flatMap(d => d.children.map(c => c.year)));
 
-        const x = d3.scaleBand()
+        const x: ScaleBand<string> = d3.scaleBand()
             .domain(Array.from(years))
             .rangeRound([0, fx.bandwidth()])
             .padding(0.05);
@@ -36,7 +40,7 @@ const CategoryBarGroupChart = ({ isLoading, data }) => {
             .unknown("#ccc");
 
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data.children.flatMap(d => d.children.map(c => c.value)))]).nice()
+            .domain([0, d3.max(data.children.flatMap(d => d.children.map(c => c.value)))] as Iterable<NumberValue>).nice()
             .rangeRound([height - marginBottom, marginTop]);
 
         const svg = d3.select(svgRef.current)
@@ -53,20 +57,20 @@ const CategoryBarGroupChart = ({ isLoading, data }) => {
         barGroups.selectAll("rect")
             .data(d => d.children)
             .join("rect")
-            .attr("x", d => x(d.year))
+            .attr("x", d => x(d.year) as number)
             .attr("y", d => y(d.value))
             .attr("width", x.bandwidth())
             .attr("height", d => y(0) - y(d.value))
-            .attr("fill", d => color(d.year));
+            .attr("fill", d => color(d.year) as string);
 
         // Add labels for each bar
         barGroups.selectAll("text")
             .data(d => d.children)
             .join("text")
-            .attr("x", d => x(d.year))
+            .attr("x", d => x(d.year) as number)
             .attr("y", d => y(d.value)) // Position the label above the bar
             .attr("text-anchor", "middle")
-            .attr("transform", d => `rotate(90, ${x(d.year) + x.bandwidth() / 2}, ${y(d.value) - 5})`) // Rotate the label by 90 degrees
+            .attr("transform", d => `rotate(90, ${x(d.year) as number + x.bandwidth() / 2}, ${y(d.value) - 5})`) // Rotate the label by 90 degrees
             .attr("fill", "white") // Change the color if needed
             .text(d => d.year);
 
