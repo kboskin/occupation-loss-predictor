@@ -50,15 +50,20 @@ jobs:
     machine:
       image: ubuntu-2204:2022.04.2
     steps:
+      - checkout
+      - setup_remote_docker
       - run:
-          name: Push docker images
+          name: Push Backend Docker Image
           command: |
-            cd apps/backend
+            cd ~/occupation-loss-predictor/apps/backend
             docker login -u "$GITHUB_USERNAME" -p "$GITHUB_TOKEN" ghcr.io
             docker build -t ghcr.io/kboskin/occupation-loss-predictor/backend:main .
             docker push ghcr.io/kboskin/occupation-loss-predictor/backend:main
-            cd ..
-            cd frontend
+      - run:
+          name: Push Frontend Docker Image
+          command: |
+            cd ~/occupation-loss-predictor/apps/frontend
+            docker login -u "$GITHUB_USERNAME" -p "$GITHUB_TOKEN" ghcr.io
             docker build -t ghcr.io/kboskin/occupation-loss-predictor/frontend:main .
             docker push ghcr.io/kboskin/occupation-loss-predictor/frontend:main
 
@@ -69,7 +74,7 @@ jobs:
       - run:
           name: Deploy Everything to the Server
           command: |
-            'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+            'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
             eval $(ssh-agent -s)
             echo "$AWS_KEY" | tr -d '\r' | ssh-add -
             mkdir -p ~/.ssh
@@ -101,4 +106,4 @@ workflows:
             branches:
               only:
                 - main
-    
+
