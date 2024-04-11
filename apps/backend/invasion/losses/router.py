@@ -11,7 +11,8 @@ from invasion.base.pagination import pagination, PaginationParameters
 from invasion.losses.losses import check_losses_category
 from invasion.losses.models.domain import AggregationDbLoss
 from invasion.losses.models.presentation import LossDataPoint, LossesResponseModel, AggregationYearlyResponseModel, \
-    AggregationYearResult, AggregationYearTotal, AggregationCategoryTotal, Loss
+    AggregationYearResult, AggregationYearTotal, AggregationCategoryTotal, Loss, AggregationCategoryResult, \
+    AggregationCategory, AggregationYearTotalShort, AggregationCategoriesResponseModel
 from invasion.losses.service import LossesService
 
 losses_router = APIRouter()
@@ -78,29 +79,36 @@ async def get_yearly_aggregations(
     return AggregationYearlyResponseModel(data=result)
 
 
-@losses_router.get("/category/aggregation", response_model=AggregationYearlyResponseModel)
+@losses_router.get("/category/aggregation", response_model=AggregationCategoriesResponseModel)
 async def get_category_aggregations(
     session: Annotated[AsyncSession, Depends(get_session, use_cache=False)]
-) -> AggregationYearlyResponseModel:
+) -> AggregationCategoriesResponseModel:
+    # Regroup the data
     all_categories: List[List[AggregationDbLoss]] = [
         await LossesService.get_aggregations(session, item) for item in
         filter(lambda x: x != LossesProjectEnum.personnel, LossesProjectEnum.list())
     ]
     # Regroup the data
-    result = AggregationYearResult(children=[])
+    result = AggregationCategoryResult(children=[])
     for category in all_categories:
         for loss in category:
-            year_entry: AggregationYearTotal = next((item for item in result.children if item.name == loss.year), None)
-            if year_entry is None:
-                year_entry = AggregationYearTotal(name=loss.year, value=0, children=[])
-                result.children.append(year_entry)
+            category_entry: AggregationCategory = next(
+                (item for item in result.children if item.category == loss.type),
+                None
+            )
 
-            year_entry.value += loss.total
-            year_entry.children.append(AggregationCategoryTotal(
-                name=loss.type,
-                value=loss.total
-            ))
+            if category_entry is None:
+                category_entry = AggregationCategory(category=loss.type, total=0, children=[])
+                result.children.append(category_entry)
 
-    result.children.sort(key=lambda x: x.name)
+            category_entry.total += loss.total
+            category_entry.children.append(
+                AggregationYearTotalShort(
+                    year=loss.year,
+                    value=loss.total
+                ))
 
-    return AggregationYearlyResponseModel(data=result)
+    result.children.sort(key=lambda x: x.category)
+    result = AggregationCategoriesResponseModel(data=result)
+
+    return result

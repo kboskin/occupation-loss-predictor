@@ -17,3 +17,24 @@ interface AggregationYearTotal {
 interface AggregationResult {
     children: AggregationYearTotal[];
 }
+
+
+interface CategoryChartProps {
+    isLoading: Boolean
+    data: ChartAggregationResult
+}
+
+interface ChartAggregationResult {
+    children: AggregationCategory[];
+}
+
+interface AggregationCategory {
+    category: string;
+    total: number;
+    children: AggregationCategoryYear[];
+}
+
+interface AggregationCategoryYear {
+    year: string;
+    value: number;
+}

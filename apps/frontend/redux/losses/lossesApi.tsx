@@ -48,4 +48,4 @@ const paramsToFunction = (category?: string, dateFrom?: string, dateTo?: string)
     return result
 }
 
-export const {useGetLossesQuery, useGetYearlyAggregationQuery} = lossesApi
+export const {useGetLossesQuery, useGetYearlyAggregationQuery, useGetCategoryAggregationQuery} = lossesApi

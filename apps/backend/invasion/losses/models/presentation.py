@@ -54,17 +54,22 @@ class AggregationYearlyResponseModel(BaseModel):
 
 # "/category/aggregation"
 
-class AggregationCategoryYearly(BaseModel):
-    name: LossesProjectEnum
+class AggregationYearTotalShort(BaseModel):
+    year: int
     value: int
-    children: List[AggregationYearTotal]
+
+
+class AggregationCategory(BaseModel):
+    category: LossesProjectEnum
+    total: int
+    children: List[AggregationYearTotalShort]
 
 
 class AggregationCategoryResult(BaseModel):
-    children: List[AggregationCategoryYearly]
+    children: List[AggregationCategory]
 
 
-class AggregationCategoryResponseModel(BaseModel):
+class AggregationCategoriesResponseModel(BaseModel):
     message: str = "OK"
     data: AggregationCategoryResult
 

@@ -30,35 +30,35 @@ const RadialGroupChart = (props: RadialChartProps) => {
     const width = 700
     const radius = width / 2
 
-            const color = d3
-            .scaleOrdinal()
-            .domain([
-                LossType.AIRCRAFT,
-                LossType.AIRCRAFT_WARFARE,
-                LossType.APV,
-                LossType.ARTILLERY,
-                LossType.FUEL_TANKS,
-                LossType.HELICOPTERS,
-                LossType.MISSILES,
-                LossType.MLRS,
-                LossType.PERSONNEL,
-                LossType.SPECIAL_EQUIP,
-                LossType.SUBMARINES,
-                LossType.TANKS,
-                LossType.UAV,
-                LossType.WARSHIPS,
-                "2022",
-                "2023",
-                "2024",
-                "2025",
-                "2026"
-            ])
-            .range([
-                "#5d85cf", "#7c6561", "#da7847", "#6fb971", "#9e70cf", "#bbbbbb",
-                "#e6194B", "#f58231", "#ffe119", "#bfef45", "#3cb44b", "#42d4f4",
-                "#4363d8", "#911eb4",
-                // years
-            ]);
+    const color = d3
+        .scaleOrdinal()
+        .domain([
+            LossType.AIRCRAFT,
+            LossType.AIRCRAFT_WARFARE,
+            LossType.APV,
+            LossType.ARTILLERY,
+            LossType.FUEL_TANKS,
+            LossType.HELICOPTERS,
+            LossType.MISSILES,
+            LossType.MLRS,
+            LossType.PERSONNEL,
+            LossType.SPECIAL_EQUIP,
+            LossType.SUBMARINES,
+            LossType.TANKS,
+            LossType.UAV,
+            LossType.WARSHIPS,
+            "2022",
+            "2023",
+            "2024",
+            "2025",
+            "2026"
+        ])
+        .range([
+            "#5d85cf", "#7c6561", "#da7847", "#6fb971", "#9e70cf", "#bbbbbb",
+            "#e6194B", "#f58231", "#ffe119", "#bfef45", "#3cb44b", "#42d4f4",
+            "#4363d8", "#911eb4",
+            // years
+        ]);
 
     useEffect(() => {
         if (!data) return;
@@ -89,9 +89,6 @@ const RadialGroupChart = (props: RadialChartProps) => {
             .outerRadius(radius)
 
         const root = partition(data);
-
-        console.log(root)
-
         const svg = d3.select(svgRef.current)
         // Make this into a view, so that the currently hovered sequence is available to the breadcrumb
         const element = svg.node();
@@ -183,6 +180,11 @@ const RadialGroupChart = (props: RadialChartProps) => {
                 element.dispatchEvent(new CustomEvent("input"));
                 updateBreadcrumbs(sequence, percentage);
             })
+
+        // Cleanup function to remove the SVG when the component unmounts
+        return () => {
+            d3.select(svgRef.current).selectAll("*").remove();
+        };
 
     }, [data]);
 
