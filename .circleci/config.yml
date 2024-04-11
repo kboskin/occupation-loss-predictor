@@ -50,7 +50,8 @@ jobs:
     machine:
       image: ubuntu-2204:2022.04.2
     steps:
-      - checkout
+      - checkout:
+          path: ~/occupation-loss-predictor/
       - run:
           name: Push Backend Docker Image
           command: |
