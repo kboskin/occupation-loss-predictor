@@ -59,10 +59,17 @@
 
   "forecast_chart_title": "Russian losses forecast for",
   "forecast_trending": "Occupation Army Personnel Losses \uD83D\uDCA5",
-  "forecast_unique": "Common Interest losses \uD83D\uDE31",
+  "forecast_unique": "Common Interest losses",
   "forecast_other": "Other important statistics \uD83D\uDE31",
 
-  "support_the_project": "Support project growth \uD83D\uDE31",
+  "support_the_project": "Donate to support project",
+  "support_the_twt": "Donate using TrustWallet link",
+
+  "support_btc_wallet": "BTC wallet",
+  "support_btc_link": "https://link.trustwallet.com/send?coin=0&address=bc1qprfjf4glp7h4geav97y2y7w8lc8epg8ssp3uts",
+
+  "support_eth_wallet": "ETH wallet",
+  "support_eth_link": "https://link.trustwallet.com/send?coin=60&address=0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
 
   "losses_yearly_by_category": "Losses by categories",
   "losses_category_by_year": "Losses by year",

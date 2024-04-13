@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from invasion.admin.mapper import losses_enum_to_table_mapper
 from invasion.admin.models import LossesProjectModel
 from invasion.admin.base import LossesProjectEnum
-from invasion.db.models import ForecastsTable, ForecastsDataTable
+from invasion.db.models import ForecastsTable, ForecastsDataTable, PersonnelLossesTable
 from invasion.losses.models.presentation import LossDataPoint
 
 
@@ -29,16 +29,25 @@ class ForecastService:
             return None
 
     @classmethod
+    async def __get_last_record_date(cls, session: AsyncSession) -> Union[datetime, None]:
+        execution_result = await session.execute(
+            select(PersonnelLossesTable).order_by(PersonnelLossesTable.id.desc()).limit(1)
+        )
+
+        data: PersonnelLossesTable = execution_result.scalars().first()
+        if data:
+            return data.time
+        else:
+            return None
+
+    @classmethod
     async def create_parent_forecast(cls, session: AsyncSession) -> ForecastsTable:
         parent_forecast = ForecastsTable()
 
         logging.debug(f"adding forecast {parent_forecast}")
         session.add(parent_forecast)
 
-        execution_result = await session.execute(select(ForecastsTable).order_by(ForecastsTable.id))
-        execution_result = execution_result.scalars().first()
-
-        return execution_result
+        return parent_forecast
 
     @classmethod
     async def prepare_forecast_for_category(
@@ -86,7 +95,7 @@ class ForecastService:
             ForecastsDataTable(
                 **{
                     **item,
-                    'parent_forecast_id': parent_forecast.id,
+                    'parent_forecast': parent_forecast,
                     'forecast_type': enum
                 }
             ) for item in forecast_df.to_dict('records')
@@ -120,15 +129,18 @@ class ForecastService:
         logging.debug("create_all_forecasts_if_needed")
         async with session.begin():
             # Given datetime
-            given_datetime = await ForecastService.__get_last_forecast_date(session)
+            forecast_time = await ForecastService.__get_last_forecast_date(session)
 
-            logging.debug(f"last forecast date: {given_datetime}")
+            # also need to make sure that the data worth preparing forecase
+            last_record_time = await ForecastService.__get_last_forecast_date(session)
+
+            logging.debug(f"last forecast date: {forecast_time}")
 
             # Current datetime
             current_datetime = datetime.now()
 
             # Check if the given datetime is on the current day
-            if not given_datetime or (given_datetime.date() != current_datetime.date()):
+            if not forecast_time or (forecast_time.date() != current_datetime.date()) or (forecast_time.date() < last_record_time.date()):
                 logging.debug("preparing new forecast")
                 try:
                     parent_forecast = await ForecastService.create_parent_forecast(session)

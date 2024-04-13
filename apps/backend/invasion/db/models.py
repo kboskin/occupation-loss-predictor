@@ -1,7 +1,7 @@
 import datetime
 
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import declarative_base, mapped_column, Mapped
+from sqlalchemy.orm import declarative_base, mapped_column, Mapped, relationship
 from sqlalchemy.sql import func
 from .engine import engine
 from ..admin.base import LossesProjectEnum
@@ -82,6 +82,12 @@ class ForecastsTable(BASE):
     created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
     updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
     deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
+    # Relationship to the child table
+    forecast_data: Mapped[list['ForecastsDataTable']] = relationship(
+        "ForecastsDataTable",
+        back_populates="parent_forecast",
+        cascade="all, delete-orphan"
+    )
 
 
 class ForecastsDataTable(BASE):
@@ -90,11 +96,14 @@ class ForecastsDataTable(BASE):
     forecast_added: Mapped[int] = mapped_column(nullable=False)
     forecast_time: Mapped[datetime.datetime] = mapped_column(nullable=False)
     forecast_type: Mapped[LossesProjectEnum] = mapped_column(nullable=False)
-    parent_forecast_id: Mapped[int] = mapped_column(ForeignKey(ForecastsTable.id, ondelete='CASCADE'), primary_key=True)
+    parent_forecast_id: Mapped[int] = mapped_column(ForeignKey(ForecastsTable.id, ondelete='CASCADE'))
 
     created_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
     updated_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), nullable=False)
     deleted_time: Mapped[datetime.datetime] = mapped_column(nullable=True)
+
+    # Relationship to the parent table
+    parent_forecast: Mapped[ForecastsTable] = relationship("ForecastsTable", back_populates="forecast_data")
 
 
 async def init_models():

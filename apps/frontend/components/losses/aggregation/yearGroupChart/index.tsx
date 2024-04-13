@@ -236,7 +236,7 @@ const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
     }
 
     return <div className="text-center m-auto">
-        <h3 className="text-2xl mb-8 mt-4 text-white">{t('losses_yearly_by_category')}</h3>
+        <h2 className="text-2xl mb-8 mt-4 text-white">{t('losses_yearly_by_category')}</h2>
         <svg id="breadcrumbs" className="d-block m-auto mt-4"/>
         <svg ref={svgRef} className="d-block m-auto mt-4"/>
     </div>;
