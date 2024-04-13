@@ -5,6 +5,7 @@
   "scripts": {
     "local": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "test": "jest --passWithNoTests"
@@ -25,6 +26,7 @@
     "moment": "^2.30.1",
     "next": "14.0.3",
     "next-i18next": "^15.0.0",
+    "next-sitemap": "^4.2.3",
     "react": "18.2.0",
     "react-device-detect": "^2.2.2",
     "react-dom": "18.2.0",
@@ -36,10 +38,10 @@
     "yarn": "^1.22.21"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.3",
     "@types/lodash": "^4.14.180",
     "@types/node": "20.9.4",
     "@types/react": "18.2.38",
-    "@types/d3": "^7.4.3",
     "autoprefixer": "^10.4.16",
     "eslint": "8.23.0",
     "eslint-config-next": "12.2.5",
