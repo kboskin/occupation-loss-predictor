@@ -2,10 +2,11 @@
 
 import {useEffect, useRef} from "react";
 import * as d3 from "d3";
-import {useTranslation} from "next-i18next";
 import {NumberValue} from "d3";
+import {useTranslation} from "next-i18next";
 import {ScaleBand} from "d3-scale";
 import {mapCategoryToTranslation} from "../../../../utils/category";
+import {LossType} from "../../../../redux/losses/models";
 
 const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
     const svgRef = useRef(null);
@@ -24,7 +25,7 @@ const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
         }
 
         const fx = d3.scaleBand()
-            .domain(data.children.map(d => mapCategoryToTranslation(d.category, t)))
+            .domain(data.children.map(d => mapCategoryToTranslation(d.category as LossType, t)))
             .rangeRound([marginLeft, width - marginRight])
             .paddingInner(0.1);
 
@@ -53,7 +54,7 @@ const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
             .selectAll("g")
             .data(data.children)
             .join("g")
-            .attr("transform", d => `translate(${fx(mapCategoryToTranslation(d.category, t))},-1)`);
+            .attr("transform", d => `translate(${fx(mapCategoryToTranslation(d.category as LossType, t))},-1)`);
 
         barGroups.selectAll("rect")
             .data(d => d.children)
