@@ -5,6 +5,7 @@ import * as d3 from "d3";
 import {useTranslation} from "next-i18next";
 import {NumberValue} from "d3";
 import {ScaleBand} from "d3-scale";
+import {mapCategoryToTranslation} from "../../../../utils/category";
 
 const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
     const svgRef = useRef(null);
@@ -12,7 +13,7 @@ const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
 
     const width = 1080;
     const height = 800;
-    const marginTop = 10;
+    const marginTop = 30;
     const marginRight = 10;
     const marginBottom = 150;
     const marginLeft = 40;
@@ -23,7 +24,7 @@ const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
         }
 
         const fx = d3.scaleBand()
-            .domain(data.children.map(d => d.category))
+            .domain(data.children.map(d => mapCategoryToTranslation(d.category, t)))
             .rangeRound([marginLeft, width - marginRight])
             .paddingInner(0.1);
 
@@ -52,7 +53,7 @@ const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
             .selectAll("g")
             .data(data.children)
             .join("g")
-            .attr("transform", d => `translate(${fx(d.category)},-1)`);
+            .attr("transform", d => `translate(${fx(mapCategoryToTranslation(d.category, t))},-1)`);
 
         barGroups.selectAll("rect")
             .data(d => d.children)
@@ -98,7 +99,7 @@ const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
 
     return (
         <div className="text-center m-auto">
-            <h3 className="text-2xl mb-8 mt-4 text-white">{t('losses_category_by_year')}</h3>
+            <h3 className="text-3xl lg:text-4xl mt-4 lg:mt-4 font-bold mb-8 mt-4 text-white">{t('losses_category_by_year')}</h3>
             <svg ref={svgRef} className="m-auto mt-4" />
         </div>
     );

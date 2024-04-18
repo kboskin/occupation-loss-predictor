@@ -14,6 +14,7 @@ import GroupChart from "../../components/losses/groupLineChart";
 import CategoryBarGroupChart from "../../components/losses/aggregation/categoryGroupChart";
 import Separator from "../../components/separator";
 import {Loss} from "../../redux/losses/models";
+import FAQ from "../../components/faq";
 
 
 const Home = () => {
@@ -32,6 +33,7 @@ const Home = () => {
             <RadialGroupChart data={yearlyData} isLoading={yearlyLoading}/>
             <Separator/>
             <CategoryBarGroupChart data={categoryData} isLoading={categoryLoading}/>
+            <FAQ faqs={[{question: "Test", answer: "quest"}, {question: "Test2", answer: "quest2"}]}/>
             <Footer/>
         </div>
     );
