@@ -140,7 +140,8 @@ class ForecastService:
             current_datetime = datetime.now()
 
             # Check if the given datetime is on the current day
-            if not forecast_time or (forecast_time.date() != current_datetime.date()) or (forecast_time.date() < last_record_time.date()):
+            if not forecast_time or (forecast_time.date() != current_datetime.date()) or (
+                    forecast_time.date() < last_record_time.date()):
                 logging.debug("preparing new forecast")
                 try:
                     parent_forecast = await ForecastService.create_parent_forecast(session)

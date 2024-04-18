@@ -71,8 +71,10 @@
   "support_eth_wallet": "ETH wallet",
   "support_eth_link": "https://link.trustwallet.com/send?coin=60&address=0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
 
-  "losses_yearly_by_category": "Losses by categories",
-  "losses_category_by_year": "Losses by year",
-  "losses_yearly_percentage_from_total": "* from all total for all years"
+  "losses_yearly_by_category": "Losses of vehicles by categories",
+  "losses_category_by_year": "Losses of vehicles by year",
+  "losses_yearly_percentage_from_total": "* from all total for all years",
+
+  "faq_title": "Frequently Asked Questions (FAQ)"
 
 }
