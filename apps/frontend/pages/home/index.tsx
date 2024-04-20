@@ -15,6 +15,7 @@ import CategoryBarGroupChart from "../../components/losses/aggregation/categoryG
 import Separator from "../../components/separator";
 import {Loss} from "../../redux/losses/models";
 import FAQ from "../../components/faq";
+import SeoHead from "../../components/seo";
 
 
 const Home = () => {
@@ -24,7 +25,8 @@ const Home = () => {
     const {data: categoryData, isLoading: categoryLoading, error: categoryError} = useGetCategoryAggregationQuery("");
 
     return (
-        <div>
+        <>
+            <SeoHead title={t('main_page_title')} description={t('main_page_description')} imagePath={"/images/img_logo.png"}/>
             <Header/>
             <MainVideo/>
             <LossesTable isLoading={lossesLoading} losses={lossesData as Loss[]}/>
@@ -33,9 +35,11 @@ const Home = () => {
             <RadialGroupChart data={yearlyData} isLoading={yearlyLoading}/>
             <Separator/>
             <CategoryBarGroupChart data={categoryData} isLoading={categoryLoading}/>
-            <FAQ faqs={[{question: "Test", answer: "quest"}, {question: "Test2", answer: "quest2"}]}/>
+            <FAQ faqs={[...Array.from(Array(6).keys())].map((number) => {
+                return {question: t(`faq_main_q_${number}`), answer: t(`faq_main_a_${number}`)}
+            })}/>
             <Footer/>
-        </div>
+        </>
     );
 }
 

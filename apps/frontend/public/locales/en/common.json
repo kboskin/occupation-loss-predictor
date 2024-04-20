@@ -1,6 +1,9 @@
 {
   "app_title": "Russian losses forecast",
 
+  "main_page_title": "AI-based Russian army losses in war forecast",
+  "main_page_description": "AI-based predictions of Russian military losses in the Russo-Ukraine war. Expert analysis to stay informed on the latest information. Comprehensive data, detailed charts, and insightful interpretations of ongoing military engagements, updated daily.",
+
   "header_item_losses": "Losses & Forecast",
   "header_item_numbers": "Data Aggregations",
   "header_item_support_us": "Support project",
@@ -58,9 +61,9 @@
   "losses_no_changes": "no change",
 
   "forecast_chart_title": "Russian losses forecast for",
-  "forecast_trending": "Occupation Army Personnel Losses \uD83D\uDCA5",
+  "forecast_trending": "Russian Army Personnel Losses \uD83D\uDCC8",
   "forecast_unique": "Common Interest losses",
-  "forecast_other": "Other important statistics \uD83D\uDE31",
+  "forecast_other": "Other important statistics \uD83D\uDCD1",
 
   "support_the_project": "Donate to support project",
   "support_the_twt": "Donate using TrustWallet link",
@@ -75,6 +78,23 @@
   "losses_category_by_year": "Losses of vehicles by year",
   "losses_yearly_percentage_from_total": "* from all total for all years",
 
-  "faq_title": "Frequently Asked Questions (FAQ)"
+  "faq_title": "Frequently Asked Questions (FAQ)",
 
+  "faq_main_q_0": "When Russian-Ukraine war started?",
+  "faq_main_a_0": "Russia has started the war in 2014, from Crimea peninsula with Donetsk and Luhansk occupation. The full-scale invasion has started on 24 February 2022",
+
+  "faq_main_q_1": "What were the personnel losses of Russia in 2022?",
+  "faq_main_a_1": "As of 2023 - Russian Federation has lost approximately 106720 soldiers in combat",
+
+  "faq_main_q_2": "What were the personnel losses of Russia in 2023?",
+  "faq_main_a_2": "As of 2024 - Russian Federation has list approximately 253290 soldiers in combat",
+
+  "faq_main_q_3": "How many vehicles Russian Federation has lost in 2022",
+  "faq_main_a_3": "Approximately Russian Federation has lost in total 19,668 units, including ; Aircraft: 283; Aircraft Warfare: 213; APV: 6075; Artillery: 2016; Fuel Tanks: 4707; Helicopters: 269; Missiles: 711; MLRS: 423; Special Equipment: 180; Tanks: 3029; UAV: 1746; Warships: 16",
+
+  "faq_main_q_4": "How many vehicles Russian Federation has lost in 2023",
+  "faq_main_a_4": "Approximately Russian Federation has lost in total 48,614 units, including Aircraft: 329; Aircraft Warfare: 623; APV: 11070; Artillery: 8464; Fuel Tanks: 11292; Helicopters: 324; Missiles: 1709; MLRS: 943; Special Equipment: 1268; Submarines: 1; Tanks: 5977; UAV: 6591; Warships: 23",
+
+  "faq_main_q_5": "What is the most intense year of war?",
+  "faq_main_a_5": "So far, according to the gathered statistics, Russia has lost the most personnel and vehicles in 2024"
 }

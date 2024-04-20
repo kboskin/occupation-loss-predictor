@@ -6,46 +6,46 @@ import {useTranslation} from "next-i18next";
 import {LossType} from "../../../../redux/losses/models";
 import {mapCategoryToTranslation} from "../../../../utils/category";
 
+const breadcrumbWidth = 120
+const breadcrumbHeight = 50
+
+const width = 700
+const radius = width / 2
+
+const color: any = d3
+    .scaleOrdinal()
+    .domain([
+        LossType.AIRCRAFT,
+        LossType.AIRCRAFT_WARFARE,
+        LossType.APV,
+        LossType.ARTILLERY,
+        LossType.FUEL_TANKS,
+        LossType.HELICOPTERS,
+        LossType.MISSILES,
+        LossType.MLRS,
+        LossType.PERSONNEL,
+        LossType.SPECIAL_EQUIP,
+        LossType.SUBMARINES,
+        LossType.TANKS,
+        LossType.UAV,
+        LossType.WARSHIPS,
+        "2022",
+        "2023",
+        "2024",
+        "2025",
+        "2026"
+    ])
+    .range([
+        "#5d85cf", "#7c6561", "#da7847", "#6fb971", "#9e70cf", "#bbbbbb",
+        "#e6194B", "#f58231", "#ffe119", "#bfef45", "#3cb44b", "#42d4f4",
+        "#4363d8", "#911eb4",
+        // years
+    ]);
+
 const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
 
     const {t} = useTranslation()
     const svgRef = useRef(null);
-
-    const breadcrumbWidth = 120
-    const breadcrumbHeight = 50
-
-    const width = 700
-    const radius = width / 2
-
-    const color: any = d3
-        .scaleOrdinal()
-        .domain([
-            LossType.AIRCRAFT,
-            LossType.AIRCRAFT_WARFARE,
-            LossType.APV,
-            LossType.ARTILLERY,
-            LossType.FUEL_TANKS,
-            LossType.HELICOPTERS,
-            LossType.MISSILES,
-            LossType.MLRS,
-            LossType.PERSONNEL,
-            LossType.SPECIAL_EQUIP,
-            LossType.SUBMARINES,
-            LossType.TANKS,
-            LossType.UAV,
-            LossType.WARSHIPS,
-            "2022",
-            "2023",
-            "2024",
-            "2025",
-            "2026"
-        ])
-        .range([
-            "#5d85cf", "#7c6561", "#da7847", "#6fb971", "#9e70cf", "#bbbbbb",
-            "#e6194B", "#f58231", "#ffe119", "#bfef45", "#3cb44b", "#42d4f4",
-            "#4363d8", "#911eb4",
-            // years
-        ]);
 
     useEffect(() => {
         if (!data || isLoading) return;
@@ -175,7 +175,7 @@ const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
             d3.select(svgRef.current).selectAll("*").remove();
         };
 
-    }, [data]);
+    }, [data, isLoading, t]);
 
     const itemToText = (d: any, noYear: Boolean = false) => {
 

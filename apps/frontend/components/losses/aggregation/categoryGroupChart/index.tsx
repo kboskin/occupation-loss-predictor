@@ -8,16 +8,16 @@ import {ScaleBand} from "d3-scale";
 import {mapCategoryToTranslation} from "../../../../utils/category";
 import {LossType} from "../../../../redux/losses/models";
 
+const width = 1080;
+const height = 800;
+const marginTop = 30;
+const marginRight = 10;
+const marginBottom = 150;
+const marginLeft = 40;
+
 const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
     const svgRef = useRef(null);
     const { t } = useTranslation();
-
-    const width = 1080;
-    const height = 800;
-    const marginTop = 30;
-    const marginRight = 10;
-    const marginBottom = 150;
-    const marginLeft = 40;
 
     useEffect(() => {
         if (isLoading || !data) {
@@ -96,7 +96,7 @@ const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
         return () => {
             d3.select(svgRef.current).selectAll("*").remove();
         };
-    }, [isLoading, data]);
+    }, [isLoading, data, t]);
 
     return (
         <div className="text-center m-auto">

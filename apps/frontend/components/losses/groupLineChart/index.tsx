@@ -41,6 +41,7 @@ const GroupChart = (props: GroupChartProps) => {
                             <>
                                 <h2 className="text-3xl lg:text-4xl mt-16 font-bold">{t('forecast_trending')}</h2>
                                 <LineChart
+                                    key={dataItem.type}
                                     width={window.innerWidth - window.innerWidth * 0.12}
                                     data={dataItem.history.slice(SLICE)}
                                     forecast={dataItem.prediction.slice(0, FORECAST_SLICE)}
@@ -66,14 +67,14 @@ const GroupChart = (props: GroupChartProps) => {
                                         trendingItems.map((items) => {
                                             return (
                                                 <>
-                                                    <div className="md:grid md:grid-cols-2 mt-4">
+                                                    <div className="md:grid md:grid-cols-2 mt-4" key={dataItem.type}>
                                                         {
                                                             items.map((dataItem) =>
                                                                 <LineChart
                                                                     width={(window.innerWidth / getSupportedColumnsCount() - window.innerWidth * 0.1)}
                                                                     key={dataItem.type}
                                                                     data={dataItem.history.slice(SLICE)}
-                                                                     forecast={dataItem.prediction.slice(0, FORECAST_SLICE)}
+                                                                    forecast={dataItem.prediction.slice(0, FORECAST_SLICE)}
                                                                     category={dataItem.type} showHeader/>
                                                             )
                                                         }

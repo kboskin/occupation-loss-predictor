@@ -3,7 +3,7 @@ version: '3.0'
 services:
   app:
     build: apps/backend
-    image: registry.gitlab.com/abab5/bit-rx/backend:${TAG:-main}
+    image: ghcr.io/kboskin/occupation-loss-predictor/backend:${TAG:-main}
     container_name: "losses-backend"
     networks:
       - internal
@@ -21,6 +21,7 @@ services:
         condition: service_healthy
     links:
       - db
+    command: alembic upgrade head
   db:
     image: postgres:14.0
     container_name: "losses-db"
@@ -42,7 +43,7 @@ services:
       retries: 5
   frontend:
     build: apps/frontend
-    image: registry.gitlab.com/abab5/bit-rx/frontend:${TAG:-main}
+    image: ghcr.io/kboskin/occupation-loss-predictor/frontend:${TAG:-main}
     container_name: "losses-frontend"
     ports:
       - 3000:3000
