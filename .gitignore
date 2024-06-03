@@ -82,3 +82,7 @@ next/
 ## env data
 **/.env
 
+terraform/environments/prod/terraform.tfvars
+terraform/environments/prod/*
+
+terraform/.terraform/providers
