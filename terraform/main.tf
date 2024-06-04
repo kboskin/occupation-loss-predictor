@@ -39,7 +39,7 @@ resource "google_compute_instance" "app_vm" {
     ${file("${path.module}/../docker-compose.yml")}
     EOF2
     cd /home/ubuntu/docker
-    docker-compose up -d
+    docker-compose down && docker-compose pull && docker-compose up -d
   EOF
 
   service_account {
