@@ -95,7 +95,7 @@ jobs:
           command: terraform init
       - run:
           name: Terraform Plan
-          command: terraform plan
+          command: terraform plan -var-file="~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars"
       - run:
           name: Terraform Apply
           command: terraform apply -var-file="~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars" -auto-approve
@@ -116,7 +116,7 @@ jobs:
           command: terraform init
       - run:
           name: Terraform Plan
-          command: terraform plan
+          command: terraform plan -var-file="~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars"
       - run:
           name: Terraform Apply
           command: terraform apply -var-file="~/occupation-loss-predictor/terraform/environments/dev/terraform.tfvars" -auto-approve
