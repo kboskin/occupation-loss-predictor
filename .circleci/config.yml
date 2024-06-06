@@ -77,16 +77,16 @@ jobs:
           path: ~/occupation-loss-predictor/
       - run:
           name: Prepare folders
-          command: mkdir environments/prod
+          command: mkdir -p ~/occupation-loss-predictor/terraform/environments/prod
       - run:
           name: Variables
-          command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 -d > environments/prod/terraform.tfvars
+          command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
       - run:
           name: Credentials
-          command: echo "${{ secrets.CREDENTIALS_FILE }}" | base64 -d > environments/prod/credentials.json
+          command: echo "${{ secrets.CREDENTIALS_FILE }}" | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
       - run:
           name: Export
-          command: export GOOGLE_APPLICATION_CREDENTIALS="$PWD/environments/prod/credentials.json"
+          command: export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"
       - run:
           name: Initialize Terraform
           command: terraform init
@@ -95,7 +95,7 @@ jobs:
           command: terraform plan
       - run:
           name: Terraform Apply
-          command: terraform apply -var-file="environments/prod/terraform.tfvars" -auto-approve
+          command: terraform apply -var-file="~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars" -auto-approve
           
   prepare_infrastructure_dev:
     docker:
@@ -106,7 +106,7 @@ jobs:
           path: ~/occupation-loss-predictor/
       - run:
           name: Export
-          command: export GOOGLE_APPLICATION_CREDENTIALS="$PWD/environments/dev/credentials.json"
+          command: export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/dev/credentials.json"
       - run:
           name: Initialize Terraform
           command: terraform init
@@ -115,7 +115,7 @@ jobs:
           command: terraform plan
       - run:
           name: Terraform Apply
-          command: terraform apply -var-file="environments/dev/terraform.tfvars" -auto-approve
+          command: terraform apply -var-file="~/occupation-loss-predictor/terraform/environments/dev/terraform.tfvars" -auto-approve
 
 
   deploy_all:
