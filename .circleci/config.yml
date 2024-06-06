@@ -80,10 +80,10 @@ jobs:
           command: mkdir -p ~/occupation-loss-predictor/terraform/environments/prod
       - run:
           name: Variables
-          command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
+          command: echo $TERRAFORM_VARIABLES | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
       - run:
           name: Credentials
-          command: echo "${{ secrets.CREDENTIALS_FILE }}" | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
+          command: echo $CREDENTIALS_FILE | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
       - run:
           name: Export
           command: export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"
