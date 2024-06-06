@@ -83,20 +83,12 @@ jobs:
           command: |
             touch ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
             echo $TERRAFORM_VARIABLES | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
-            cat ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
       - run:
-          name: Credentials
+          name: Credentials & Export
           command: |
             touch ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
             echo $CREDENTIALS_FILE | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
-            cat ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
-      - run:
-          name: Export
-          command: |
-            echo 'export PATH=/path/to/foo/bin:"$PATH"' >> "$BASH_ENV"
-            echo 'export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"' >> "$BASH_ENV"
-            source "$BASH_ENV"
-            cat "$BASH_ENV"
+            echo $CREDENTIALS_FILE | base64 -d > $HOME/.config/gcloud/application_default_credentials.json
       - run:
           name: Initialize Terraform
           command: terraform init
@@ -115,11 +107,9 @@ jobs:
       - checkout:
           path: ~/occupation-loss-predictor/
       - run:
-          name: Export
+          name: Credentials & Export
           command: |
-            echo 'export PATH=/path/to/foo/bin:"$PATH"' >> "$BASH_ENV"
-            echo 'export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"' >> "$BASH_ENV"
-            source "$BASH_ENV"
+            echo $CREDENTIALS_FILE | base64 -d > $HOME/.config/gcloud/application_default_credentials.json
       - run:
           name: Initialize Terraform
           command: terraform init
