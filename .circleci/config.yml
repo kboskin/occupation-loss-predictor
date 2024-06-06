@@ -68,13 +68,22 @@ jobs:
             docker build -t ghcr.io/kboskin/occupation-loss-predictor/frontend:main .
             docker push ghcr.io/kboskin/occupation-loss-predictor/frontend:main
 
-  prepare_infrastructure_prod:
+  prepare_infrastructure:
     docker:
       - image: hashicorp/terraform:light
     working_directory: ~/occupation-loss-predictor/terraform
     steps:
       - checkout:
           path: ~/occupation-loss-predictor/
+      - run:
+          name: Variables
+          command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 --decode > environments/$TF_ENV_FOLDER_NAME/terraform.tfvars
+      - run:
+          name: Credentials
+          command: echo "${{ secrets.CREDENTIALS_FILE }}" | base64 --decode > environments/$TF_ENV_FOLDER_NAME/credentials.json
+      - run:
+          name: Export
+          command: export GOOGLE_APPLICATION_CREDENTIALS="$PWD/environments/$TF_ENV_FOLDER_NAME/credentials.json"
       - run:
           name: Initialize Terraform
           command: terraform init
@@ -84,23 +93,6 @@ jobs:
       - run:
           name: Terraform Apply
           command: terraform apply -var-file="environments/prod/terraform.tfvars" -auto-approve
-
-  prepare_infrastructure_dev:
-    docker:
-      - image: hashicorp/terraform:light
-    working_directory: ~/occupation-loss-predictor/terraform
-    steps:
-      - checkout:
-          path: ~/occupation-loss-predictor/
-      - run:
-          name: Initialize Terraform
-          command: terraform init
-      - run:
-          name: Terraform Plan
-          command: terraform plan
-      - run:
-          name: Terraform Apply
-          command: terraform apply -var-file="environments/dev/terraform.tfvars" -auto-approve        
 
 
   deploy_all:
@@ -136,16 +128,7 @@ workflows:
             branches:
               only:
                 - main
-      - prepare_infrastructure_dev:
-          filters:
-            branches:
-              only:
-                - release/*
-      - prepare_infrastructure_prod:
-          filters:
-            branches:
-              only:
-                - main        
+      - prepare_infrastructure
       - deploy_all:
           requires:
             - push_to_registry
