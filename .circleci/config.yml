@@ -80,10 +80,10 @@ jobs:
           command: mkdir environments/$TF_ENV_FOLDER_NAME
       - run:
           name: Variables
-          command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 --decode > environments/$TF_ENV_FOLDER_NAME/terraform.tfvars
+          command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 -d > environments/$TF_ENV_FOLDER_NAME/terraform.tfvars
       - run:
           name: Credentials
-          command: echo "${{ secrets.CREDENTIALS_FILE }}" | base64 --decode > environments/$TF_ENV_FOLDER_NAME/credentials.json
+          command: echo "${{ secrets.CREDENTIALS_FILE }}" | base64 -d > environments/$TF_ENV_FOLDER_NAME/credentials.json
       - run:
           name: Export
           command: export GOOGLE_APPLICATION_CREDENTIALS="$PWD/environments/$TF_ENV_FOLDER_NAME/credentials.json"
@@ -131,7 +131,9 @@ workflows:
             branches:
               only:
                 - main
-      - prepare_infrastructure
+      - prepare_infrastructure:
+          requires:
+            - push_to_registry
       - deploy_all:
           requires:
             - push_to_registry
