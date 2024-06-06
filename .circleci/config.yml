@@ -79,6 +79,10 @@ jobs:
           name: Prepare folders
           command: mkdir environments/$TF_ENV_FOLDER_NAME
       - run:
+          name: echo
+          command: echo "${{ secrets.CREDENTIALS_FILE }}" && echo "environments/$TF_ENV_FOLDER_NAME/terraform.tfvars" && echo "environments/$TF_ENV_FOLDER_NAME/credentials.json"
+          
+      - run:
           name: Variables
           command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 -d > environments/$TF_ENV_FOLDER_NAME/terraform.tfvars
       - run:
@@ -120,26 +124,5 @@ workflows:
       - backend_validate
       - frontend_validate
   build_test_deploy:
-    jobs:
-      - backend_validate
-      - frontend_validate
-      - push_to_registry:
-          requires:
-            - backend_validate
-            - frontend_validate
-          filters:
-            branches:
-              only:
-                - main
-      - prepare_infrastructure:
-          requires:
-            - push_to_registry
-      - deploy_all:
-          requires:
-            - push_to_registry
-            - prepare_infrastructure
-          filters:
-            branches:
-              only:
-                - main
+      - prepare_infrastructure
 
