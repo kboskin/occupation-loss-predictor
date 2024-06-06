@@ -108,6 +108,7 @@ jobs:
           name: Export
           command: |
             echo "export GOOGLE_APPLICATION_CREDENTIALS=\"~/occupation-loss-predictor/terraform/environments/dev/credentials.json\"" >> "$BASH_ENV"
+            source "$BASH_ENV"
       - run:
           name: Initialize Terraform
           command: terraform init
