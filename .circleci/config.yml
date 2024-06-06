@@ -124,5 +124,6 @@ workflows:
       - backend_validate
       - frontend_validate
   build_test_deploy:
+    jobs:
       - prepare_infrastructure
 
