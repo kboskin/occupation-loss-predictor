@@ -79,6 +79,9 @@ jobs:
           name: Prepare folders
           command: mkdir environments/$TF_ENV_FOLDER_NAME
       - run:
+          name: env
+          command: printenv
+      - run:
           name: echo
           command: echo "${{ secrets.CREDENTIALS_FILE }}" && echo "environments/$TF_ENV_FOLDER_NAME/terraform.tfvars" && echo "environments/$TF_ENV_FOLDER_NAME/credentials.json"
           
