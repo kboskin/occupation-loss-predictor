@@ -76,6 +76,9 @@ jobs:
       - checkout:
           path: ~/occupation-loss-predictor/
       - run:
+          name: Prepare folders
+          command: mkdir environments/$TF_ENV_FOLDER_NAME
+      - run:
           name: Variables
           command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 --decode > environments/$TF_ENV_FOLDER_NAME/terraform.tfvars
       - run:
@@ -92,7 +95,7 @@ jobs:
           command: terraform plan
       - run:
           name: Terraform Apply
-          command: terraform apply -var-file="environments/prod/terraform.tfvars" -auto-approve
+          command: terraform apply -var-file="environments/$TF_ENV_FOLDER_NAME/terraform.tfvars" -auto-approve
 
 
   deploy_all:
@@ -132,6 +135,7 @@ workflows:
       - deploy_all:
           requires:
             - push_to_registry
+            - prepare_infrastructure
           filters:
             branches:
               only:
