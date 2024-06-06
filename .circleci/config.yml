@@ -84,14 +84,12 @@ jobs:
       - run:
           name: Credentials
           command: |
-            echo 'export PATH=/path/to/foo/bin:"$PATH"' >> "$BASH_ENV"
-            echo 'export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"' >> "$BASH_ENV"
-            source "$BASH_ENV"
-            echo $BASH_ENV
+            echo $CREDENTIALS_FILE | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
       - run:
           name: Export
           command: |
-            export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"
+            echo 'export PATH=/path/to/foo/bin:"$PATH"' >> "$BASH_ENV"
+            echo 'export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"' >> "$BASH_ENV"
             source "$BASH_ENV"
       - run:
           name: Initialize Terraform
@@ -113,8 +111,7 @@ jobs:
       - run:
           name: Export
           command: |
-            echo 'export PATH=/path/to/foo/bin:"$PATH"' >> "$BASH_ENV"
-            echo "export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/dev/credentials.json" >> "$BASH_ENV"
+            echo "export GOOGLE_APPLICATION_CREDENTIALS=\"~/occupation-loss-predictor/terraform/environments/dev/credentials.json\"" >> "$BASH_ENV"
             source "$BASH_ENV"
       - run:
           name: Initialize Terraform
