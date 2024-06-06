@@ -83,7 +83,9 @@ jobs:
           command: echo $TERRAFORM_VARIABLES | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
       - run:
           name: Credentials
-          command: echo $CREDENTIALS_FILE | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
+          command: |
+            echo "export GOOGLE_APPLICATION_CREDENTIALS=\"~/occupation-loss-predictor/terraform/environments/prod/credentials.json\"" >> "$BASH_ENV"
+            source "$BASH_ENV"
       - run:
           name: Export
           command: |
