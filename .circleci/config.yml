@@ -68,7 +68,7 @@ jobs:
             docker build -t ghcr.io/kboskin/occupation-loss-predictor/frontend:main .
             docker push ghcr.io/kboskin/occupation-loss-predictor/frontend:main
 
-  prepare_infrastructure:
+  prepare_infrastructure_prod:
     docker:
       - image: hashicorp/terraform:light
     working_directory: ~/occupation-loss-predictor/terraform
@@ -77,23 +77,16 @@ jobs:
           path: ~/occupation-loss-predictor/
       - run:
           name: Prepare folders
-          command: mkdir environments/$TF_ENV_FOLDER_NAME
-      - run:
-          name: env
-          command: printenv
-      - run:
-          name: echo
-          command: echo "${{ secrets.CREDENTIALS_FILE }}" && echo "environments/$TF_ENV_FOLDER_NAME/terraform.tfvars" && echo "environments/$TF_ENV_FOLDER_NAME/credentials.json"
-          
+          command: mkdir environments/prod
       - run:
           name: Variables
-          command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 -d > environments/$TF_ENV_FOLDER_NAME/terraform.tfvars
+          command: echo "${{ secrets.TERRAFORM_VARIABLES }}" | base64 -d > environments/prod/terraform.tfvars
       - run:
           name: Credentials
-          command: echo "${{ secrets.CREDENTIALS_FILE }}" | base64 -d > environments/$TF_ENV_FOLDER_NAME/credentials.json
+          command: echo "${{ secrets.CREDENTIALS_FILE }}" | base64 -d > environments/prod/credentials.json
       - run:
           name: Export
-          command: export GOOGLE_APPLICATION_CREDENTIALS="$PWD/environments/$TF_ENV_FOLDER_NAME/credentials.json"
+          command: export GOOGLE_APPLICATION_CREDENTIALS="$PWD/environments/prod/credentials.json"
       - run:
           name: Initialize Terraform
           command: terraform init
@@ -102,7 +95,27 @@ jobs:
           command: terraform plan
       - run:
           name: Terraform Apply
-          command: terraform apply -var-file="environments/$TF_ENV_FOLDER_NAME/terraform.tfvars" -auto-approve
+          command: terraform apply -var-file="environments/prod/terraform.tfvars" -auto-approve
+          
+  prepare_infrastructure_dev:
+    docker:
+      - image: hashicorp/terraform:light
+    working_directory: ~/occupation-loss-predictor/terraform
+    steps:
+      - checkout:
+          path: ~/occupation-loss-predictor/
+      - run:
+          name: Export
+          command: export GOOGLE_APPLICATION_CREDENTIALS="$PWD/environments/dev/credentials.json"
+      - run:
+          name: Initialize Terraform
+          command: terraform init
+      - run:
+          name: Terraform Plan
+          command: terraform plan
+      - run:
+          name: Terraform Apply
+          command: terraform apply -var-file="environments/dev/terraform.tfvars" -auto-approve
 
 
   deploy_all:
@@ -126,7 +139,26 @@ workflows:
     jobs:
       - backend_validate
       - frontend_validate
-  build_test_deploy:
-    jobs:
-      - prepare_infrastructure
+      - prepare_infrastructure:
+          requires:
+            - push_to_registry
+          filters:
+            tags:
+              only: /^v*/
+            branches:
+              only: main
+      - prepare_infrastructure_dev:
+          requires:
+            - push_to_registry
+          filters:
+            branches:
+              only: release/*
+      - deploy_all:
+          requires:
+            - push_to_registry
+            - prepare_infrastructure
+          filters:
+            branches:
+              only:
+                - main
 
