@@ -68,7 +68,7 @@ jobs:
             docker build -t ghcr.io/kboskin/occupation-loss-predictor/frontend:main .
             docker push ghcr.io/kboskin/occupation-loss-predictor/frontend:main
 
-  prepare_infrastructure:
+  prepare_infrastructure_prod:
     docker:
       - image: hashicorp/terraform:light
     working_directory: ~/occupation-loss-predictor/terraform
@@ -84,6 +84,23 @@ jobs:
       - run:
           name: Terraform Apply
           command: terraform apply -var-file="environments/prod/terraform.tfvars" -auto-approve
+
+  prepare_infrastructure_dev:
+    docker:
+      - image: hashicorp/terraform:light
+    working_directory: ~/occupation-loss-predictor/terraform
+    steps:
+      - checkout:
+          path: ~/occupation-loss-predictor/
+      - run:
+          name: Initialize Terraform
+          command: terraform init
+      - run:
+          name: Terraform Plan
+          command: terraform plan
+      - run:
+          name: Terraform Apply
+          command: terraform apply -var-file="environments/dev/terraform.tfvars" -auto-approve        
 
 
   deploy_all:
@@ -119,11 +136,16 @@ workflows:
             branches:
               only:
                 - main
-      - prepare_infrastructure: 
-	  filters:
+      - prepare_infrastructure_dev:
+          filters:
             branches:
               only:
-                - main
+                - release/*
+      - prepare_infrastructure_prod:
+          filters:
+            branches:
+              only:
+                - main        
       - deploy_all:
           requires:
             - push_to_registry
