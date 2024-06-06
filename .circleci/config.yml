@@ -86,7 +86,9 @@ jobs:
           command: echo $CREDENTIALS_FILE | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
       - run:
           name: Export
-          command: export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"
+          command: |
+            export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"
+            source "$BASH_ENV"
       - run:
           name: Initialize Terraform
           command: terraform init
