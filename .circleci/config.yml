@@ -87,6 +87,7 @@ jobs:
             echo 'export PATH=/path/to/foo/bin:"$PATH"' >> "$BASH_ENV"
             echo 'export GOOGLE_APPLICATION_CREDENTIALS="~/occupation-loss-predictor/terraform/environments/prod/credentials.json"' >> "$BASH_ENV"
             source "$BASH_ENV"
+            echo $BASH_ENV
       - run:
           name: Export
           command: |
