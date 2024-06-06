@@ -32,14 +32,23 @@ resource "google_compute_instance" "app_vm" {
     # Install Docker Compose
     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
+    sudo usermod -a -G docker $USER
 
-    # Setup Docker Compose directory and run
-    mkdir -p /home/ubuntu/docker
-    cat <<'EOF2' > /home/ubuntu/docker/docker-compose.yml
+    # prep directories
+    sudo mkdir -p /home/app
+    sudo mkdir -p /home/app/configs/docker
+    sudo mkdir -p /home/app/configs/initdb.d
+
+    # Setting up app directory
+    cat <<'EOF2' > /home/app/docker-compose.yml
     ${file("${path.module}/../docker-compose.yml")}
-    EOF2
-    cd /home/ubuntu/docker
-    docker-compose down && docker-compose pull && docker-compose up -d
+    EOF3
+    cat <<'EOF3' > /home/app/configs/docker/losses.env
+    ${file("${path.module}/../configs/docker/losses.env")}
+    EOF4
+    cat <<'EOF4' > /home/app/configs/initdb.d/setup.sql
+    ${file("${path.module}/../configs/initdb.d/setup.sql")}
+    EOF5
   EOF
 
   service_account {

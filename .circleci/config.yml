@@ -47,6 +47,7 @@ jobs:
           name: Run tests
 
   push_to_registry:
+    description: "Pushing over to docker registry"
     machine:
       image: ubuntu-2204:2022.04.2
     steps:
@@ -55,8 +56,6 @@ jobs:
       - run:
           name: Push Backend Docker Image
           command: |
-            echo ${GITHUB_USERNAME}
-            echo ${GITHUB_TOKEN}
             cd ~/occupation-loss-predictor/apps/backend
             docker login -u ${GITHUB_USERNAME} -p ${GITHUB_TOKEN} ghcr.io
             docker build -t ghcr.io/kboskin/occupation-loss-predictor/backend:main .
@@ -64,12 +63,28 @@ jobs:
       - run:
           name: Push Frontend Docker Image
           command: |
-            echo ${GITHUB_USERNAME}
-            echo ${GITHUB_TOKEN}
             cd ~/occupation-loss-predictor/apps/frontend
             docker login -u ${GITHUB_USERNAME} -p ${GITHUB_TOKEN} ghcr.io
             docker build -t ghcr.io/kboskin/occupation-loss-predictor/frontend:main .
             docker push ghcr.io/kboskin/occupation-loss-predictor/frontend:main
+
+  prepare_infrastructure:
+    docker:
+      - image: hashicorp/terraform:light
+    working_directory: ~/occupation-loss-predictor/terraform
+    steps:
+      - checkout:
+          path: ~/occupation-loss-predictor/
+      - run:
+          name: Initialize Terraform
+          command: terraform init
+      - run:
+          name: Terraform Plan
+          command: terraform plan
+      - run:
+          name: Terraform Apply
+          command: terraform apply -var-file="environments/prod/terraform.tfvars" -auto-approve
+
 
   deploy_all:
     machine:
@@ -86,6 +101,7 @@ jobs:
             ssh-keyscan $AWS_SERVER >> ~/.ssh/known_hosts
             chmod 644 ~/.ssh/known_hosts
             ssh $AWS_USER@$AWS_SERVER 'cd /app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend'
+
 workflows:
   build_and_test:
     jobs:
@@ -100,6 +116,11 @@ workflows:
             - backend_validate
             - frontend_validate
           filters:
+            branches:
+              only:
+                - main
+      - prepare_infrastructure: 
+	  filters:
             branches:
               only:
                 - main
