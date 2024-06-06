@@ -139,7 +139,16 @@ workflows:
     jobs:
       - backend_validate
       - frontend_validate
-      - prepare_infrastructure:
+      - push_to_registry:
+          requires:
+            - backend_validate
+            - frontend_validate
+          filters:
+            branches:
+              only:
+                - main
+                - release/*
+      - prepare_infrastructure_prod:
           requires:
             - push_to_registry
           filters:
@@ -156,9 +165,10 @@ workflows:
       - deploy_all:
           requires:
             - push_to_registry
-            - prepare_infrastructure
+            - prepare_infrastructure_prod
           filters:
+            tags:
+              only: /^v*/
             branches:
-              only:
-                - main
+              only: main
 
