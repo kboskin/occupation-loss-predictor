@@ -83,6 +83,7 @@ jobs:
           command: |
             touch ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
             echo $TERRAFORM_VARIABLES | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
+            cat ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
       - run:
           name: Credentials & Export
           command: |
