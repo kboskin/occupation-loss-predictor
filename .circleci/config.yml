@@ -96,10 +96,10 @@ jobs:
           command: terraform init
       - run:
           name: Terraform Plan
-          command: terraform plan -var-file="~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars"
+          command: terraform plan -var-file="environments/prod/terraform.tfvars"
       - run:
           name: Terraform Apply
-          command: terraform apply -var-file="~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars" -auto-approve
+          command: terraform apply -var-file="environments/prod/terraform.tfvars" -auto-approve
           
   prepare_infrastructure_dev:
     docker:
