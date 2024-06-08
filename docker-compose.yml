@@ -20,7 +20,7 @@ services:
         condition: service_healthy
     links:
       - db
-    command: alembic upgrade head
+    command: poetry run alembic upgrade head
   db:
     image: postgres:14.0
     container_name: "losses-db"

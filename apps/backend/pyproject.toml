@@ -2,7 +2,7 @@
 name = "invasion"
 version = "1.0"
 description = ""
-authors = ["Kostiantyn Boskin <kostyaboskin@gmail.com>"]
+authors = ["Combat Losses <support@combatlosses.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.10, <3.12"

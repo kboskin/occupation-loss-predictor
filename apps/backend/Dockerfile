@@ -1,12 +1,13 @@
 FROM python:3.10
-MAINTAINER Kostiantyn Boskin
+MAINTAINER Combat Losses
 
-COPY ./pyproject.toml /app/pyproject.toml
+COPY ./pyproject.toml /app/
 WORKDIR /app
 ENV PYTHONPATH=/app
 
 RUN pip install pip==20.3.1
 RUN pip install poetry uvicorn
+RUN poetry config virtualenvs.create false
 RUN poetry install
 
 EXPOSE 80

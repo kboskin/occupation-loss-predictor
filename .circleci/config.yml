@@ -166,8 +166,8 @@ workflows:
                 - main
                 - release/*
       - prepare_infrastructure_prod:
-#          requires:
-#            - push_to_registry
+          requires:
+            - push_to_registry
           filters:
             tags:
               only: /^v*/
@@ -181,7 +181,7 @@ workflows:
               only: release/*
       - deploy_all_prod:
           requires:
-#            - push_to_registry
+            - push_to_registry
             - prepare_infrastructure_prod
           filters:
             tags:
