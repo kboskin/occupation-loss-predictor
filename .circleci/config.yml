@@ -132,9 +132,9 @@ jobs:
       - run:
           name: Terraform Apply
           command: terraform apply -var-file="environments/dev/terraform.tfvars" -auto-approve
-
-
-  deploy_all:
+          
+          
+  deploy_all_prod:
     machine:
       image: ubuntu-2204:2022.04.2
     steps:
@@ -143,12 +143,12 @@ jobs:
           command: |
             'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
             eval $(ssh-agent -s)
-            echo "GCP_KEY" | tr -d '\r' | ssh-add -
+            echo "$GCP_PR_KEY_PROD" | tr -d '\r' | ssh-add -
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
-            ssh-keyscan $AWS_SERVER >> ~/.ssh/known_hosts
+            ssh-keyscan $GCP_SERVER_PROD >> ~/.ssh/known_hosts
             chmod 644 ~/.ssh/known_hosts
-            ssh GCP_USER@GCP_SERVER 'cd /app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend'
+            ssh $GCP_USER_PROD@$GCP_SERVER_PROD 'cd /app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend'
 
 workflows:
   build_and_test:
@@ -165,8 +165,8 @@ workflows:
                 - main
                 - release/*
       - prepare_infrastructure_prod:
-#          requires:
-#            - push_to_registry
+          requires:
+            - push_to_registry
           filters:
             tags:
               only: /^v*/
@@ -178,7 +178,7 @@ workflows:
           filters:
             branches:
               only: release/*
-      - deploy_all:
+      - deploy_all_prod:
           requires:
             - push_to_registry
             - prepare_infrastructure_prod
