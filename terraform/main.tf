@@ -48,13 +48,16 @@ resource "google_compute_instance" "app_vm" {
     # Setting up app directory
     cat <<'EOF2' > /home/app/docker-compose.yml
     ${file("${path.module}/../docker-compose.yml")}
-    EOF3
+    EOF2
+
     cat <<'EOF3' > /home/app/configs/docker/losses.env
     ${file("${path.module}/../configs/docker/losses.env")}
-    EOF4
+    EOF3
+
     cat <<'EOF4' > /home/app/configs/initdb.d/setup.sql
     ${file("${path.module}/../configs/initdb.d/setup.sql")}
-    EOF5
+    EOF4
+
   EOF
 
   service_account {
