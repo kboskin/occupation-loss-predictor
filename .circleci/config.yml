@@ -180,7 +180,7 @@ workflows:
               only: release/*
       - deploy_all_prod:
           requires:
-            - push_to_registry
+#            - push_to_registry
             - prepare_infrastructure_prod
           filters:
             tags:
