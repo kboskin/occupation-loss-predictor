@@ -141,7 +141,7 @@ jobs:
       - run:
           name: Deploy Everything to the Server
           command: |
-            'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
+            command -v ssh-agent >/dev/null || ( sudo DEBIAN_FRONTEND=noninteractive apt-get update && sudo apt-get install -y openssh-client )
             eval $(ssh-agent -s)
             echo "$GCP_PR_KEY_PROD" | tr -d '\r' | ssh-add -
             mkdir -p ~/.ssh
