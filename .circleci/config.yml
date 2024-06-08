@@ -146,6 +146,7 @@ jobs:
             echo "$GCP_PR_KEY_PROD" | tr -d '\r' | ssh-add -
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
+            echo "$GCP_PR_KEY_PROD" | tr -d '\r' | ssh-add -
             ssh-keyscan $GCP_SERVER_PROD >> ~/.ssh/known_hosts
             chmod 644 ~/.ssh/known_hosts
             ssh $GCP_USER_PROD@$GCP_SERVER_PROD 'cd /app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend'
@@ -179,9 +180,9 @@ workflows:
             branches:
               only: release/*
       - deploy_all_prod:
-          requires:
-            - push_to_registry
-            - prepare_infrastructure_prod
+#          requires:
+#            - push_to_registry
+#            - prepare_infrastructure_prod
           filters:
             tags:
               only: /^v*/
