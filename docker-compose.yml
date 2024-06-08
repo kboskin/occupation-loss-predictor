@@ -42,6 +42,8 @@ services:
   frontend: #build: apps/frontend
     image: ghcr.io/kboskin/occupation-loss-predictor/frontend:${TAG:-main}
     container_name: "losses-frontend"
+    networks:
+      - internal
     ports:
       - 3000:3000
     stdin_open: true
