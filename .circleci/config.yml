@@ -142,11 +142,8 @@ jobs:
           name: Deploy Everything to the Server
           command: |
             command -v ssh-agent >/dev/null || ( sudo DEBIAN_FRONTEND=noninteractive apt-get update && sudo apt-get install -y openssh-client )
-            echo "here1"
             eval $(ssh-agent -s)
-            echo "here2"
-            echo "$GCP_PR_KEY_PROD" | tr -d '\r' | ssh-add -
-            echo "here3"
+            echo "$GCP_PR_KEY_PROD" | base64 --decode | tr -d '\r' | ssh-add -
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
             ssh-keyscan $GCP_SERVER_PROD >> ~/.ssh/known_hosts
