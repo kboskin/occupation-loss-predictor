@@ -83,7 +83,12 @@ jobs:
           command: |
             touch ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
             echo $TERRAFORM_VARIABLES | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
-            cat ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
+      - run:
+          name: Keys
+          command: |
+            touch ~/occupation-loss-predictor/terraform/environments/prod/ssh.pub
+            echo $SSH_PUB | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/ssh.pub
+            cat ~/occupation-loss-predictor/terraform/environments/prod/ssh.pub
       - run:
           name: Credentials & Export
           command: |
@@ -109,6 +114,12 @@ jobs:
       - checkout:
           path: ~/occupation-loss-predictor/
       - run:
+          name: Keys
+          command: |
+            touch ~/occupation-loss-predictor/terraform/environments/dev/ssh.pub
+            echo $SSH_PUB_DEV | base64 -d > ~/occupation-loss-predictor/terraform/environments/dev/ssh.pub
+            cat ~/occupation-loss-predictor/terraform/environments/dev/ssh.pub
+      - run:
           name: Credentials & Export
           command: |
             echo $CREDENTIALS_FILE | base64 -d > $HOME/.config/gcloud/application_default_credentials.json
@@ -117,10 +128,10 @@ jobs:
           command: terraform init
       - run:
           name: Terraform Plan
-          command: terraform plan -var-file="~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars"
+          command: terraform plan -var-file="environments/dev/terraform.tfvars"
       - run:
           name: Terraform Apply
-          command: terraform apply -var-file="~/occupation-loss-predictor/terraform/environments/dev/terraform.tfvars" -auto-approve
+          command: terraform apply -var-file="environments/dev/terraform.tfvars" -auto-approve
 
 
   deploy_all:
@@ -132,12 +143,12 @@ jobs:
           command: |
             'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
             eval $(ssh-agent -s)
-            echo "$AWS_KEY" | tr -d '\r' | ssh-add -
+            echo "GCP_KEY" | tr -d '\r' | ssh-add -
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
             ssh-keyscan $AWS_SERVER >> ~/.ssh/known_hosts
             chmod 644 ~/.ssh/known_hosts
-            ssh $AWS_USER@$AWS_SERVER 'cd /app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend'
+            ssh GCP_USER@GCP_SERVER 'cd /app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend'
 
 workflows:
   build_and_test:
@@ -176,4 +187,3 @@ workflows:
               only: /^v*/
             branches:
               only: main
-

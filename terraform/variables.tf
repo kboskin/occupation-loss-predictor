@@ -39,3 +39,13 @@ variable "gcs_bucket_name" {
   description = "The name of the GCS bucket to store Terraform state."
   type        = string
 }
+
+variable "ssh_user" {
+  description = "SSH user for deployments"
+  type        = string
+}
+
+variable "ssh_pub_path" {
+  description = "SSH pub key path"
+  type        = string
+}

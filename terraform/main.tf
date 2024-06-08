@@ -3,6 +3,12 @@ resource "google_compute_instance" "app_vm" {
   machine_type = var.machine_type
   zone         = var.instance_zone
 
+  metadata = {
+    ssh-keys = <<EOF
+      ${var.ssh_user}:${file(var.ssh_pub_path)}
+    EOF
+  }
+
   boot_disk {
     initialize_params {
       image = var.instance_image
@@ -10,10 +16,10 @@ resource "google_compute_instance" "app_vm" {
   }
 
   network_interface {
-    network = "default"
+    network    = "default"
     subnetwork = "default"
     access_config {
-      nat_ip = var.external_ip  // Ephemeral IP
+      nat_ip = var.external_ip // Ephemeral IP
     }
   }
 
@@ -95,4 +101,17 @@ resource "google_compute_firewall" "health_check" {
   // Google's IP ranges for health check
   source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
   target_tags   = var.network_tags
+}
+
+// allow ssh for terraform provisioned ssh keys
+resource "google_compute_firewall" "ssh-rule" {
+  name    = "tf-ssh-allow"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+  target_tags   = var.network_tags
+  source_ranges = ["0.0.0.0/0"]
 }
