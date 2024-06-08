@@ -1,8 +1,7 @@
 version: '3.0'
 
 services:
-  app:
-#    build: apps/backend
+  app: #build: apps/backend
     image: ghcr.io/kboskin/occupation-loss-predictor/backend:${TAG:-main}
     container_name: "losses-backend"
     networks:
@@ -41,8 +40,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-  frontend:
-#    build: apps/frontend
+  frontend: #build: apps/frontend
     image: ghcr.io/kboskin/occupation-loss-predictor/frontend:${TAG:-main}
     container_name: "losses-frontend"
     ports:
