@@ -75,9 +75,7 @@ async def data_update_job():
 
 
 def run_event_loop():
-    new_loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(new_loop)
-    new_loop.run_until_complete(get_forecasts())
+    asyncio.run(get_forecasts())
 
 
 async def get_forecasts():

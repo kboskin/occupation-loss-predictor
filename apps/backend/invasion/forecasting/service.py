@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime, timedelta
 from datetime import date
-from typing import Union, List
+from typing import Union, List, Sequence
 
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
@@ -50,18 +50,13 @@ class ForecastService:
         return parent_forecast
 
     @classmethod
-    async def prepare_forecast_for_category(
+    def prepare_forecast_for_category(
         cls,
-        session: AsyncSession,
         enum: LossesProjectEnum,
-        parent_forecast: ForecastsTable
-    ):
+        parent_forecast: ForecastsTable,
+        data: Sequence
+    ) -> List[ForecastsDataTable] :
         logging.debug(f"Parent forecast id: {parent_forecast}")
-
-        table = losses_enum_to_table_mapper(enum)
-        data = (await session.execute(select(table).order_by(table.time))) \
-            .scalars() \
-            .all()
 
         for item in data:
             item.__dict__['type'] = enum
@@ -120,9 +115,9 @@ class ForecastService:
         #     plt.legend()
         #     plt.grid(True)
         #     plt.show()
-        session.add_all(dictified)
         logging.debug("added forecast to session")
         logging.debug(f"forecast created for category {enum}")
+        return dictified
 
     @classmethod
     async def create_all_forecasts_if_needed(cls, session: AsyncSession):
@@ -146,11 +141,24 @@ class ForecastService:
                 try:
                     parent_forecast = ForecastService.create_parent_forecast(session)
                     for losses_item in LossesProjectEnum.list():
-                        await ForecastService.prepare_forecast_for_category(session, losses_item, parent_forecast)
+                        table = losses_enum_to_table_mapper(losses_item)
+                        data = (await session.execute(select(table).order_by(table.time))) \
+                            .scalars() \
+                            .all()
+
+                        forecast_data = ForecastService.prepare_forecast_for_category(
+                            losses_item,
+                            parent_forecast,
+                            data
+                        )
+
+                        session.add_all(forecast_data)
                     await session.commit()
                 except Exception as e:
                     logging.error(f"exception during forecast preparation {e}")
                     await session.rollback()
+                finally:
+                    await session.close()
             else:
                 logging.debug("skipping forecast preparation; the date is same")
 

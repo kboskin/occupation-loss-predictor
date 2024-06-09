@@ -136,6 +136,9 @@ jobs:
     machine:
       image: ubuntu-2204:2022.04.2
     steps:
+      - run: 
+           name: Metadata script delay (bad bad quick)
+           command: sleep 120;
       - run:
           name: Configure SSH
           command: |
