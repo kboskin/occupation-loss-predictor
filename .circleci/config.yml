@@ -160,7 +160,7 @@ workflows:
     jobs:
       - backend_validate
       - frontend_validate
-      - push_to_registry:
+      - push_to_registry_prod:
           requires:
             - backend_validate
             - frontend_validate
