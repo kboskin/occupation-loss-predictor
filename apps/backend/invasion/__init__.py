@@ -73,7 +73,6 @@ async def data_update_job():
     process = multiprocessing.Process(target=run_event_loop)
     process.start()
 
-
 def run_event_loop():
     new_loop = asyncio.new_event_loop()
     asyncio.set_event_loop(new_loop)

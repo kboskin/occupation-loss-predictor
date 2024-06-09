@@ -41,7 +41,7 @@ class ForecastService:
             return None
 
     @classmethod
-    async def create_parent_forecast(cls, session: AsyncSession) -> ForecastsTable:
+    def create_parent_forecast(cls, session: AsyncSession) -> ForecastsTable:
         parent_forecast = ForecastsTable()
 
         logging.debug(f"adding forecast {parent_forecast}")
@@ -131,7 +131,7 @@ class ForecastService:
             # Given datetime
             forecast_time = await ForecastService.__get_last_forecast_date(session)
 
-            # also need to make sure that the data worth preparing forecase
+            # also need to make sure that the data worth preparing forecast
             last_record_time = await ForecastService.__get_last_forecast_date(session)
 
             logging.debug(f"last forecast date: {forecast_time}")
@@ -144,15 +144,13 @@ class ForecastService:
                     forecast_time.date() < last_record_time.date()):
                 logging.debug("preparing new forecast")
                 try:
-                    parent_forecast = await ForecastService.create_parent_forecast(session)
+                    parent_forecast = ForecastService.create_parent_forecast(session)
                     for losses_item in LossesProjectEnum.list():
                         await ForecastService.prepare_forecast_for_category(session, losses_item, parent_forecast)
                     await session.commit()
                 except Exception as e:
                     logging.error(f"exception during forecast preparation {e}")
                     await session.rollback()
-                finally:
-                    await session.close()
             else:
                 logging.debug("skipping forecast preparation; the date is same")
 
