@@ -46,7 +46,7 @@ jobs:
           command: yarn test
           name: Run tests
 
-  push_to_registry:
+  push_to_registry_prod:
     description: "Pushing over to docker registry"
     machine:
       image: ubuntu-2204:2022.04.2
@@ -64,6 +64,7 @@ jobs:
           name: Push Frontend Docker Image
           command: |
             cd ~/occupation-loss-predictor/apps/frontend
+            echo $FE_ENV_PROD | base64 -d > /home/app/configs/docker/frontend.env
             docker login -u ${GITHUB_USERNAME} -p ${GITHUB_TOKEN} ghcr.io
             docker build -t ghcr.io/kboskin/occupation-loss-predictor/frontend:main .
             docker push ghcr.io/kboskin/occupation-loss-predictor/frontend:main
@@ -170,7 +171,7 @@ workflows:
                 - release/*
       - prepare_infrastructure_prod:
           requires:
-            - push_to_registry
+            - push_to_registry_prod
           filters:
             tags:
               only: /^v*/
@@ -178,13 +179,13 @@ workflows:
               only: main
       - prepare_infrastructure_dev:
           requires:
-            - push_to_registry
+            - push_to_registry_prod
           filters:
             branches:
               only: release/*
       - deploy_all_prod:
           requires:
-            - push_to_registry
+            - push_to_registry_prod
             - prepare_infrastructure_prod
           filters:
             tags:
