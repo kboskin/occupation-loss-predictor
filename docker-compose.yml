@@ -42,6 +42,8 @@ services:
   frontend: #build: apps/frontend
     image: ghcr.io/kboskin/occupation-loss-predictor/frontend:${TAG:-main}
     container_name: "losses-frontend"
+    env_file:
+      - configs/docker/frontend.env
     networks:
       - internal
     ports:

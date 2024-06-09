@@ -79,18 +79,17 @@ jobs:
           name: Prepare folders
           command: mkdir -p ~/occupation-loss-predictor/terraform/environments/prod/
       - run:
-          name: Variables
+          name: Terraform Variables
           command: |
             touch ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
             echo $TERRAFORM_VARIABLES | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/terraform.tfvars
       - run:
-          name: Keys
+          name: SSH Keys
           command: |
             touch ~/occupation-loss-predictor/terraform/environments/prod/ssh.pub
             echo $SSH_PUB | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/ssh.pub
-            cat ~/occupation-loss-predictor/terraform/environments/prod/ssh.pub
       - run:
-          name: Credentials & Export
+          name: Terraform Credentials & Export
           command: |
             touch ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
             echo $CREDENTIALS_FILE | base64 -d > ~/occupation-loss-predictor/terraform/environments/prod/credentials.json
@@ -118,7 +117,6 @@ jobs:
           command: |
             touch ~/occupation-loss-predictor/terraform/environments/dev/ssh.pub
             echo $SSH_PUB_DEV | base64 -d > ~/occupation-loss-predictor/terraform/environments/dev/ssh.pub
-            cat ~/occupation-loss-predictor/terraform/environments/dev/ssh.pub
       - run:
           name: Credentials & Export
           command: |
@@ -139,7 +137,7 @@ jobs:
       image: ubuntu-2204:2022.04.2
     steps:
       - run:
-          name: Deploy Everything to the Server
+          name: Configure SSH
           command: |
             command -v ssh-agent >/dev/null || ( sudo DEBIAN_FRONTEND=noninteractive apt-get update && sudo apt-get install -y openssh-client )
             eval $(ssh-agent -s)
@@ -148,6 +146,14 @@ jobs:
             chmod 700 ~/.ssh
             ssh-keyscan $GCP_SERVER_PROD >> ~/.ssh/known_hosts
             chmod 644 ~/.ssh/known_hosts
+      - run:
+          name: Prepare env variables
+          command: |
+            SSH_EXECUTE_SCRIPT="mkdir /home/app/configs/docker/ && cd /home/app/configs/docker/ &&
+            echo $LOSSES_ENV_PROD | base64 -d > losses.env && echo $FE_ENV_PROD | base64 -d > frontend.env"
+      - run:
+          name: Run containers
+          command: |      
             SSH_EXECUTE_SCRIPT="docker login -u ${GITHUB_USERNAME} -p ${GITHUB_TOKEN} ghcr.io && cd /home/app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend"
             ssh -o StrictHostKeyChecking=no $GCP_USER_PROD@$GCP_SERVER_PROD "${SSH_EXECUTE_SCRIPT}"
 

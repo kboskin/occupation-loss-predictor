@@ -51,13 +51,9 @@ resource "google_compute_instance" "app_vm" {
     ${file("${path.module}/../docker-compose.yml")}
     EOF2
 
-    cat <<'EOF3' > /home/app/configs/docker/losses.env
-    ${file("${path.module}/../configs/docker/losses.env")}
-    EOF3
-
-    cat <<'EOF4' > /home/app/configs/initdb.d/setup.sql
+    cat <<'EOF3' > /home/app/configs/initdb.d/setup.sql
     ${file("${path.module}/../configs/initdb.d/setup.sql")}
-    EOF4
+    EOF3
 
   EOF
 
