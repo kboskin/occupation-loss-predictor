@@ -64,7 +64,7 @@ jobs:
           name: Push Frontend Docker Image
           command: |
             cd ~/occupation-loss-predictor/apps/frontend
-            echo $FE_ENV_PROD | base64 -d > /home/app/configs/docker/frontend.env
+            echo $FE_ENV_PROD | base64 -d > ~/occupation-loss-predictor/apps/frontend/frontend.env
             docker login -u ${GITHUB_USERNAME} -p ${GITHUB_TOKEN} ghcr.io
             docker build -t ghcr.io/kboskin/occupation-loss-predictor/frontend:main .
             docker push ghcr.io/kboskin/occupation-loss-predictor/frontend:main
