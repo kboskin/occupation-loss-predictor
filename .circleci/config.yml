@@ -180,9 +180,9 @@ workflows:
             branches:
               only: release/*
       - deploy_all_prod:
-#          requires:
-#            - push_to_registry
-#            - prepare_infrastructure_prod
+          requires:
+            - push_to_registry
+            - prepare_infrastructure_prod
           filters:
             tags:
               only: /^v*/

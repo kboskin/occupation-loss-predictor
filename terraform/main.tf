@@ -46,6 +46,9 @@ resource "google_compute_instance" "app_vm" {
     sudo mkdir -p /home/app/configs/docker
     sudo mkdir -p /home/app/configs/initdb.d
 
+    # read, Write, and Execute Permissions
+    sudo chmod 777 /home/app/configs/docker
+
     # Setting up app directory
     cat <<'EOF2' > /home/app/docker-compose.yml
     ${file("${path.module}/../docker-compose.yml")}
