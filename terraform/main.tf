@@ -45,12 +45,12 @@ resource "google_compute_instance" "app_vm" {
     sudo apt-get install certbot python3-certbot-nginx
     sudo certbot --nginx -d combatlosses.com -d www.combatlosses.com
 
-    # prep directories
+    # Prepare directories
     sudo mkdir -p /home/app
     sudo mkdir -p /home/app/configs/docker
     sudo mkdir -p /home/app/configs/initdb.d
 
-    # read, Write, and Execute Permissions
+    # Read, Write, and Execute Permissions
     sudo chmod 777 /home/app/configs/docker
 
     # Setting up app directory
