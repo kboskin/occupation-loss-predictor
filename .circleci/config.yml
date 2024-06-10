@@ -150,8 +150,10 @@ jobs:
             chmod 700 ~/.ssh
             ssh-keyscan $GCP_SERVER_PROD >> ~/.ssh/known_hosts
             chmod 644 ~/.ssh/known_hosts
+            SSH_PUT_CERTS="mkdir -p /etc/letsencrypt/live/combatlosses.com && mkdir -p echo $CERT_PROD | base64 -d > /etc/letsencrypt/live/combatlosses.com/fullchain.pem && echo $CERT_PKEY_PROD | base64 -d > /etc/letsencrypt/live/combatlosses.com/privkey.pem"
             SSH_EXECUTE_SCRIPT_ENV="mkdir -p /home/app/configs/docker/ && echo $LOSSES_ENV_PROD | base64 -d > /home/app/configs/docker/losses.env && echo $FE_ENV_PROD | base64 -d > /home/app/configs/docker/frontend.env"
             SSH_EXECUTE_SCRIPT="docker login -u ${GITHUB_USERNAME} -p ${GITHUB_TOKEN} ghcr.io && cd /home/app && docker compose down && docker compose pull && docker compose up -d db && docker compose up -d app && docker compose up -d frontend && docker compose up -d nginx"
+            ssh -o StrictHostKeyChecking=no $GCP_USER_PROD@$GCP_SERVER_PROD "${SSH_PUT_CERTS}"
             ssh -o StrictHostKeyChecking=no $GCP_USER_PROD@$GCP_SERVER_PROD "${SSH_EXECUTE_SCRIPT_ENV}"
             ssh -o StrictHostKeyChecking=no $GCP_USER_PROD@$GCP_SERVER_PROD "${SSH_EXECUTE_SCRIPT}"
 
