@@ -54,9 +54,17 @@ resource "google_compute_instance" "app_vm" {
     ${file("${path.module}/../docker-compose.yml")}
     EOF2
 
-    cat <<'EOF3' > /home/app/configs/initdb.d/setup.sql
-    ${file("${path.module}/../configs/initdb.d/setup.sql")}
+     cat <<'EOF3' > /home/app/nginx.conf
+    ${file("${path.module}/../nginx.conf")}
     EOF3
+
+    cat <<'EOF4' > /home/app/configs/initdb.d/setup.sql
+    ${file("${path.module}/../configs/initdb.d/setup.sql")}
+    EOF4
+
+    # Get certificates
+    sudo apt-get install certbot python3-certbot-nginx
+    sudo certbot --nginx -d combatlosses.com -d www.combatlosses.com
 
   EOF
 

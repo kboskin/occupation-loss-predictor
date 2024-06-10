@@ -5,14 +5,9 @@ services:
     image: ghcr.io/kboskin/occupation-loss-predictor/backend:${TAG:-main}
     container_name: "losses-backend"
     networks:
-      - internal
+      - app_internal
     env_file:
       - configs/docker/losses.env
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=losses
-      - POSTGRES_HOST=db
     ports:
       - "8000:80"
     depends_on:
@@ -25,7 +20,7 @@ services:
     container_name: "losses-db"
     command: postgres -c max_connections=400 -c shared_buffers=800MB
     networks:
-      - internal
+      - app_internal
     ports:
       - "5432:5432"
     env_file:
@@ -45,11 +40,25 @@ services:
     env_file:
       - configs/docker/frontend.env
     networks:
-      - internal
+      - app_internal
     ports:
       - 3000:3000
     stdin_open: true
+  nginx:
+      image: nginx:latest
+      container_name: "losses-nginx"
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf:ro
+        - /etc/letsencrypt:/etc/letsencrypt:ro  # Mounting Letsencrypt certificates
+      ports:
+        - "80:80"
+        - "443:443"
+      depends_on:
+        - app
+        - frontend
+      networks:
+        - app_internal
 
 networks:
-  internal:
+  app_internal:
     driver: bridge
