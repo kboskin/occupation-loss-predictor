@@ -41,6 +41,10 @@ resource "google_compute_instance" "app_vm" {
     sudo usermod -a -G docker $USER
     sudo chmod 666 /var/run/docker.sock
 
+    # Get certificates
+    sudo apt-get install certbot python3-certbot-nginx
+    sudo certbot --nginx -d combatlosses.com -d www.combatlosses.com
+
     # prep directories
     sudo mkdir -p /home/app
     sudo mkdir -p /home/app/configs/docker
@@ -61,10 +65,6 @@ resource "google_compute_instance" "app_vm" {
     cat <<'EOF4' > /home/app/configs/initdb.d/setup.sql
     ${file("${path.module}/../configs/initdb.d/setup.sql")}
     EOF4
-
-    # Get certificates
-    sudo apt-get install certbot python3-certbot-nginx
-    sudo certbot --nginx -d combatlosses.com -d www.combatlosses.com
 
   EOF
 
