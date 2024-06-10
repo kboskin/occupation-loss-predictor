@@ -41,9 +41,9 @@ resource "google_compute_instance" "app_vm" {
     sudo usermod -a -G docker $USER
     sudo chmod 666 /var/run/docker.sock
 
-    # Get certificates
-    sudo apt-get install certbot python3-certbot-nginx
-    sudo certbot --nginx -d combatlosses.com -d www.combatlosses.com
+    # Prepare cert infrastructure
+    sudo mkdir -p /etc/letsencrypt/live/combatlosses.com/
+    sudo chmod 777 /etc/letsencrypt/live/combatlosses.com/
 
     # Prepare directories
     sudo mkdir -p /home/app
