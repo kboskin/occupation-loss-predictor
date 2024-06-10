@@ -5,6 +5,10 @@ import React from 'react';
 import {AppProps} from 'next/app';
 import {Providers} from "../redux/provider";
 import { Ubuntu } from 'next/font/google'
+import dotenv from "dotenv";
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
 const ubuntu = Ubuntu({
     weight: ['400', '500', '700'],

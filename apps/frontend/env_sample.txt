@@ -1,4 +1,4 @@
-API_URL="http://localhost:8000/"
+API_URL="http://test:8000/"
 
 //prod
 NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSyBP57CBw-MLaen0am1U6XB4WK7FpyJj6lc"
