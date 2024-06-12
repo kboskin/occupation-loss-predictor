@@ -81,7 +81,6 @@ class AdminService:
                         continue
                     else:
                         async_session.add_all(AdminService._scrap(year, month).tables_mapped)
-        await async_session.commit()
 
     @classmethod
     def _scrap(cls, year, month) -> ScrapDataHolder:

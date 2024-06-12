@@ -11,6 +11,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi_utils_sqlalch2.tasks import repeat_every
+from sqlalchemy import create_engine
+from sqlalchemy.ext.asyncio import async_session
 from starlette.responses import JSONResponse
 
 from invasion.admin.service import AdminService
@@ -21,7 +23,7 @@ from invasion.base.pagination import PaginationException
 from invasion.config import DEBUG, CORS, init_sentry
 import os
 
-from invasion.db.engine import get_session
+from invasion.db.engine import get_session, create_engine_for_process, get_session_for_process
 from invasion.db.models import init_models
 from invasion.forecasting.service import ForecastService
 from invasion.losses.losses import BrokenLossTypeException
@@ -80,10 +82,23 @@ def run_event_loop():
     asyncio.run(get_forecasts())
 
 
+# get forecasts lives in a separate process due to blocking nature
 async def get_forecasts():
     logging.info("Running event loop with updates")
-    await AdminService.update_statistic(get_session())
-    await ForecastService.create_all_forecasts_if_needed(get_session())
+
+    async_session_maker = get_session_for_process(create_engine_for_process())
+    async with async_session_maker as session:
+        try:
+            async with session.begin():
+                await AdminService.update_statistic(session)
+                await ForecastService.create_all_forecasts_if_needed(session)
+            await session.commit()  # Explicitly commit the transaction
+        except Exception as e:
+            await session.rollback()  # Rollback in case of an exception
+            logging.error(f"Exception during forecast updates: {e}")
+        finally:
+            await session.close()
+
 
 
 @app.exception_handler(PaginationException)

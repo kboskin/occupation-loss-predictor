@@ -122,52 +122,44 @@ class ForecastService:
     @classmethod
     async def create_all_forecasts_if_needed(cls, session: AsyncSession):
         logging.debug("create_all_forecasts_if_needed")
-        async with session.begin():
-            # Given datetime
-            forecast_time = await ForecastService.__get_last_forecast_date(session)
+        # Given datetime
+        forecast_time = await ForecastService.__get_last_forecast_date(session)
 
-            # also need to make sure that the data worth preparing forecast
-            last_record_time = await ForecastService.__get_last_forecast_date(session)
+        # also need to make sure that the data worth preparing forecast
+        last_record_time = await ForecastService.__get_last_forecast_date(session)
 
-            logging.debug(f"last forecast date: {forecast_time}")
+        logging.debug(f"last forecast date: {forecast_time}")
 
-            # Current datetime
-            current_datetime = datetime.now()
+        # Current datetime
+        current_datetime = datetime.now()
 
-            # Check if the given datetime is on the current day
-            if not forecast_time or (forecast_time.date() != current_datetime.date()) or (
-                    forecast_time.date() < last_record_time.date()):
-                logging.debug("preparing new forecast")
-                try:
-                    parent_forecast = ForecastService.create_parent_forecast(session)
-                    for losses_item in LossesProjectEnum.list():
-                        table = losses_enum_to_table_mapper(losses_item)
-                        data = (await session.execute(select(table).order_by(table.time))) \
-                            .scalars() \
-                            .all()
+        # Check if the given datetime is on the current day
+        if not forecast_time or (forecast_time.date() != current_datetime.date()) or (
+                forecast_time.date() < last_record_time.date()):
+            logging.debug("preparing new forecast")
+            parent_forecast = ForecastService.create_parent_forecast(session)
+            for losses_item in LossesProjectEnum.list():
+                table = losses_enum_to_table_mapper(losses_item)
+                data = (await session.execute(select(table).order_by(table.time))) \
+                    .scalars() \
+                    .all()
 
-                        forecast_data = ForecastService.prepare_forecast_for_category(
-                            losses_item,
-                            parent_forecast,
-                            data
-                        )
+                forecast_data = ForecastService.prepare_forecast_for_category(
+                    losses_item,
+                    parent_forecast,
+                    data
+                )
 
-                        session.add_all(forecast_data)
-                    await session.commit()
-                except Exception as e:
-                    logging.error(f"exception during forecast preparation {e}")
-                    await session.rollback()
-                finally:
-                    await session.close()
-            else:
-                logging.debug("skipping forecast preparation; the date is same")
+                session.add_all(forecast_data)
+        else:
+            logging.debug("skipping forecast preparation; the date is same")
 
     @classmethod
     async def get_prediction(
-        cls,
-        session: AsyncSession,
-        enum: LossesProjectEnum,
-        base_loss: int
+            cls,
+            session: AsyncSession,
+            enum: LossesProjectEnum,
+            base_loss: int
     ) -> List[LossDataPoint]:
         records = []
         async with session:
