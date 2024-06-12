@@ -23,7 +23,7 @@ const GroupChart = (props: GroupChartProps) => {
 
     const skipCategories = []
     return (
-        <div className="text-center sm:px-2 md:px-4 lg:gap-4 md:gap-2">
+        <div className="text-center sm:px-2 md:px-4 lg:gap-4 md:gap-2" id="forecast-charts">
             {props.data && sortableList.sort((a, b) => {
                 if (a.type == LossType.PERSONNEL) {
                     return -1

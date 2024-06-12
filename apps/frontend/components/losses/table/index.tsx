@@ -43,7 +43,7 @@ const LossesTable = (props: LossesTableProps) => {
 
     const topContent = useMemo(() => {
         return (
-            <div className="flex flex-col">
+            <div className="flex flex-col" id="numerical-losses-statistics">
                 <h2 className="text-start text-2xl lg:text-4xl mb-8 lg:mb-4 font-bold text-white">{t('losses_table_header')}</h2>
                 <h3 className="text-start text-xl lg:text-2xl font-thin text-white">{t('losses_table_subheader')}</h3>
 

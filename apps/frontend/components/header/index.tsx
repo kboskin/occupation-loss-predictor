@@ -31,25 +31,32 @@ const Header = () => {
             </NavbarContent>
 
             <NavbarContent className="hidden lg:flex" justify="center">
-                <NavbarItem>
+                <NavbarItem key={"header_item_statistic"}>
                     <Link
                         className="w-auto px-8 text-white"
-                        href="#">
-                        {t("header_item_losses")}
+                        href="#numerical-losses-statistics">
+                        {t("header_item_statistic")}
                     </Link>
                 </NavbarItem>
-                <NavbarItem>
+                <NavbarItem key={"header_item_forecast"}>
                     <Link
                         className="w-auto px-8 text-white"
-                        href="#">
-                        {t("header_item_numbers")}
+                        href="#forecast-charts">
+                        {t("header_item_forecast")}
                     </Link>
                 </NavbarItem>
-                <NavbarItem>
+                <NavbarItem key={"header_item_aggregation"}>
+                    <Link
+                        className="w-auto px-8 text-white"
+                        href="#aggregation-chart">
+                        {t("header_item_aggregation")}
+                    </Link>
+                </NavbarItem>
+                <NavbarItem key={"header_item_support_us"}>
                     <Link
                         className="w-auto px-8"
                         color="warning"
-                        href="#">
+                        href="#support-project-container">
                         {t("header_item_support_us")}
                     </Link>
                 </NavbarItem>
@@ -64,27 +71,35 @@ const Header = () => {
                 </NavbarItem>
             </NavbarContent>
             <NavbarMenu>
-                <NavbarMenuItem key={"item_losses"}>
+                <NavbarMenuItem key={"header_item_statistic"}>
                     <Link
                         className="w-auto text-white"
-                        href="#"
+                        href="#numerical-losses-statistics"
                         size="lg">
-                        {t("header_item_losses")}
+                        {t("header_item_statistic")}
                     </Link>
                 </NavbarMenuItem>
-                <NavbarMenuItem key={`item_numbers`}>
+                <NavbarMenuItem key={"header_item_forecast"}>
                     <Link
                         className="w-auto text-white"
-                        href="#"
+                        href="#forecast-charts"
                         size="lg">
-                        {t("header_item_numbers")}
+                        {t("header_item_forecast")}
                     </Link>
                 </NavbarMenuItem>
-                <NavbarMenuItem key={`item_support_us`}>
+                <NavbarMenuItem key={`header_item_aggregation`}>
+                    <Link
+                        className="w-auto text-white"
+                        href="#aggregation-chart"
+                        size="lg">
+                        {t("header_item_aggregation")}
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem key={`header_item_support_us`}>
                     <Link
                         className="w-auto"
                         color="warning"
-                        href="#"
+                        href="#support-project-container"
                         size="lg">
                         {t("header_item_support_us")}
                     </Link>

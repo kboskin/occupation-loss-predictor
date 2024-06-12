@@ -9,7 +9,7 @@ const SupportTheProject = (_: SupportProjectProps) => {
     const {t} = useTranslation()
 
     return (
-        <div className="text-center">
+        <div className="text-center" id="support-project-container">
             <h2 className="text-3xl lg:text-4xl mt-4 lg:mt-4 font-bold mb-8 mt-4 text-white">{`${t('support_the_project')}`}</h2>
 
             <div className="grid content-center grid-cols-2 justify-items-center">

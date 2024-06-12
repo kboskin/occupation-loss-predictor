@@ -235,7 +235,7 @@ const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
         return points.join(" ");
     }
 
-    return <div className="text-center m-auto">
+    return <div className="text-center m-auto" id="aggregation-chart">
         <h2 className="text-3xl lg:text-4xl mt-4 lg:mt-4 font-bold mb-8 mt-4 text-white">{t('losses_yearly_by_category')}</h2>
         <svg id="breadcrumbs" className="d-block m-auto mt-4"/>
         <svg ref={svgRef} className="d-block m-auto mt-4"/>
