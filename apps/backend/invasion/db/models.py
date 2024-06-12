@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import declarative_base, mapped_column, Mapped, relationship
@@ -107,5 +108,11 @@ class ForecastsDataTable(BASE):
 
 
 async def init_models():
-    async with engine.begin() as conn:
-        await conn.run_sync(metadata.create_all)
+    try:
+        async with engine.begin() as conn:
+            logging.info("Connection established")
+            await conn.run_sync(metadata.create_all)
+            logging.info("Metadata creation successful")
+    except Exception as e:
+        logging.error(f"Error during init_models: {e}")
+        raise
