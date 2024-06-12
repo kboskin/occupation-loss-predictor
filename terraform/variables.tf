@@ -49,3 +49,8 @@ variable "ssh_pub_path" {
   description = "SSH pub key path"
   type        = string
 }
+
+variable "boot_disk_size" {
+  description = "SSH pub key path"
+  type        = string
+}
