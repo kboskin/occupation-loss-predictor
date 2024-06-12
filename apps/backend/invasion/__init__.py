@@ -82,8 +82,8 @@ def run_event_loop():
 
 async def get_forecasts():
     logging.info("Running event loop with updates")
-    # await AdminService.update_statistic(get_session())
-    # await ForecastService.create_all_forecasts_if_needed(get_session())
+    await AdminService.update_statistic(get_session())
+    await ForecastService.create_all_forecasts_if_needed(get_session())
 
 
 @app.exception_handler(PaginationException)
