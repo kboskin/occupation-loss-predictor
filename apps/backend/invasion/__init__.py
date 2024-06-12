@@ -63,6 +63,10 @@ timeout: Final[int] = 14400
 async def startup_event():
     await init_sentry()
     await init_models()
+    await run_coroutine_update_process()
+
+
+async def run_coroutine_update_process():
     process = multiprocessing.Process(target=run_event_loop)
     process.start()
 
@@ -70,9 +74,7 @@ async def startup_event():
 # trying to
 @repeat_every(seconds=timeout)
 async def data_update_job():
-    process = multiprocessing.Process(target=run_event_loop)
-    process.start()
-
+    await run_coroutine_update_process()
 
 def run_event_loop():
     asyncio.run(get_forecasts())
