@@ -34,7 +34,7 @@ const Home = () => {
 
     return (
         <>
-            <SeoHead title={t('main_page_title')} description={t('main_page_description')} imagePath={"/images/img_logo.png"}/>
+            <SeoHead title={t('main_page_title')} description={t('main_page_description')} imagePath={`${process.env.NEXT_PUBLIC_SITE_URL}images/img_logo.png`}/>
             <Header/>
             <MainVideo/>
             <LossesTable isLoading={lossesLoading} losses={lossesData as Loss[]}/>
