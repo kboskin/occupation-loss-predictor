@@ -16,9 +16,17 @@ import Separator from "../../components/separator";
 import {Loss} from "../../redux/losses/models";
 import FAQ from "../../components/faq";
 import SeoHead from "../../components/seo";
+import {analytics} from "../../firebase";
+import {useEffect} from "react";
+import {logEvent} from "@firebase/analytics";
 
 
 const Home = () => {
+
+    useEffect(() => {
+        analytics && logEvent(analytics, 'main_page_viewed');
+    }, [])
+
     const {t} = useTranslation("common");
     const {data: lossesData, isLoading: lossesLoading, error: lossesError} = useGetLossesQuery("");
     const {data: yearlyData, isLoading: yearlyLoading, error: yearlyError} = useGetYearlyAggregationQuery("");

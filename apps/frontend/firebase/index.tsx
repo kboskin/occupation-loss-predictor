@@ -1,4 +1,5 @@
 import {getApps, initializeApp} from "firebase/app";
+import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,4 +14,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const Firebase = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
-export default Firebase;
+const analytics = await isSupported() ? getAnalytics(Firebase) : null
+
+export { analytics, Firebase}
