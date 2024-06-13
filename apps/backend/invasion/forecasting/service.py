@@ -156,36 +156,35 @@ class ForecastService:
 
     @classmethod
     async def get_prediction(
-            cls,
-            session: AsyncSession,
-            enum: LossesProjectEnum,
-            base_loss: int
+        cls,
+        session: AsyncSession,
+        enum: LossesProjectEnum,
+        base_loss: int
     ) -> List[LossDataPoint]:
         records = []
-        async with session:
-            result = await session.execute(
-                select(ForecastsDataTable.parent_forecast_id).filter(ForecastsDataTable.forecast_type == enum).order_by(
-                    ForecastsDataTable.parent_forecast_id.desc()
-                ).limit(1)
-            )
-            max_forecast_id = result.scalars().first()
+        result = await session.execute(
+            select(ForecastsDataTable.parent_forecast_id).filter(ForecastsDataTable.forecast_type == enum).order_by(
+                ForecastsDataTable.parent_forecast_id.desc()
+            ).limit(1)
+        )
+        max_forecast_id = result.scalars().first()
 
-            result = await session.execute(
-                select(ForecastsDataTable).where(
-                    and_(
-                        ForecastsDataTable.parent_forecast_id == max_forecast_id,
-                        ForecastsDataTable.forecast_type == enum
-                    )
+        result = await session.execute(
+            select(ForecastsDataTable).where(
+                and_(
+                    ForecastsDataTable.parent_forecast_id == max_forecast_id,
+                    ForecastsDataTable.forecast_type == enum
                 )
             )
+        )
 
-            # Assume incremental_value is the value you want to add incrementally
-            losses_total = base_loss
+        # Assume incremental_value is the value you want to add incrementally
+        losses_total = base_loss
 
-            for item in result.scalars().all():
-                item: ForecastsDataTable
-                losses_total += item.forecast_added  # Increment the 'losses' total
-                record = LossDataPoint(day_increment=item.forecast_added, losses=losses_total, time=item.forecast_time)
-                records.append(record)
+        for item in result.scalars().all():
+            item: ForecastsDataTable
+            losses_total += item.forecast_added  # Increment the 'losses' total
+            record = LossDataPoint(day_increment=item.forecast_added, losses=losses_total, time=item.forecast_time)
+            records.append(record)
 
         return records

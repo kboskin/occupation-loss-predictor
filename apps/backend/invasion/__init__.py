@@ -23,7 +23,7 @@ from invasion.base.pagination import PaginationException
 from invasion.config import DEBUG, CORS, init_sentry
 import os
 
-from invasion.db.engine import get_session, create_engine_for_process, get_session_for_process
+from invasion.db.engine import get_session, create_engine_for_process, get_session_for_process, engine
 from invasion.db.models import init_models
 from invasion.forecasting.service import ForecastService
 from invasion.losses.losses import BrokenLossTypeException
@@ -68,6 +68,11 @@ async def startup_event():
     await run_coroutine_update_process()
 
 
+@app.on_event("shutdown")
+async def shutdown():
+    engine.dispose()
+
+
 async def run_coroutine_update_process():
     process = multiprocessing.Process(target=run_event_loop)
     process.start()
@@ -77,6 +82,7 @@ async def run_coroutine_update_process():
 @repeat_every(seconds=timeout)
 async def data_update_job():
     await run_coroutine_update_process()
+
 
 def run_event_loop():
     asyncio.run(get_forecasts())
@@ -100,7 +106,6 @@ async def get_forecasts():
         finally:
             await session.close()
             await engine.dispose()
-
 
 
 @app.exception_handler(PaginationException)
