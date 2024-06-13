@@ -86,7 +86,8 @@ def run_event_loop():
 async def get_forecasts():
     logging.info("Running event loop with updates")
 
-    async_session_maker = get_session_for_process(create_engine_for_process())
+    engine = create_engine_for_process()
+    async_session_maker = get_session_for_process(engine)
     async with async_session_maker as session:
         try:
             async with session.begin():
@@ -98,6 +99,7 @@ async def get_forecasts():
             logging.error(f"Exception during forecast updates: {e}")
         finally:
             await session.close()
+            await engine.dispose()
 
 
 
