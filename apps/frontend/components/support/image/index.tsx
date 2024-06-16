@@ -10,13 +10,13 @@ const SupportCryptoBlock = ({title, src, link}: SupportImageProps) => {
     const {t} = useTranslation()
 
     return <>
-        <div className="flex flex-col justify-center w-2/6 text-center">
-            <h3 className="text-2xl mb-8 mt-4 font-bold">{title}</h3>
+        <div className="flex flex-col justify-center text-center w-7/12 mt-8">
+            <h3 className="text-2xl mb-8 mt-4 font-bold w-full">{title}</h3>
             <Image
                 alt={title}
                 src={src}
             />
-            <Link isBlock showAnchorIcon href={link} color="secondary" className="mt-4">{t('support_the_twt')}</Link>
+            <Link showAnchorIcon href={link} color="secondary" className="mt-4 w-full text-center">{t('support_the_twt')}</Link>
         </div>
     </>
 }

@@ -69,11 +69,37 @@
   "support_the_project": "Donate to support project",
   "support_the_twt": "Donate using TrustWallet link",
 
-  "support_btc_wallet": "BTC wallet",
-  "support_btc_link": "https://link.trustwallet.com/send?coin=0&address=bc1qprfjf4glp7h4geav97y2y7w8lc8epg8ssp3uts",
+  "support_usdt_erc_20_wallet": "USDT (ERC-20)",
+  "support_usdt_erc_20_link": "https://link.trustwallet.com/send?coin=60&address=0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655&token_id=0xdAC17F958D2ee523a2206206994597C13D831ec7",
+  "support_usdt_erc_20_address": "0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
 
-  "support_eth_wallet": "ETH wallet",
+  "support_usdt_arb_wallet": "USDT (Arbitrum)",
+  "support_usdt_arb_link": "https://link.trustwallet.com/send?coin=10042221&address=0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655&token_id=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+  "support_usdt_arb_address": "0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
+
+  "support_matic_wallet": "MATIC",
+  "support_matic_link": "https://link.trustwallet.com/send?coin=966&address=0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
+  "support_matic_address": "0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
+
+  "support_bnb_wallet": "BNB",
+  "support_bnb_link": "https://link.trustwallet.com/send?coin=20000714&address=0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
+  "support_bnb_address": "0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
+
+  "support_solana_wallet": "SOL",
+  "support_solana_link": "https://link.trustwallet.com/send?coin=501&address=ZaD7pmxrqfMrdif3k4N3HHPWJPZAiD3vVZr2zC1GimE",
+  "support_solana_address": "ZaD7pmxrqfMrdif3k4N3HHPWJPZAiD3vVZr2zC1GimE",
+
+  "support_ton_wallet": "TON",
+  "support_ton_link": "https://link.trustwallet.com/send?coin=607&address=EQC0SGDk2EaEj6K83L4fNChJGJdb3fnhDxOKk8qdLflyZw5z",
+  "support_ton_address": "EQC0SGDk2EaEj6K83L4fNChJGJdb3fnhDxOKk8qdLflyZw5z",
+
+  "support_btc_wallet": "BTC",
+  "support_btc_link": "https://link.trustwallet.com/send?coin=0&address=bc1qprfjf4glp7h4geav97y2y7w8lc8epg8ssp3uts",
+  "support_btc_address": "bc1qprfjf4glp7h4geav97y2y7w8lc8epg8ssp3uts",
+
+  "support_eth_wallet": "ETH",
   "support_eth_link": "https://link.trustwallet.com/send?coin=60&address=0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
+  "support_eth_address": "0xade134A18c37A6F9ec3a45E8FedDc8cEA278e655",
 
   "losses_yearly_by_category": "Losses of vehicles by categories",
   "losses_category_by_year": "Losses of vehicles by year",
