@@ -81,7 +81,7 @@ async def run_coroutine_update_process():
 # trying to
 @repeat_every(seconds=timeout)
 async def data_update_job():
-    await run_coroutine_update_process()
+    pass
 
 
 def run_event_loop():
