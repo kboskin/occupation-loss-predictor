@@ -16,13 +16,13 @@ class AdminService:
 
     @classmethod
     async def update_statistic(cls, async_session: AsyncSession):
-        logging.debug("executing update")
+        logging.debug("Executing update")
         invasion_start = 2022
         present_date = datetime.date.today()
         present_year = present_date.year
         present_month = present_date.month
         months = list(range(1, 13))
-        years = list(range(invasion_start, present_year - (present_year - invasion_start) + 2))
+        years = list(range(invasion_start, present_year + 1))  # Corrected year range
 
         last_personnel_record = await async_session.execute(
             select(PersonnelLossesTable).order_by(desc(PersonnelLossesTable.time)).limit(1)
@@ -34,9 +34,8 @@ class AdminService:
             last_record_time = last_personnel_record.time
             time_diff = [
                 pd.to_datetime(last_record_time).normalize() + datetime.timedelta(days=x)
-                for x in range(
-                    (pd.to_datetime(present_date).normalize() - pd.to_datetime(last_record_time).normalize()).days
-                )
+                for x in
+                range((pd.to_datetime(present_date).normalize() - pd.to_datetime(last_record_time).normalize()).days)
             ]
             time_diff = list(set([(item.year, item.month) for item in time_diff]))
             time_diff.reverse()

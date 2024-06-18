@@ -66,14 +66,6 @@ resource "google_compute_instance" "app_vm" {
     cat <<'EOF4' > /home/app/configs/initdb.d/setup.sql
     ${file("${path.module}/../configs/initdb.d/setup.sql")}
     EOF4
-
-    cat <<'EOF5' > /etc/cron.daily
-    #!/bin/bash
-    docker system prune -af  --filter "until=$((1*24))h"
-    EOF5
-
-    sudo chmod +x /etc/cron.daily/docker-prune
-
   EOF
 
   service_account {
