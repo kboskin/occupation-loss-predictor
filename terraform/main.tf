@@ -66,6 +66,13 @@ resource "google_compute_instance" "app_vm" {
     cat <<'EOF4' > /home/app/configs/initdb.d/setup.sql
     ${file("${path.module}/../configs/initdb.d/setup.sql")}
     EOF4
+
+    cat <<'EOF5' > /etc/cron.daily
+    #!/bin/bash
+    docker system prune -af  --filter "until=$((1*24))h"
+    EOF5
+
+    sudo chmod +x /etc/cron.daily/docker-prune
   EOF
 
   service_account {
@@ -82,7 +89,7 @@ resource "google_compute_firewall" "app_firewall" {
     ports    = ["8000", "3000", "5432"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = ["${var.external_ip}/0"]  // Example CIDR block, adjust based on actual VPC
   target_tags   = var.network_tags
 }
 
