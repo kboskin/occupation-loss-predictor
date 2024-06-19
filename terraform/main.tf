@@ -80,18 +80,6 @@ resource "google_compute_instance" "app_vm" {
   }
 }
 
-resource "google_compute_firewall" "app_firewall" {
-  name    = "app-firewall"
-  network = "default"
-
-  allow {
-    protocol = "tcp"
-    ports    = ["8000", "3000", "5432"]
-  }
-
-  source_ranges = ["${var.external_ip}/0"]  // Example CIDR block, adjust based on actual VPC
-  target_tags   = var.network_tags
-}
 
 // Optionally, include HTTPS and health check firewalls if needed
 resource "google_compute_firewall" "https_firewall" {
