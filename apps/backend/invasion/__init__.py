@@ -58,14 +58,16 @@ api_router.include_router(losses_router, prefix="/losses")
 app.include_router(api_router)
 
 # 4 hours in seconds
-timeout: Final[int] = 14400
+timeout: Final[int] = 25
 
 
 @app.on_event("startup")
 async def startup_event():
+    logging.debug("Warming up")
     await init_sentry()
     await init_models()
     await run_coroutine_update_process()
+    logging.debug("Warmed up")
 
 
 @app.on_event("shutdown")
@@ -79,9 +81,12 @@ async def run_coroutine_update_process():
 
 
 # trying to
-@repeat_every(seconds=timeout)
+@app.on_event("startup")
+@repeat_every(seconds=timeout, wait_first=True)
 async def data_update_job():
+    logging.debug("Updating data...")
     await run_coroutine_update_process()
+    logging.debug("Data update finished")
 
 
 def run_event_loop():
