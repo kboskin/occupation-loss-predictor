@@ -34,11 +34,14 @@ async def get_data_for_category(
             table = losses_enum_to_table_mapper(enum)
             data = await LossesService.get_data_for(session, commons.offset_from, commons.offset_to, table)
 
+            logging.debug(f"got data for category {enum}")
             if not data:
                 prediction_data = []
             else:
                 last_data_record_data = data[-1].losses
                 prediction_data = await ForecastService.get_prediction(session, enum, last_data_record_data)
+
+            logging.debug(f"grabbed forecast for category {enum}")
 
             loss = Loss(
                 type=enum,

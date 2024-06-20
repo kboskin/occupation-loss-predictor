@@ -58,7 +58,7 @@ api_router.include_router(losses_router, prefix="/losses")
 app.include_router(api_router)
 
 # 4 hours in seconds
-timeout: Final[int] = 25
+timeout: Final[int] = 14400
 
 
 @app.on_event("startup")
@@ -66,7 +66,7 @@ async def startup_event():
     logging.debug("Warming up")
     await init_sentry()
     await init_models()
-    await run_coroutine_update_process()
+    # await run_coroutine_update_process()
     logging.debug("Warmed up")
 
 
