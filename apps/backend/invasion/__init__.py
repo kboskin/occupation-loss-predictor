@@ -66,7 +66,7 @@ async def startup_event():
     logging.debug("Warming up")
     await init_sentry()
     await init_models()
-    await run_coroutine_update_process()
+    await data_update_job()
     logging.debug("Warmed up")
 
 
@@ -81,10 +81,10 @@ async def run_coroutine_update_process():
 
 
 # trying to
-@app.on_event("startup")
-@repeat_every(seconds=timeout, wait_first=True)
+@repeat_every(seconds=timeout, wait_first=False)
 async def data_update_job():
     logging.debug("Updating data...")
+    await init_sentry()
     await run_coroutine_update_process()
     logging.debug("Data update finished")
 
