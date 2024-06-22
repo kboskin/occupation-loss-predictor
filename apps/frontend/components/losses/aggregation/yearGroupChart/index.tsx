@@ -58,12 +58,6 @@ const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
             }))
         }
 
-        // Set default path for breadcrumbs on initial load
-        if (!selectedPath) {
-            const defaultNode = root.descendants().find(d => d.depth === 1); // This sets the default to the first child of the root
-            setSelectedPath(defaultNode ? defaultNode.ancestors().reverse() : []);
-        }
-
         const partition = (data: any) =>
             d3.partition().size([2 * Math.PI, radius * radius])(
                 d3
@@ -202,7 +196,7 @@ const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
     }
 
     // Function to update breadcrumbs
-    const updateBreadcrumbs = (sequence, percentage) => {
+    const updateBreadcrumbs = (sequence) => {
         const breadcrumbs: any = d3.select("#breadcrumbs")
             .selectAll("g")
             .data(sequence, d => d.data.name);
