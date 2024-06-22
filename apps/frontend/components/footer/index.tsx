@@ -10,37 +10,37 @@ const Footer = () => {
             <Table className="footer pt-2" aria-label="AI losses footer">
                 <TableHeader>
                     <TableColumn className="footer-title text-lg text-center text-amber-300">
-                        {t('footer_column_disclaimer')}
+                        {t('common.footer_column_disclaimer')}
                     </TableColumn>
                     <TableColumn
-                        className="footer-title text-lg">{t('footer_column_navigation')}</TableColumn>
+                        className="footer-title text-lg">{t('common.footer_column_navigation')}</TableColumn>
                     <TableColumn
-                        className="footer-title text-lg">{t('footer_column_contacts')}</TableColumn>
+                        className="footer-title text-lg">{t('common.footer_column_contacts')}</TableColumn>
 
                 </TableHeader>
                 <TableBody>
                     <TableRow key="1">
                         <TableCell
-                            className="width-45 text-center">{t('footer_column_disclaimer_approximate')}</TableCell>
-                        <TableCell><Link href={"#"}>{t('footer_column_total_losses_aggregation')}</Link></TableCell>
+                            className="width-45 text-center">{t('common.footer_column_disclaimer_approximate')}</TableCell>
+                        <TableCell><Link href={"#"}>{t('common.footer_column_total_losses_aggregation')}</Link></TableCell>
                         <TableCell className="width-30">✌🏻🇺🇦</TableCell>
                     </TableRow>
                     <TableRow key="2">
                         <TableCell className="width-45 text-center whitespace-pre-wrap">
-                            {t('footer_column_disclaimer_ai')}
+                            {t('common.footer_column_disclaimer_ai')}
                         </TableCell>
-                        <TableCell><Link href={"#"}>{t('footer_column_tomorrow_forecast')}</Link></TableCell>
-                        <TableCell className="width-30">{t('contacts_email')}</TableCell>
+                        <TableCell><Link href={"#"}>{t('common.footer_column_tomorrow_forecast')}</Link></TableCell>
+                        <TableCell className="width-30">{t('common.contacts_email')}</TableCell>
                     </TableRow>
                     <TableRow key="3">
                         <TableCell
-                            className="width-45 text-center whitespace-pre-wrap">{t('footer_column_source')}</TableCell>
-                        <TableCell><Link href={"#"}>{t('footer_column_support_project')}</Link></TableCell>
+                            className="width-45 text-center whitespace-pre-wrap">{t('common.footer_column_source')}</TableCell>
+                        <TableCell><Link href={"#"}>{t('common.footer_column_support_project')}</Link></TableCell>
                         <TableCell className="width-30"><Link className="hidden" href="https://cloudflex.team" rel="dofollow">Developed by CloudFlex - custom software development</Link></TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
-            <p className="text-center mt-8">{t('footer_copyright')}</p>
+            <p className="text-center mt-8">{t('common.footer_copyright')}</p>
         </footer>
     );
 };

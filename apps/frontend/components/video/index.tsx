@@ -46,8 +46,8 @@ const MainVideo = () => {
             <div
                 className="video-overlay flex flex-col items-center inline-block align-middle m-auto justify-center py-8">
                 <div className="text-center">
-                    <h1 className="font-bold text-2xl lg:text-4xl mb-8 lg:mb-16">{t('heading_protecting_losses_forecast')}</h1>
-                    <h2 className="text-4xl lg:text-8xl font-bold">{t('heading_protecting_the_world')}</h2>
+                    <h1 className="font-bold text-2xl lg:text-4xl mb-8 lg:mb-16">{t('main_page.heading_protecting_losses_forecast')}</h1>
+                    <h2 className="text-4xl lg:text-8xl font-bold">{t('main_page.heading_protecting_the_world')}</h2>
                     <div className={numbersShown ? "transition-opacity ease-in duration-300 opacity-100" : "opacity-0 delay-0"}>
                         <TimerContainer days={days} hours={hours} minutes={minutes} seconds={seconds}/>
                     </div>

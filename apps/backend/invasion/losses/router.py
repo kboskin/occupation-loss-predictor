@@ -22,9 +22,9 @@ losses_router.tags = ["losses"]
 
 @losses_router.get("/", response_model=LossesResponseModel)
 async def get_data_for_category(
-        commons: Annotated[PaginationParameters, Depends(pagination)],
-        categories: Annotated[Union[List[LossesProjectEnum], None], Depends(check_losses_category)],
-        session_context: Annotated[AsyncSession, Depends(get_session_context, use_cache=False)]
+    commons: Annotated[PaginationParameters, Depends(pagination, use_cache=False)],
+    categories: Annotated[Union[List[LossesProjectEnum], None], Depends(check_losses_category)],
+    session_context: Annotated[AsyncSession, Depends(get_session_context, use_cache=False)]
 ) -> LossesResponseModel:
     losses_with_categories: List[Loss] = []
     async with session_context as session:
@@ -38,8 +38,10 @@ async def get_data_for_category(
             if not data:
                 prediction_data = []
             else:
-                last_data_record_data = data[-1].losses
-                prediction_data = await ForecastService.get_prediction(session, enum, last_data_record_data)
+                last_data_record_data = data[-1]
+                logging.debug(f"last record date {last_data_record_data.time}")
+
+                prediction_data = await ForecastService.get_prediction(session, enum, last_data_record_data.losses)
 
             logging.debug(f"grabbed forecast for category {enum}")
 
@@ -61,7 +63,7 @@ async def get_data_for_category(
 
 @losses_router.get("/yearly/aggregation", response_model=AggregationYearlyResponseModel)
 async def get_yearly_aggregations(
-        session_context: Annotated[AsyncSession, Depends(get_session_context, use_cache=False)]
+    session_context: Annotated[AsyncSession, Depends(get_session_context, use_cache=False)]
 ) -> AggregationYearlyResponseModel:
     result = AggregationYearResult(children=[])
 
@@ -94,7 +96,7 @@ async def get_yearly_aggregations(
 
 @losses_router.get("/category/aggregation", response_model=AggregationCategoriesResponseModel)
 async def get_category_aggregations(
-        session_context: Annotated[AsyncSession, Depends(get_session_context, use_cache=False)]
+    session_context: Annotated[AsyncSession, Depends(get_session_context, use_cache=False)]
 ) -> AggregationCategoriesResponseModel:
     result = AggregationCategoryResult(children=[])
 

@@ -26,7 +26,7 @@ const Header = () => {
                     className="lg:hidden"/>
                 <NavbarBrand>
                     <Logo width={50} height={50} />
-                    <p className="font-bold text-inherit px-10">{t("app_title")}</p>
+                    <p className="font-bold text-inherit px-10">{t("common.app_title")}</p>
                 </NavbarBrand>
             </NavbarContent>
 
@@ -34,38 +34,38 @@ const Header = () => {
                 <NavbarItem key={"header_item_statistic"}>
                     <Link
                         className="w-auto px-8 text-white"
-                        href="#numerical-losses-statistics">
-                        {t("header_item_statistic")}
+                        href="/#numerical-losses-statistics">
+                        {t("common.header_item_statistic")}
                     </Link>
                 </NavbarItem>
                 <NavbarItem key={"header_item_forecast"}>
                     <Link
                         className="w-auto px-8 text-white"
-                        href="#forecast-charts">
-                        {t("header_item_forecast")}
+                        href="/#forecast-charts">
+                        {t("common.header_item_forecast")}
                     </Link>
                 </NavbarItem>
                 <NavbarItem key={"header_item_aggregation"}>
                     <Link
                         className="w-auto px-8 text-white"
-                        href="#aggregation-chart">
-                        {t("header_item_aggregation")}
+                        href="/#aggregation-chart">
+                        {t("common.header_item_aggregation")}
                     </Link>
                 </NavbarItem>
                 <NavbarItem key={"header_item_support_us"}>
                     <Link
                         className="w-auto px-8"
                         color="warning"
-                        href="#support-project-container">
-                        {t("header_item_support_us")}
+                        href="/#support-project-container">
+                        {t("common.header_item_support_us")}
                     </Link>
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent className="hidden lg:flex" justify="end">
                 <NavbarItem>
-                    <Link href={t('link_support_army')} target="_blank" rel="noopener noreferrer">
-                        <Button color="danger" href={t('link_support_army')} variant="flat" >
-                            {t('header_item_army_support')}
+                    <Link href={t('common.link_support_army')} target="_blank" rel="noopener noreferrer">
+                        <Button color="danger" href={t('common.link_support_army')} variant="flat" >
+                            {t('common.header_item_army_support')}
                         </Button>
                     </Link>
                 </NavbarItem>
@@ -74,39 +74,39 @@ const Header = () => {
                 <NavbarMenuItem key={"header_item_statistic"}>
                     <Link
                         className="w-auto text-white"
-                        href="#numerical-losses-statistics"
+                        href="/#numerical-losses-statistics"
                         size="lg">
-                        {t("header_item_statistic")}
+                        {t("common.header_item_statistic")}
                     </Link>
                 </NavbarMenuItem>
                 <NavbarMenuItem key={"header_item_forecast"}>
                     <Link
                         className="w-auto text-white"
-                        href="#forecast-charts"
+                        href="/#forecast-charts"
                         size="lg">
-                        {t("header_item_forecast")}
+                        {t("common.header_item_forecast")}
                     </Link>
                 </NavbarMenuItem>
                 <NavbarMenuItem key={`header_item_aggregation`}>
                     <Link
                         className="w-auto text-white"
-                        href="#aggregation-chart"
+                        href="/#aggregation-chart"
                         size="lg">
-                        {t("header_item_aggregation")}
+                        {t("common.header_item_aggregation")}
                     </Link>
                 </NavbarMenuItem>
                 <NavbarMenuItem key={`header_item_support_us`}>
                     <Link
                         className="w-auto"
                         color="warning"
-                        href="#support-project-container"
+                        href="/#support-project-container"
                         size="lg">
-                        {t("header_item_support_us")}
+                        {t("common.header_item_support_us")}
                     </Link>
                 </NavbarMenuItem>
                  <NavbarMenuItem>
-                    <Link color="danger" size="lg" href={t('link_support_army')} target="_blank" rel="noopener noreferrer">
-                        {t('header_item_army_support')}
+                    <Link color="danger" size="lg" href={t('common.link_support_army')} target="_blank" rel="noopener noreferrer">
+                        {t('common.header_item_army_support')}
                     </Link>
                 </NavbarMenuItem>
             </NavbarMenu>

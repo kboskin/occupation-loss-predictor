@@ -44,7 +44,7 @@ const color: any = d3
 
 const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
 
-    const {t} = useTranslation()
+    const {t} = useTranslation();
     const svgRef = useRef(null);
 
     useEffect(() => {
@@ -56,6 +56,12 @@ const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
                 "name": item.name,
                 "children": item.children
             }))
+        }
+
+        // Set default path for breadcrumbs on initial load
+        if (!selectedPath) {
+            const defaultNode = root.descendants().find(d => d.depth === 1); // This sets the default to the first child of the root
+            setSelectedPath(defaultNode ? defaultNode.ancestors().reverse() : []);
         }
 
         const partition = (data: any) =>
@@ -108,7 +114,7 @@ const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
             .attr("x", 0)
             .attr("y", 0)
             .attr("dy", "1.5em")
-            .text(t('losses_yearly_percentage_from_total'));
+            .text(t('main_page.losses_yearly_percentage_from_total'));
 
         svg
             .attr("viewBox", `${-radius} ${-radius} ${width} ${width}`)
@@ -236,7 +242,7 @@ const RadialGroupChart = ({ isLoading, data }: RadialChartProps) => {
     }
 
     return <div className="text-center m-auto" id="aggregation-chart">
-        <h2 className="text-3xl lg:text-4xl mt-4 lg:mt-4 font-bold mb-8 mt-4 text-white">{t('losses_yearly_by_category')}</h2>
+        <h2 className="text-3xl lg:text-4xl mt-4 lg:mt-4 font-bold mb-8 mt-4 text-white">{t('main_page.losses_yearly_by_category')}</h2>
         <svg id="breadcrumbs" className="d-block m-auto mt-4"/>
         <svg ref={svgRef} className="d-block m-auto mt-4"/>
     </div>;

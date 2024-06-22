@@ -122,7 +122,7 @@ const LineChart = (props: LineChartProps) => {
     return (
         <div className="text-center">
             {props.showHeader &&
-            <h3 className="text-2xl mb-8 mt-4 text-white">{`${t('forecast_chart_title')}`}<br/>{`${mapCategoryToTranslation(props.category, t)}`}
+            <h3 className="text-2xl mb-8 mt-4 text-white">{`${t('main_page.forecast_chart_title')}`}<br/>{`${mapCategoryToTranslation(props.category, t)}`}
             </h3>}
             <svg ref={svgRef} style={{display: "block", margin: "auto", marginBottom: "30px"}} className="mt-8"/>
         </div>

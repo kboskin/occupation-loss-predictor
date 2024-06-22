@@ -44,10 +44,10 @@ const LossesTable = (props: LossesTableProps) => {
     const topContent = useMemo(() => {
         return (
             <div className="flex flex-col" id="numerical-losses-statistics">
-                <h2 className="text-start text-2xl lg:text-4xl mb-8 lg:mb-4 font-bold text-white">{t('losses_table_header')}</h2>
-                <h3 className="text-start text-xl lg:text-2xl font-thin text-white">{t('losses_table_subheader')}</h3>
+                <h2 className="text-start text-2xl lg:text-4xl mb-8 lg:mb-4 font-bold text-white">{t('main_page.losses_table_header')}</h2>
+                <h3 className="text-start text-xl lg:text-2xl font-thin text-white">{t('main_page.losses_table_subheader')}</h3>
 
-                <h3 className="text-center text-xl font-thin mt-8 text-white">{t('losses_table_subheader_statistics')}</h3>
+                <h3 className="text-center text-xl font-thin mt-8 text-white">{t('main_page.losses_table_subheader_statistics')}</h3>
 
                 <div className="flex justify-center gap-4 lg:gap-12 items-end mt-8">
                     <ButtonGroup
@@ -55,13 +55,13 @@ const LossesTable = (props: LossesTableProps) => {
                         variant="bordered"
                         size="md"
                     >
-                        <LossesColumnHeader name={t('losses_header_last_day')} selected={period == Periods.DAY}
+                        <LossesColumnHeader name={t('main_page.losses_header_last_day')} selected={period == Periods.DAY}
                                             onSelect={() => setPeriod(Periods.DAY)}/>
-                        <LossesColumnHeader name={t('losses_header_last_week')} selected={period == Periods.WEEK}
+                        <LossesColumnHeader name={t('main_page.losses_header_last_week')} selected={period == Periods.WEEK}
                                             onSelect={() => setPeriod(Periods.WEEK)}/>
-                        <LossesColumnHeader name={t('losses_header_last_month')} selected={period == Periods.MONTH}
+                        <LossesColumnHeader name={t('main_page.losses_header_last_month')} selected={period == Periods.MONTH}
                                             onSelect={() => setPeriod(Periods.MONTH)}/>
-                        <LossesColumnHeader name={t('losses_header_last_year')} selected={period == Periods.YEAR}
+                        <LossesColumnHeader name={t('main_page.losses_header_last_year')} selected={period == Periods.YEAR}
                                             onSelect={() => setPeriod(Periods.YEAR)}/>
                     </ButtonGroup>
                 </div>
@@ -134,7 +134,7 @@ const LossesTable = (props: LossesTableProps) => {
                                         alt={`${aggrItem.type} growth icon`}/>
                                     : null
                             }>
-                            {aggrItem.periodIncr < 1 ? t('losses_no_changes') : `+ ${aggrItem.periodIncr}`}
+                            {aggrItem.periodIncr < 1 ? t('main_page.losses_no_changes') : `+ ${aggrItem.periodIncr}`}
                         </Button>
                     </TableCell>
                 </TableRow>

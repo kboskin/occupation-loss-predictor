@@ -39,7 +39,7 @@ const GroupChart = (props: GroupChartProps) => {
                     if (dataItem.type == LossType.PERSONNEL) {
                         return (
                             <>
-                                <h2 className="text-3xl lg:text-4xl mt-16 font-bold">{t('forecast_trending')}</h2>
+                                <h2 className="text-3xl lg:text-4xl mt-16 font-bold">{t('main_page.forecast_trending')}</h2>
                                 <LineChart
                                     key={dataItem.type}
                                     width={window.innerWidth - window.innerWidth * 0.12}
@@ -62,7 +62,7 @@ const GroupChart = (props: GroupChartProps) => {
                             skipCategories.push(LossType.MISSILES, LossType.AIRCRAFT, LossType.HELICOPTERS, LossType.WARSHIPS)
                             return (
                                 <>
-                                    <h2 className="text-3xl lg:text-4xl mt-16 lg:mt-16 font-bold">{t('forecast_unique')}</h2>
+                                    <h2 className="text-3xl lg:text-4xl mt-16 lg:mt-16 font-bold">{t('main_page.forecast_unique')}</h2>
                                     {
                                         trendingItems.map((items) => {
                                             return (
@@ -92,7 +92,7 @@ const GroupChart = (props: GroupChartProps) => {
                             skipCategories.push(...filteredSortableList.map((item) => item.type))
                             return (
                                 <>
-                                    <h2 className="text-3xl lg:text-4xl mt-16 lg:mt-16 font-bold">{t('forecast_other')}</h2>
+                                    <h2 className="text-3xl lg:text-4xl mt-16 lg:mt-16 font-bold">{t('main_page.forecast_other')}</h2>
                                     <div className="md:grid md:grid-cols-2 lg:grid-cols-3 mt-4">
                                         {filteredSortableList.map((dataItem) => {
                                             return (
