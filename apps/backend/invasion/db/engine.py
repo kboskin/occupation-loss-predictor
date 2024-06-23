@@ -35,8 +35,12 @@ async def get_session_context():
 
 
 def get_session() -> AsyncSession:
-    return AsyncSession(engine, expire_on_commit=False)
+    session = AsyncSession(engine, expire_on_commit=False)
+    session.execute("SET TIME ZONE 'Europe/Kiev';")
+    return session
 
 
 def get_session_for_process(engine: AsyncEngine) -> AsyncSession:
-    return AsyncSession(engine, expire_on_commit=False)
+    session = AsyncSession(engine, expire_on_commit=False)
+    session.execute("SET TIME ZONE 'Europe/Kiev';")
+    return session

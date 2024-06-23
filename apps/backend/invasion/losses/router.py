@@ -30,7 +30,7 @@ async def get_data_for_category(
     async with session_context as session:
         for category_item in categories:
             enum = LossesProjectEnum(category_item)
-            logging.debug(f"getting data for category {enum}")
+            logging.debug(f"getting data for category {enum}, offsets: {commons.offset_from, commons.offset_to}")
             table = losses_enum_to_table_mapper(enum)
             data = await LossesService.get_data_for(session, commons.offset_from, commons.offset_to, table)
 

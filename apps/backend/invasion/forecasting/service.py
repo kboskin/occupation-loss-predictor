@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from invasion.admin.mapper import losses_enum_to_table_mapper
 from invasion.admin.models import LossesProjectModel
 from invasion.admin.base import LossesProjectEnum
+from invasion.base.utils import time_now_assuming_tz
 from invasion.db.models import ForecastsTable, ForecastsDataTable, PersonnelLossesTable
 from invasion.losses.models.presentation import LossDataPoint
 
@@ -131,7 +132,7 @@ class ForecastService:
         logging.debug(f"last forecast date: {forecast_time}")
 
         # Current datetime
-        current_datetime = datetime.now()
+        current_datetime = time_now_assuming_tz()
 
         # Check if the given datetime is on the current day
         if not forecast_time or (forecast_time.date() != current_datetime.date()) or (

@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from invasion.admin.mapper import minfin_to_losses_mapper, losses_to_orm_mapper
 from invasion.admin.models import LossesProjectModel, ScrapDataHolder
+from invasion.base.utils import time_now_assuming_tz
 from invasion.db.models import PersonnelLossesTable, GenericLossTable
 from invasion.integrations.minfin import scrap_minfin_data
 
@@ -18,7 +19,7 @@ class AdminService:
     async def update_statistic(cls, async_session: AsyncSession):
         logging.debug("Executing update")
         invasion_start = 2022
-        present_date = datetime.date.today()
+        present_date = time_now_assuming_tz().date()
         present_year = present_date.year
         present_month = present_date.month
         months = list(range(1, 13))
