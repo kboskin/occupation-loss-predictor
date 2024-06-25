@@ -1,4 +1,6 @@
+import logging
 from datetime import date
+from typing import Optional
 
 from invasion.config import INVASION_START
 
@@ -14,7 +16,14 @@ class PaginationException(Exception):
     pass
 
 
-def pagination(date_from: date = INVASION_START, date_to: date = date.today()) -> PaginationParameters:
+def pagination(date_from: date = INVASION_START, date_to: Optional[date] = None) -> PaginationParameters:
+    logging.debug(f"Pagination request parameters: \n from {date_from} \n to {date_to}")
+
+    if date_to is None:
+        date_to = date.today()
+
+    logging.debug(f"Pagination request parameters wrapped: \n from {date_from} \n to {date_to}")
+
     if date_from < INVASION_START or date_to > date.today() or date_to < date_from:
         raise PaginationException
     return PaginationParameters(date_from, date_to)

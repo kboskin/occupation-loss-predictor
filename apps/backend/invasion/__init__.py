@@ -4,6 +4,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import multiprocessing
+from datetime import datetime
 from typing import Final
 from urllib.request import Request
 
@@ -29,7 +30,7 @@ from invasion.forecasting.service import ForecastService
 from invasion.losses.losses import BrokenLossTypeException
 from invasion.losses.router import losses_router
 
-logging_level = logging.ERROR
+logging_level = logging.WARNING
 file_name = "invasion.log"
 
 if DEBUG:
@@ -72,7 +73,7 @@ async def startup_event():
 
 @app.on_event("shutdown")
 async def shutdown():
-    engine.dispose()
+    await engine.dispose()
 
 
 async def run_coroutine_update_process():
@@ -83,7 +84,7 @@ async def run_coroutine_update_process():
 # trying to
 @repeat_every(seconds=timeout, wait_first=False)
 async def data_update_job():
-    logging.debug("Updating data...")
+    logging.debug(f"Updating data...{datetime.now()}")
     await init_sentry()
     await run_coroutine_update_process()
     logging.debug("Data update finished")
