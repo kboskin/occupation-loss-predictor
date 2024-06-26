@@ -5,9 +5,9 @@ orbs:
   node: circleci/node@5.0.2
 
 jobs:
-  backend_validate:
+  statshub_validate:
     description: Validate Backend [Build, Lint, Test]
-    working_directory: ~/occupation-loss-predictor/apps/backend
+    working_directory: ~/occupation-loss-predictor/apps/backend/statshub/
     executor: python/default
     steps:
       - checkout:
@@ -165,11 +165,11 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - backend_validate
+      - statshub_validate
       - frontend_validate
       - push_to_registry_prod:
           requires:
-            - backend_validate
+            - statshub_validate
             - frontend_validate
           filters:
             branches:
