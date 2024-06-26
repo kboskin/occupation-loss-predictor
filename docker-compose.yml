@@ -44,7 +44,7 @@ services:
     ports:
       - 3000:3000
     stdin_open: true
-  nginx:
+  statshub-nginx:
       image: nginx:latest
       container_name: "losses-nginx"
       volumes:
@@ -54,7 +54,7 @@ services:
         - "80:80"
         - "443:443"
       depends_on:
-        - app
+        - statshub
         - frontend
       networks:
         - app_internal
