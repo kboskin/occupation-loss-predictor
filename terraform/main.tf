@@ -67,7 +67,7 @@ resource "google_compute_instance" "app_vm" {
     EOF3
 
     cat <<'EOF4' > /home/app/configs/backend/statshub/initdb.d/setup.sql
-    ${file("${path.module}/../configs/statshub/initdb.d/setup.sql")}
+    ${file("${path.module}/../configs/backend/statshub/initdb.d/setup.sql")}
     EOF4
 
     cat <<'EOF5' > /etc/cron.daily
