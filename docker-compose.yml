@@ -7,7 +7,7 @@ services:
     networks:
       - app_internal
     env_file:
-      - configs/docker/losses.env
+      - configs/backend/statshub/docker/losses.env
     ports:
       - "8000:80"
     depends_on:
@@ -24,10 +24,10 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - configs/docker/losses.env
+      - configs/backend/statshub/docker/losses.env
     volumes:
       - ./var/data/postgres/data:/var/lib/postgresql/data
-      - ./configs/initdb.d:/docker-entrypoint-initdb.d/
+      - ./configs/backend/statshub/initdb.d:/docker-entrypoint-initdb.d/
     restart: on-failure:3
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
@@ -38,7 +38,7 @@ services:
     image: ghcr.io/kboskin/occupation-loss-predictor/frontend:${TAG:-main}
     container_name: "losses-frontend"
     env_file:
-      - configs/docker/frontend.env
+      - configs/frontend/docker/frontend.env
     networks:
       - app_internal
     ports:

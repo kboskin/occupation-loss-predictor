@@ -106,5 +106,9 @@
     "faq_main_a_4": "Approximately Russian Federation has lost in total 48,614 units, including Aircraft: 329; Aircraft Warfare: 623; APV: 11070; Artillery: 8464; Fuel Tanks: 11292; Helicopters: 324; Missiles: 1709; MLRS: 943; Special Equipment: 1268; Submarines: 1; Tanks: 5977; UAV: 6591; Warships: 23",
     "faq_main_q_5": "What is the most intense year of war?",
     "faq_main_a_5": "So far, according to the gathered statistics, Russia has lost the most personnel and vehicles in 2024"
+  },
+  "day_page": {
+    "day_page_title": "AI-based Russian army losses forecast. Invasion chronicles",
+    "day_page_description": "Key insights and statistics of the invasion for the %s date"
   }
 }

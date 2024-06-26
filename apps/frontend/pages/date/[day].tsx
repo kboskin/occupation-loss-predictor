@@ -23,7 +23,7 @@ const DayPage = (props: DayPageParams) => {
 
     return (
         <>
-            <SeoHead title={t('main_page_title')} description={t('main_page_description')}
+            <SeoHead title={t('day_page.day_page_title')} description={t('day_page.day_page_description')}
                      imagePath={`${process.env.NEXT_PUBLIC_SITE_URL}images/img_logo.png`}/>
             <Header/>
             <p>Under construction</p>

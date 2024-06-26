@@ -17,11 +17,6 @@ class CORS:
 
 
 @dataclass
-class ENCRYPTION:
-    key = os.getenv("ENCRYPTION_KEY", "occupation_loss_")
-
-
-@dataclass
 class POSTGRES:
     user = os.getenv("POSTGRES_USER", "postgres")
     password = os.getenv("POSTGRES_PASSWORD", "postgres")

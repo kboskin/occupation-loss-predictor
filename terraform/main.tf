@@ -48,23 +48,26 @@ resource "google_compute_instance" "app_vm" {
 
     # Prepare directories
     sudo mkdir -p /home/app
-    sudo mkdir -p /home/app/configs/docker
-    sudo mkdir -p /home/app/configs/initdb.d
+    sudo mkdir -p /home/app/configs/backend/statshub/docker
+    sudo mkdir -p /home/app/configs/backend/statshub/initdb.d
+    sudo mkdir -p /home/app/configs/frontend/docker
 
     # Read, Write, and Execute Permissions
-    sudo chmod 777 /home/app/configs/docker
+    sudo chmod 777 /home/app/configs/backend/statshub/docker
+    sudo chmod 777 /home/app/configs/backend/statshub/initdb.d
+    sudo chmod 777 /home/app/configs/frontend/docker
 
     # Setting up app directory
     cat <<'EOF2' > /home/app/docker-compose.yml
     ${file("${path.module}/../docker-compose.yml")}
     EOF2
 
-     cat <<'EOF3' > /home/app/nginx.conf
+    cat <<'EOF3' > /home/app/nginx.conf
     ${file("${path.module}/../nginx.conf")}
     EOF3
 
-    cat <<'EOF4' > /home/app/configs/initdb.d/setup.sql
-    ${file("${path.module}/../configs/initdb.d/setup.sql")}
+    cat <<'EOF4' > /home/app/configs/backend/statshub/initdb.d/setup.sql
+    ${file("${path.module}/../configs/statshub/initdb.d/setup.sql")}
     EOF4
 
     cat <<'EOF5' > /etc/cron.daily
