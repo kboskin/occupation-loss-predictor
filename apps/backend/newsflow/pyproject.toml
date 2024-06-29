@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "newsprocessor"
+version = "1.0"
+description = ""
+authors = ["Combat Losses <support@combatlosses.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.12"
+fastapi = "^0.104.1"
+uvicorn = "^0.24.0"
+passlib = "^1.7.4"
+pathlib = "^1.0.1"
+sentry-sdk = "^1.4.3"
+async-asgi-testclient = "^1.4.6"
+pytest = "^6.2.5"
+pydantic = {extras = ["email"], version = "^1.9.2"}
+asyncio = "^3.4.3"
+flake8 = "^6.1.0"
+firebase-admin = "^6.5.0"
+fastapi-utils-sqlalch2 = "^0.3.0"
+gnews = "^0.3.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

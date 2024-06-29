@@ -1,13 +1,14 @@
 const path = require('path');
+const { AVAILABLE_LOCALES } = require('./utils/locale.js'); // Adjust the file extension to .js after TypeScript compilation
+
 
 /** @type {import('next-i18next').UserConfig} */
 module.exports = {
     i18n: {
-        locales: ['uk', 'en', 'fr', 'es', 'de'],
-        defaultLocale: 'uk'
+        locales: AVAILABLE_LOCALES,
+        defaultLocale: AVAILABLE_LOCALES[0]
     },
     localePath: path.resolve('./public/locales'),  // Specifies the path to the locale files
-    localeStructure: '{{lng}}/{{ns}}',  // Defines how the locale files are structured within the localePath directory
     defaultNS: 'common',  // Specifies the default namespace used if none is provided in the translation function
     interpolation: {
         escapeValue: false,  // Prevents XSS attacks by avoiding escaping interpolated values
