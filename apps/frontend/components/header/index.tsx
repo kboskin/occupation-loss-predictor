@@ -30,7 +30,7 @@ const Header = () => {
                 </NavbarBrand>
             </NavbarContent>
 
-            <NavbarContent className="hidden lg:flex" justify="center">
+            <NavbarContent className="hidden xl:flex" justify="center">
                 <NavbarItem key={"header_item_statistic"}>
                     <Link
                         className="w-auto px-8 text-white"
@@ -61,7 +61,7 @@ const Header = () => {
                     </Link>
                 </NavbarItem>
             </NavbarContent>
-            <NavbarContent className="hidden lg:flex" justify="end">
+            <NavbarContent className="hidden xl:flex" justify="end">
                 <NavbarItem>
                     <Link href={t('common.link_support_army')} target="_blank" rel="noopener noreferrer">
                         <Button color="danger" href={t('common.link_support_army')} variant="flat" >

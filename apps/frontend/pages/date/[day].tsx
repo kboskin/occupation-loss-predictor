@@ -8,6 +8,8 @@ import SeoHead from "../../components/seo";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import {getServerSideTranslations} from "../../utils/locale";
+import NewsRow from "../../components/news";
+import SupportTheProject from "../../components/support";
 
 interface DayPageParams {
     day: string
@@ -26,7 +28,8 @@ const DayPage = (props: DayPageParams) => {
             <SeoHead title={t('day_page.day_page_title')} description={t('day_page.day_page_description')}
                      imagePath={`${process.env.NEXT_PUBLIC_SITE_URL}images/img_logo.png`}/>
             <Header/>
-            <p>Under construction</p>
+            <NewsRow/>
+            <SupportTheProject />
             <Footer/>
         </>
     )
