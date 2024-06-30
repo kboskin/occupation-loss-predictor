@@ -1,4 +1,4 @@
-const languages = ['en', 'de', 'fr', 'es', 'uk']; // Define supported languages
+const availableLocales = ['en', 'de', 'fr', 'es', 'uk']; // Define supported languages
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
@@ -6,9 +6,9 @@ module.exports = {
     trailingSlash: true,
     generateRobotsTxt: true,
     priority: 1.0,
-    alternateRefs: languages.flatMap(lang => ({
+    alternateRefs: availableLocales.flatMap(lang => ({
         hreflang: lang,
-        href: lang === 'uk' ? "https://combatlosses.com" : `https://combatlosses.com/${lang}`,
+        href: `https://combatlosses.com/${lang}`,
     })),
     additionalPaths: async (config) => {
         const dates = generateDatePaths();
@@ -19,8 +19,8 @@ module.exports = {
                 changefreq: 'daily',
                 priority: 0.5,
                 lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
-                alternateRefs: [...languages.map(language => ({
-                    href: language === 'uk' ? `${config.siteUrl}/` : `${config.siteUrl}/${language}/`,
+                alternateRefs: [...availableLocales.map(language => ({
+                    href: `${config.siteUrl}/${language}/`,
                     hreflang: language
                 }))]
             }

@@ -1,7 +1,7 @@
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {GetServerSideProps} from "next";
 
-export const AVAILABLE_LOCALES = ['uk', 'en', 'fr', 'es', 'de']
+const AVAILABLE_LOCALES = ['uk', 'en', 'fr', 'es', 'de']
 
 export const getServerSideTranslations: GetServerSideProps = async ({ locale }) => {
   return {
@@ -10,3 +10,5 @@ export const getServerSideTranslations: GetServerSideProps = async ({ locale }) 
     },
   };
 };
+
+export default AVAILABLE_LOCALES

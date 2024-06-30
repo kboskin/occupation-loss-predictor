@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {logEvent} from "@firebase/analytics";
 import {useTranslation} from "next-i18next";
 
-import {GetServerSideProps} from "next";
+import {GetServerSideProps, GetStaticPaths, GetStaticProps} from "next";
 import {analytics} from "../../firebase";
 import SeoHead from "../../components/seo";
 import Header from "../../components/header";
