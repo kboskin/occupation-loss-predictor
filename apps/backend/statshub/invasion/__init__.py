@@ -30,7 +30,7 @@ from invasion.forecasting.service import ForecastService
 from invasion.losses.losses import BrokenLossTypeException
 from invasion.losses.router import losses_router
 
-logging_level = logging.WARNING
+logging_level = logging.DEBUG
 file_name = "invasion.log"
 
 if DEBUG:

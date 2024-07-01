@@ -1,11 +1,7 @@
 import React from "react";
 import {Card, CardFooter, CardHeader} from "@nextui-org/card";
 import {Button, Image} from "@nextui-org/react";
-
-
-interface NewsRowProps {
-
-}
+interface NewsRowProps { }
 
 const NewsRow = (props: NewsRowProps) => {
     return (
@@ -90,7 +86,7 @@ const NewsRow = (props: NewsRowProps) => {
                             />
                             <div className="flex flex-col">
                                 <p className="text-tiny text-white/60">Breathing App</p>
-                                <p className="text-tiny text-white/60">Get a good night's sleep.</p>
+                                <p className="text-tiny text-white/60">Get a good night sleep.</p>
                             </div>
                         </div>
                         <Button radius="full" size="sm">Get App</Button>
