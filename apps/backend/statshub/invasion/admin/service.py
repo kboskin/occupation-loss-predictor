@@ -3,6 +3,7 @@ import logging
 from typing import List
 
 import pandas as pd
+import sentry_sdk
 from sqlalchemy import select, desc, exists
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -41,6 +42,7 @@ class AdminService:
             time_diff.reverse()
 
             logging.debug(f"time diff {time_diff} last personnel record {last_record_time}")
+            sentry_sdk.capture_message(f"time diff {time_diff} last personnel record {last_record_time}")
 
             year_to_start = last_record_time.year
             month_to_start = last_record_time.month

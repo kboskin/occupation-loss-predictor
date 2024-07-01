@@ -8,6 +8,7 @@ from datetime import datetime
 from typing import Final
 from urllib.request import Request
 
+import sentry_sdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -97,6 +98,7 @@ def run_event_loop():
 # get forecasts lives in a separate process due to blocking nature
 async def get_forecasts():
     logging.info("Running event loop with updates")
+    sentry_sdk.capture_message(f"Running event loop with updates {datetime.now()}", "info")
 
     engine = create_engine_for_process()
     async_session_maker = get_session_for_process(engine)
