@@ -1,11 +1,9 @@
 import React, {useEffect} from "react";
 import {logEvent} from "@firebase/analytics";
-import {GetServerSideProps, GetStaticProps} from "next";
+import {GetStaticProps} from "next";
 import {analytics} from "../firebase";
 import {useTranslation} from "next-i18next";
-import {
-    lossesApi,
-} from "../redux/losses/lossesApi";
+import {lossesApi,} from "../redux/losses/lossesApi";
 import MainVideo from "../components/video";
 import LossesTable from "../components/losses/table";
 import GroupChart from "../components/losses/groupLineChart";
@@ -19,7 +17,9 @@ import {Loss} from "../redux/losses/models";
 import FAQ from "../components/faq";
 import Footer from "../components/footer";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import { store } from "../redux/store";
+import {store} from "../redux/store";
+import BreadcrumbItems from "../components/breadcrumbs";
+import {SideBySideLayout} from "../components/news/combined_news_row";
 
 interface HomeProps {
     lossesData: Loss[];
@@ -27,40 +27,88 @@ interface HomeProps {
     categoryData: ChartAggregationResult;
 }
 
-const Home = ({ lossesData, yearlyData, categoryData }: HomeProps) => {
-  useEffect(() => {
-    if (analytics) {
-      logEvent(analytics, "main_page_viewed");
-    }
-  }, []);
+const Home = ({lossesData, yearlyData, categoryData}: HomeProps) => {
+    useEffect(() => {
+        if (analytics) {
+            logEvent(analytics, "main_page_viewed");
+        }
+    }, []);
 
-  const { t } = useTranslation();
+    const items = [
+        {
+            title: "What to watch",
+            subtitle: "Stream the Acme event",
+            imageUrl: "https://nextui.org/images/card-example-4.jpeg",
+            footerTitle: "New",
+            footerSubtitle: "Available soon.",
+            buttonText: "Notify Me"
+        },
+        {
+            title: "Plant a tree",
+            subtitle: "Contribute to the planet",
+            imageUrl: "https://nextui.org/images/card-example-3.jpeg",
+            footerTitle: "Your day your way",
+            footerSubtitle: "Get a good night sleep.",
+            buttonText: "Get App"
+        },
+        {
+            title: "Supercharged",
+            subtitle: "Creates beauty like a beast",
+            imageUrl: "https://nextui.org/images/card-example-2.jpeg",
+            footerTitle: "Breathing App",
+            footerSubtitle: "Get a good night sleep.",
+            buttonText: "Get App"
+        },
+        {
+            title: "Supercharged",
+            subtitle: "Creates beauty like a beast",
+            imageUrl: "https://nextui.org/images/card-example-2.jpeg",
+            footerTitle: "Breathing App",
+            footerSubtitle: "Get a good night sleep.",
+            buttonText: "Get App"
+        },
+        {
+            title: "Supercharged",
+            subtitle: "Creates beauty like a beast",
+            imageUrl: "https://nextui.org/images/card-example-2.jpeg",
+            footerTitle: "Breathing App",
+            footerSubtitle: "Get a good night sleep.",
+            buttonText: "Get App"
+        }
+    ];
 
-  return (
-    <>
-      <SeoHead
-        title={t("main_page.main_page_title")}
-        description={t("main_page.main_page_description")}
-        imagePath={`${process.env.NEXT_PUBLIC_SITE_URL}images/img_logo.png`}
-      />
-      <Header />
-      <MainVideo />
-      <LossesTable isLoading={false} losses={lossesData} />
-      <GroupChart data={lossesData} />
-      <SupportTheProject />
-      <RadialGroupChart data={yearlyData} isLoading={false} />
-      <Separator />
-      <CategoryBarGroupChart data={categoryData} isLoading={false} />
-      <FAQ
-        faqTitle={t("main_page.faq_title")}
-        faqs={Array.from(Array(6).keys()).map((number) => ({
-          question: t(`main_page.faq_main_q_${number}`),
-          answer: t(`main_page.faq_main_a_${number}`),
-        }))}
-      />
-      <Footer />
-    </>
-  );
+    const {t} = useTranslation();
+
+    return (
+        <>
+            <SeoHead
+                title={t("main_page.main_page_title")}
+                description={t("main_page.main_page_description")}
+                imagePath={`/images/img_logo.png`}
+            />
+            {/*<SideBySideLayout newsItems={items} losses={lossesData} period={'day'}/>*/}
+            <Header/>
+            <MainVideo/>
+            <BreadcrumbItems/>
+            <LossesTable isLoading={false} losses={lossesData}/>
+            <Separator/>
+            <GroupChart data={lossesData}/>
+            <Separator/>
+            <SupportTheProject/>
+            <Separator/>
+            <RadialGroupChart data={yearlyData} isLoading={false}/>
+            <Separator/>
+            <CategoryBarGroupChart data={categoryData} isLoading={false}/>
+            <FAQ
+                faqTitle={t("main_page.faq_title")}
+                faqs={Array.from(Array(6).keys()).map((number) => ({
+                    question: t(`main_page.faq_main_q_${number}`),
+                    answer: t(`main_page.faq_main_a_${number}`),
+                }))}
+            />
+            <Footer/>
+        </>
+    );
 };
 
 

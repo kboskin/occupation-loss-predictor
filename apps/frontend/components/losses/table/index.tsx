@@ -154,15 +154,15 @@ const LossesTable = (props: LossesTableProps) => {
                 bottomContentPlacement="outside"
             >
                 <TableHeader>
-                    <TableColumn key="name">Category</TableColumn>
-                    <TableColumn key="height">Loss count</TableColumn>
-                    <TableColumn key="mass">Increase</TableColumn>
+                    <TableColumn key="category">Category</TableColumn>
+                    <TableColumn key="count">Loss count</TableColumn>
+                    <TableColumn key="increase">Increase</TableColumn>
                 </TableHeader>
                 <TableBody
                     className="center"
                     isLoading={props.isLoading}
                     loadingContent={<Spinner color="white"/>}>
-                    {mapLossesToRows(props?.losses ?? [], period)}
+                    {mapLossesToRows(props.losses, period)}
                 </TableBody>
             </Table>
         </div>

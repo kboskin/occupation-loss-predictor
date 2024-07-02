@@ -10,7 +10,7 @@ export default function Logo(props: LogoProps) {
             alt="Russian army losses prediction logo"
             width={props.width}
             height={props.height}
-            src="images/img_logo.png"
+            src="/images/img_logo.png"
         />
     )
 }

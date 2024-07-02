@@ -1,12 +1,12 @@
-const availableLocales = ['en', 'de', 'fr', 'es', 'uk']; // Define supported languages
-
 /** @type {import('next-sitemap').IConfig} */
+const AVAILABLE_LOCALES = require("./utils/available_locales");
+
 module.exports = {
     siteUrl: 'https://combatlosses.com',
     trailingSlash: true,
     generateRobotsTxt: true,
     priority: 1.0,
-    alternateRefs: availableLocales.flatMap(lang => ({
+    alternateRefs: AVAILABLE_LOCALES.flatMap(lang => ({
         hreflang: lang,
         href: `https://combatlosses.com/${lang}`,
     })),

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useTranslation} from "next-i18next";
 import LineChart from "./lineChart";
 import {Loss, LossType} from "../../../redux/losses/models";
+import Separator from "../../separator";
 
 interface GroupChartProps {
     data: Loss[];
@@ -55,8 +56,9 @@ const GroupChart = (props: GroupChartProps) => {
                 .map(dataItem => {
                     if (dataItem.type === LossType.PERSONNEL) {
                         return (
-                            <React.Fragment key={dataItem.type}>
+                            <>
                                 <h2 className="text-3xl lg:text-4xl mt-16 font-bold">{t("main_page.forecast_trending")}</h2>
+                                <Separator/>
                                 {windowWidth && (
                                     <LineChart
                                         key={dataItem.type}
@@ -67,7 +69,7 @@ const GroupChart = (props: GroupChartProps) => {
                                         showHeader={true}
                                     />
                                 )}
-                            </React.Fragment>
+                            </>
                         );
                     } else if (
                         dataItem.type === LossType.MISSILES ||
@@ -80,7 +82,7 @@ const GroupChart = (props: GroupChartProps) => {
                         } else {
                             skipCategories.push(LossType.MISSILES, LossType.AIRCRAFT, LossType.HELICOPTERS, LossType.WARSHIPS);
                             return (
-                                <React.Fragment key={dataItem.type}>
+                                <>
                                     <h2 className="text-3xl lg:text-4xl mt-16 lg:mt-16 font-bold">{t("main_page.forecast_unique")}</h2>
                                     {trendingItems.map((items, index) => (
                                         <div className="md:grid md:grid-cols-2 mt-4" key={index}>
@@ -98,7 +100,7 @@ const GroupChart = (props: GroupChartProps) => {
                                             ))}
                                         </div>
                                     ))}
-                                </React.Fragment>
+                                </>
                             );
                         }
                     } else {
@@ -107,7 +109,8 @@ const GroupChart = (props: GroupChartProps) => {
                         } else {
                             skipCategories.push(...filteredSortableList.map(item => item.type));
                             return (
-                                <React.Fragment key={dataItem.type}>
+                                <>
+                                    <Separator/>
                                     <h2 className="text-3xl lg:text-4xl mt-16 lg:mt-16 font-bold">{t("main_page.forecast_other")}</h2>
                                     <div className="md:grid md:grid-cols-2 lg:grid-cols-3 mt-4">
                                         {filteredSortableList.map(dataItem => (
@@ -123,7 +126,7 @@ const GroupChart = (props: GroupChartProps) => {
                                             )
                                         ))}
                                     </div>
-                                </React.Fragment>
+                                </>
                             );
                         }
                     }

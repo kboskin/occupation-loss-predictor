@@ -8,10 +8,11 @@ import {
     NavbarContent,
     NavbarItem,
     Link,
-    Button
+    Button, Breadcrumbs
 } from "@nextui-org/react";
 import Logo from "../logo";
 import {useTranslation} from "next-i18next";
+import BreadcrumbItems from "../breadcrumbs";
 
 
 const Header = () => {

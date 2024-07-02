@@ -100,7 +100,7 @@ const CategoryBarGroupChart = ({ isLoading, data }: CategoryChartProps) => {
 
     return (
         <div className="text-center m-auto">
-            <h3 className="text-3xl lg:text-4xl mt-4 lg:mt-4 font-bold mb-8 mt-4 text-white">{t('main_page.losses_category_by_year')}</h3>
+            <h3 className="text-3xl lg:text-4xl mt-4 font-bold text-white">{t('main_page.losses_category_by_year')}</h3>
             <svg ref={svgRef} className="m-auto mt-4" />
         </div>
     );

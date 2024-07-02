@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import * as Sentry from "@sentry/nextjs";
+import AVAILABLE_LOCALES from './utils/available_locales';
 
 // Regex to check whether something has an extension, e.g. .jpg
 const PUBLIC_FILE = /\.(.*)$/
 
 export async function middleware(req: NextRequest) {
-  const AVAILABLE_LOCALES = ['uk', 'en', 'fr', 'es', 'de']
   // Cookie locale
   const cookieLocale = req.cookies.get('NEXT_LOCALE')?.value
   // console.log(cookieLocale)
