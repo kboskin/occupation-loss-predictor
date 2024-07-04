@@ -5,12 +5,19 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query'
 import type {Loss} from './models'
 import {API_URL} from "../../api/apiUrl";
 
+// Define the Params type
+type Params = {
+    category?: string;
+    dateFrom?: string;
+    dateTo?: string;
+};
+
 // Define a service using a base URL and expected endpoints
 export const lossesApi = createApi({
     reducerPath: 'lossesPath',
     baseQuery: fetchBaseQuery({baseUrl: API_URL}),
     endpoints: (builder) => ({
-        getLosses: builder.query<Loss[], string>({
+        getLosses: builder.query<Loss[], Params>({
             transformResponse: (response, meta, arg) => response['data'],
             query: ({category, dateFrom, dateTo}) => `/losses/${paramsToFunction(category, dateFrom, dateTo)}`,
         }),

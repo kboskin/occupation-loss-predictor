@@ -14,7 +14,7 @@ const NewsCardFooter = ({title, subtitle}: CardFooterProps) => {
     return <>
         <CardFooter
             className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-            <div className="flex flex-grow gap-2 items-center">
+            <div className="flex flex-grow gap-2 justify-between">
                 <div className="flex flex-col">
                     <p className="text-tiny text-white/60">{title}</p>
                     <p className="text-tiny text-white/60">{subtitle}</p>

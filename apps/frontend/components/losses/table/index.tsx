@@ -19,6 +19,7 @@ import {mapCategoryToTranslation, mapCategoryToImage} from "../../../utils/categ
 
 interface LossesTableProps {
     isLoading: boolean,
+    enableTopBar: boolean,
     losses: Loss[]
 }
 
@@ -148,9 +149,9 @@ const LossesTable = (props: LossesTableProps) => {
                 isHeaderSticky
                 hideHeader
                 aria-label="Losses table"
-                topContent={props.isLoading ? [] : topContent}
+                topContent={props.isLoading || !props.enableTopBar ? [] : topContent}
                 topContentPlacement="outside"
-                className="pt-6 min-h-[300px] text-center max-w-[650px] m-auto text-light-grey"
+                className="min-h-[300px] text-center max-w-[650px] m-auto text-light-grey"
                 bottomContentPlacement="outside"
             >
                 <TableHeader>

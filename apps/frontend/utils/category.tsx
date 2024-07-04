@@ -19,6 +19,6 @@ const mapCategoryToTranslation = (cat: LossType, t: any): string => {
     }
 }
 
-const mapCategoryToImage = (cat: LossType): string => `images/emoji/${cat}.png`
+const mapCategoryToImage = (cat: LossType): string => `/images/emoji/${cat}.png`
 
 export { mapCategoryToTranslation, mapCategoryToImage }
