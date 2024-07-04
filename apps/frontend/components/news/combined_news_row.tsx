@@ -53,8 +53,8 @@ const NewsAndStatistics: React.FC<{ newsItems: NewsRowProps['items'], losses: Lo
             <>
                 <h2 className="text-3xl mt-4 font-bold mb-8 text-center">{t('day_page.page_heading').replace("%s", day)}</h2>
                 <div className="flex flex-col lg:flex-row justify-center">
-                    <div className="w-full lg:w-1/3 p-4">
-                        <LossesTable isLoading={false} losses={losses} enableTopBar={false}/>
+                    <div className="w-full lg:w-1/3">
+                        <LossesTable isLoading={false} losses={losses} isDayStyle={true}/>
                     </div>
                     <div className="w-full lg:w-1/2 p-4">
                         <NewsGrid items={newsItems}/>

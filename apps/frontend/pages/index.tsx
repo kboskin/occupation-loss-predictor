@@ -46,7 +46,7 @@ const Home = ({ lossesData, yearlyData, categoryData }: HomeProps) => {
             <Header />
             <MainVideo />
             <BreadcrumbItems />
-            <LossesTable isLoading={false} losses={lossesData} enableTopBar={true} />
+            <LossesTable isLoading={false} losses={lossesData} isDayStyle={false} />
             <Separator />
             <GroupChart data={lossesData} />
             <Separator />

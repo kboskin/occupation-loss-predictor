@@ -15,10 +15,11 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import store from "../../redux/store";
 import NewsRow3top2bottom, {NewsGrid} from "../../components/news";
 import AVAILABLE_DATES from "../../utils/availdable_days";
+import {Loss} from "../../redux/losses/models";
 
 interface DayPageProps {
     day: string;
-    lossesData: any; // Adjust the type based on your actual data structure
+    lossesData: Loss[]; // Adjust the type based on your actual data structure
 }
 
 const DayPage = ({day, lossesData}: DayPageProps) => {
@@ -77,6 +78,9 @@ const DayPage = ({day, lossesData}: DayPageProps) => {
             url: "test"
         },
     ];
+
+    console.log("propslog")
+    console.log(lossesData)
 
     return (
         <>

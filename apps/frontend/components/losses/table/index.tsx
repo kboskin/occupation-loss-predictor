@@ -19,7 +19,7 @@ import {mapCategoryToTranslation, mapCategoryToImage} from "../../../utils/categ
 
 interface LossesTableProps {
     isLoading: boolean,
-    enableTopBar: boolean,
+    isDayStyle: boolean,
     losses: Loss[]
 }
 
@@ -73,8 +73,10 @@ const LossesTable = (props: LossesTableProps) => {
     const mapLossesToRows = (losses: Loss[], period: Periods) =>
         losses.map((lossItem) => {
             let updatedHistory = lossItem
-                .history
-                .filter((point) => moment(point.time as MomentInput).isSame(today, period))
+                .history;
+            if (!props.isDayStyle) {
+                updatedHistory = updatedHistory.filter((point) => moment(point.time as MomentInput).isSame(today, period))
+            }
 
             let updatedItem: Loss = {
                 history: updatedHistory,
@@ -121,7 +123,9 @@ const LossesTable = (props: LossesTableProps) => {
                             <strong>{mapCategoryToTranslation(aggrItem.type, t)}</strong>
                         </Button>
                     </TableCell>
-                    <TableCell className="text-large text-end">{aggrItem.periodTotal}</TableCell>
+                    <TableCell className="text-large text-end">
+                        {aggrItem.periodTotal === -1 ? t('main_page.losses_no_data') : aggrItem.periodTotal}
+                    </TableCell>
                     <TableCell className="text-start text-large">
                         <Button
                             disabled
@@ -131,7 +135,7 @@ const LossesTable = (props: LossesTableProps) => {
                                 aggrItem.periodIncr >= 1 ?
                                     <Image
                                         className="border-none text-light-grey"
-                                        src={"images/ic_arrow_up.svg"}
+                                        src={"/images/ic_arrow_up.svg"}
                                         alt={`${aggrItem.type} growth icon`}/>
                                     : null
                             }>
@@ -149,7 +153,7 @@ const LossesTable = (props: LossesTableProps) => {
                 isHeaderSticky
                 hideHeader
                 aria-label="Losses table"
-                topContent={props.isLoading || !props.enableTopBar ? [] : topContent}
+                topContent={props.isLoading || props.isDayStyle ? [] : topContent}
                 topContentPlacement="outside"
                 className="min-h-[300px] text-center max-w-[650px] m-auto text-light-grey"
                 bottomContentPlacement="outside"
