@@ -5,8 +5,9 @@ import asyncio
 import logging
 import multiprocessing
 from datetime import datetime, timedelta
-from typing import Final, List
+from typing import Final
 
+import firebase_admin
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -17,8 +18,10 @@ from fastapi import APIRouter
 import os
 
 from newsprocessor.config import DEBUG, CORS, init_sentry, INVASION_START
+from newsprocessor.news.models import ArticleShort
 from newsprocessor.news.service import NewsService
 from newsprocessor.utils import datetime_range, DateRange
+from path import ROOT
 
 logging_level = logging.DEBUG
 file_name = "news.log"
@@ -44,6 +47,9 @@ script_dir = os.path.dirname(__file__)
 st_abs_file_path = os.path.join(script_dir, "static/")
 app.mount("/static", StaticFiles(directory=st_abs_file_path), name="static")
 
+cred_obj = firebase_admin.credentials.Certificate(f"{ROOT}/credentials.json")
+firebase_admin.initialize_app(cred_obj)
+
 # api_router.include_router(losses_router, prefix="/losses")
 
 app.include_router(api_router)
@@ -54,19 +60,7 @@ timeout: Final[int] = 7200
 
 @app.on_event("startup")
 async def startup_event():
-    tasks = []
-    end_date = datetime.now() - timedelta(days=1)
-    date_range = DateRange(start_date=INVASION_START, end_date=end_date)
-
-    set_of_sources = set()
-    for dt in datetime_range(date_range):
-        sources = await fetch_news_for_date(dt)
-        [set_of_sources.add(source) for source in sources]
-        print(f"date: {dt}; \n sources: {sources}")
-
-
-async def fetch_news_for_date(dt) -> List[str]:
-    return await NewsService.get_news(dt)
+    await data_update_job()
 
 
 async def run_coroutine_update_process():
@@ -84,8 +78,15 @@ async def data_update_job():
 
 
 def run_event_loop():
-    asyncio.run(get_forecasts())
+    asyncio.run(fetch_data())
 
 
-async def get_forecasts():
-    pass
+async def fetch_data():
+    # end_date = datetime.now() - timedelta(days=1)
+    end_date = datetime.fromisoformat((INVASION_START + timedelta(days=2)).isoformat())
+    date_range = DateRange(start_date=INVASION_START, end_date=end_date)
+
+    for dt in datetime_range(date_range):
+        articles = await NewsService.get_news(dt)
+        print(articles)
+        logging.info(f"Articles {articles} \n for date {dt}")

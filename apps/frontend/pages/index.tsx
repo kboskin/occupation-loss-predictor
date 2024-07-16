@@ -69,7 +69,6 @@ const Home = ({ lossesData, yearlyData, categoryData }: HomeProps) => {
 
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
-    console.log('Revalidating data...');
 
     // Fetch data using RTK Query endpoints
     const lossesData = await store.dispatch(lossesApi.endpoints.getLosses.initiate({}, { forceRefetch: true })).unwrap();

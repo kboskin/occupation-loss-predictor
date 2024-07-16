@@ -46,3 +46,4 @@ MANIFEST
 venv/
 *.lock
 *.log
+credentials.json

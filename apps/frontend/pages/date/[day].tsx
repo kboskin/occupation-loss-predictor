@@ -13,9 +13,10 @@ import BreadcrumbItems from "../../components/breadcrumbs";
 import {NewsAndStatistics} from "../../components/news/combined_news_row";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import store from "../../redux/store";
-import NewsRow3top2bottom, {NewsGrid} from "../../components/news";
+import NewsRow3top2bottom from "../../components/news";
 import AVAILABLE_DATES from "../../utils/availdable_days";
 import {Loss} from "../../redux/losses/models";
+import FAQ from "../../components/faq";
 
 interface DayPageProps {
     day: string;
@@ -79,9 +80,6 @@ const DayPage = ({day, lossesData}: DayPageProps) => {
         },
     ];
 
-    console.log("propslog")
-    console.log(lossesData)
-
     return (
         <>
             <SeoHead
@@ -91,11 +89,12 @@ const DayPage = ({day, lossesData}: DayPageProps) => {
             />
             <Header/>
             <BreadcrumbItems/>
-            <NewsAndStatistics newsItems={items} losses={lossesData} day={day} />
+            <NewsAndStatistics newsItems={items} losses={lossesData} day={day}/>
             <SupportTheProject/>
             <Separator/>
             <NewsRow3top2bottom items={items}/>
             <Separator/>
+            <FAQ faqTitle={} faqs={}></FAQ>
             <Footer/>
         </>
     );
@@ -115,8 +114,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({locale, params}) => {
     const day = (params?.day || '') as string; // Get the day parameter
-
-    console.log(day)
 
     if (day === '') {
         return {

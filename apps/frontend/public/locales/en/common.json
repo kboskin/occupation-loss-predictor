@@ -112,6 +112,7 @@
     "day_page_title": "AI-based Russian army losses forecast. Invasion chronicles",
     "day_page_description": "Key insights and statistics of the invasion for the %s date",
     "read_button_text": "Read more",
-    "page_heading": "Russian occupation army losses and key invasion insights of Ukraine on this date %s"
+    "page_heading": "Russian occupation army losses and key invasion insights of Ukraine on this date %s",
+    "faq_title": "Frequently Asked Questions (FAQ) about %s"
   }
 }
