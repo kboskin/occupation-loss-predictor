@@ -94,7 +94,7 @@ const DayPage = ({day, lossesData}: DayPageProps) => {
             <Separator/>
             <NewsRow3top2bottom items={items}/>
             <Separator/>
-            <FAQ faqTitle={} faqs={}></FAQ>
+            {/*<FAQ faqTitle={} faqs={}></FAQ>*/}
             <Footer/>
         </>
     );
