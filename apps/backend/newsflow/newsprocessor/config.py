@@ -5,12 +5,14 @@ from dataclasses import dataclass
 from datetime import date
 
 import sentry_sdk
+from firebase_admin import firestore
 
 DEBUG = os.getenv('DEBUG') == 'True'
 
 INVASION_START = date(2022, 2, 24)
 INVASION_START_2 = date(2024, 2, 25)
 
+FIREBASE_DB = firestore.Client()
 
 @dataclass
 class CORS:

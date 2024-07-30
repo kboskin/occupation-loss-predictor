@@ -17,6 +17,8 @@ from fastapi import APIRouter
 
 import os
 
+from firebase_admin import firestore
+
 from newsprocessor.config import DEBUG, CORS, init_sentry, INVASION_START
 from newsprocessor.news.models import ArticleShort
 from newsprocessor.news.service import NewsService
@@ -87,6 +89,6 @@ async def fetch_data():
     date_range = DateRange(start_date=INVASION_START, end_date=end_date)
 
     for dt in datetime_range(date_range):
-        articles = await NewsService.get_news(dt)
+        articles = await NewsService.scrap_news(dt)
         print(articles)
         logging.info(f"Articles {articles} \n for date {dt}")
