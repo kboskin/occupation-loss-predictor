@@ -12,4 +12,4 @@ function generateDatePaths() {
 
 const AVAILABLE_DATES = generateDatePaths()
 
-export default AVAILABLE_DATES
+module.exports = AVAILABLE_DATES

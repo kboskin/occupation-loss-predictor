@@ -19,6 +19,7 @@ import Footer from "../components/footer";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { store } from "../redux/store";
 import BreadcrumbItems from "../components/breadcrumbs";
+import * as Sentry from "@sentry/nextjs";
 
 interface HomeProps {
     lossesData: Loss[];
@@ -71,9 +72,21 @@ const Home = ({ lossesData, yearlyData, categoryData }: HomeProps) => {
 export const getStaticProps: GetStaticProps = async ({locale}) => {
 
     // Fetch data using RTK Query endpoints
-    const lossesData = await store.dispatch(lossesApi.endpoints.getLosses.initiate({}, { forceRefetch: true })).unwrap();
-    const yearlyData = await store.dispatch(lossesApi.endpoints.getYearlyAggregation.initiate("", { forceRefetch: true })).unwrap();
-    const categoryData = await store.dispatch(lossesApi.endpoints.getCategoryAggregation.initiate("", { forceRefetch: true })).unwrap();
+    let lossesData: Loss[] = []
+    let yearlyData: AggregationResult = {
+        children: []
+    }
+    let categoryData: ChartAggregationResult = {
+        children: []
+    }
+
+    try {
+        lossesData = await store.dispatch(lossesApi.endpoints.getLosses.initiate({}, { forceRefetch: true })).unwrap();
+        yearlyData = await store.dispatch(lossesApi.endpoints.getYearlyAggregation.initiate("", { forceRefetch: true })).unwrap();
+        categoryData = await store.dispatch(lossesApi.endpoints.getCategoryAggregation.initiate("", {forceRefetch: true})).unwrap();
+    } catch (e) {
+        Sentry.captureException(e)
+    }
 
     // console.log(lossesData[0]['history'].filter((value) => value['time'] == '2024-07-03T00:00:00'))
     return {

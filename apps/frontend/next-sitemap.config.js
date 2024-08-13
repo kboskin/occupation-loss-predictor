@@ -1,4 +1,3 @@
-/** @type {import('next-sitemap').IConfig} */
 const AVAILABLE_LOCALES = require("./utils/available_locales");
 const AVAILABLE_DATES = require("./utils/availdable_days");
 
@@ -19,7 +18,7 @@ module.exports = {
                 changefreq: 'daily',
                 priority: 0.5,
                 lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
-                alternateRefs: [...availableLocales.map(language => ({
+                alternateRefs: [...AVAILABLE_LOCALES.map(language => ({
                     href: `${config.siteUrl}/${language}/`,
                     hreflang: language
                 }))]

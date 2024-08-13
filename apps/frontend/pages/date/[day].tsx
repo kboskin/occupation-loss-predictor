@@ -17,6 +17,7 @@ import NewsRow3top2bottom from "../../components/news";
 import AVAILABLE_DATES from "../../utils/availdable_days";
 import {Loss} from "../../redux/losses/models";
 import FAQ from "../../components/faq";
+import * as Sentry from "@sentry/nextjs";
 
 interface DayPageProps {
     day: string;
@@ -132,9 +133,14 @@ export const getStaticProps: GetStaticProps = async ({locale, params}) => {
 
     store.dispatch(lossesApi.util.resetApiState());
 
-    const lossesData = await store.dispatch(
-        lossesApi.endpoints.getLosses.initiate(paramsToFetch, {forceRefetch: true})
-    ).unwrap();
+    let lossesData: Loss[] = []
+    try {
+        lossesData = await store.dispatch(
+            lossesApi.endpoints.getLosses.initiate(paramsToFetch, {forceRefetch: true})
+        ).unwrap();
+    } catch (e) {
+        Sentry.captureException(e)
+    }
 
     return {
         props: {
@@ -142,7 +148,7 @@ export const getStaticProps: GetStaticProps = async ({locale, params}) => {
             day,
             lossesData,
         },
-        revalidate: 3600, // Revalidate every 1 hours
+        revalidate: 3600, // Revalidate every 1 hour
     };
 };
 
